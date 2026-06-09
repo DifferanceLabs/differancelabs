@@ -251,6 +251,7 @@ module.exports = {
   getOrigin,
   isAdminEmail,
   isSecureRequest,
+  normalizeEmail,
   parseCookies,
   redirect,
   requireEnv,
