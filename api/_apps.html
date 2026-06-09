@@ -79,6 +79,8 @@
       }
 
       async function loadApps() {
+        emptyState.hidden = true;
+        requestAccessStatus.textContent = "";
         const response = await fetch("/api/session", { credentials: "same-origin" });
 
         if (response.status === 401 || response.status === 403) {
@@ -96,10 +98,12 @@
         userEmail.textContent = session.user.email;
 
         if (!session.apps.length) {
+          grid.replaceChildren();
           emptyState.hidden = false;
           return;
         }
 
+        emptyState.hidden = true;
         grid.replaceChildren(...session.apps.map(createCard));
       }
 

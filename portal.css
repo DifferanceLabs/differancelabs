@@ -249,6 +249,10 @@ a.app-card:hover {
   text-align: center;
 }
 
+.empty-state[hidden] {
+  display: none;
+}
+
 .empty-state h1 {
   display: grid;
   gap: 1.15rem;
