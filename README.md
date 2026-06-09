@@ -6,8 +6,8 @@ Minimal public homepage for differancelabs.com with a Google-authenticated app l
 
 - `index.html` is the public homepage.
 - `login/index.html` is the Google login page at `/login`.
-- `apps/index.html` is the authenticated launcher page at `/apps`.
 - `api/apps-page.js` gates `/apps` before serving the launcher shell.
+- `api/_apps.html` is the protected launcher shell served by `/api/apps-page`.
 - `api/auth/google.js` starts Google OAuth.
 - `api/auth/callback.js` completes Google OAuth and creates the session cookie.
 - `api/session.js` returns the signed-in user and app cards allowed for that email.

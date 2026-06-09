@@ -36,7 +36,7 @@ module.exports = async function appsPage(req, res) {
     return;
   }
 
-  const html = fs.readFileSync(path.join(process.cwd(), "apps", "index.html"), "utf8");
+  const html = fs.readFileSync(path.join(process.cwd(), "api", "_apps.html"), "utf8");
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   res.setHeader("Cache-Control", "no-store");

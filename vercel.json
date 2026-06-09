@@ -3,7 +3,7 @@
   "trailingSlash": false,
   "functions": {
     "api/apps-page.js": {
-      "includeFiles": "apps/index.html"
+      "includeFiles": "api/_apps.html"
     }
   },
   "rewrites": [
