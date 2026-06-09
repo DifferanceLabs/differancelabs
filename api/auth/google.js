@@ -36,8 +36,7 @@ module.exports = async function googleAuth(req, res) {
         secure: isSecureRequest(req),
       }),
     ]);
-  } catch (error) {
-    res.statusCode = error.statusCode || 500;
-    res.end("Authentication is not configured.");
+  } catch {
+    redirect(res, "/login?error=auth_config");
   }
 };
