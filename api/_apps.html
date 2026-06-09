@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
     <meta name="theme-color" content="#080807">
-    <title>Apps | Differance Labs</title>
+    <title>Portal | Differance Labs</title>
     <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/portal.css">
@@ -19,17 +19,18 @@
       <a class="sign-out-button" href="/api/logout">Sign out</a>
     </header>
 
-    <main class="launcher-shell" aria-labelledby="apps-title">
+    <main class="launcher-shell">
       <section class="launcher-title">
         <p class="portal-kicker" id="user-email">Loading</p>
-        <h1 id="apps-title">we made it</h1>
-        <p class="launcher-subtitle">Apps</p>
       </section>
 
       <section class="apps-grid" id="apps-grid" aria-live="polite"></section>
 
       <section class="empty-state" id="empty-state" hidden>
-        <h2>You've opened the door but no one is home, request access by clicking the button</h2>
+        <h1>
+          <span>You have opened the door but no one is home.</span>
+          <span>Ring the doorbell</span>
+        </h1>
         <button class="request-access-button" id="request-access-button" type="button" aria-label="Request access">
           <img src="/assets/mark.svg" alt="" width="44" height="44" aria-hidden="true">
         </button>

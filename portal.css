@@ -19,9 +19,7 @@
 }
 
 .login-shell {
-  grid-template-rows: auto auto;
   align-content: center;
-  gap: 2.5rem;
 }
 
 .portal-mark-link,
@@ -47,13 +45,9 @@
 
 .login-panel {
   display: grid;
-  width: min(100%, 24rem);
-  gap: 1.5rem;
-  padding: 2rem;
-  border: 1px solid rgba(242, 239, 231, 0.12);
-  border-radius: 8px;
-  background: rgba(8, 8, 7, 0.74);
-  box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.22);
+  width: min(100%, 18rem);
+  justify-items: center;
+  gap: 1rem;
 }
 
 .portal-kicker,
@@ -79,9 +73,7 @@
   text-transform: uppercase;
 }
 
-.login-panel h1,
-.launcher-title h1,
-.empty-state h2 {
+.empty-state h1 {
   max-width: none;
   margin: 0;
   font-size: 2.75rem;
@@ -90,15 +82,15 @@
 
 .google-button {
   display: inline-flex;
-  min-height: 3rem;
+  min-height: 3.25rem;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 1.1rem;
   border: 1px solid rgba(242, 239, 231, 0.16);
-  border-radius: 8px;
-  background: #f2efe7;
-  color: #11110f;
+  border-radius: 999px;
+  background: rgba(8, 8, 7, 0.42);
+  color: var(--text);
   font-size: 0.95rem;
   font-weight: 650;
 }
@@ -116,12 +108,13 @@
 
 .google-g {
   display: grid;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.65rem;
+  height: 1.65rem;
   place-items: center;
+  border: 1px solid rgba(242, 239, 231, 0.16);
   border-radius: 50%;
-  background: #fff;
-  color: #4285f4;
+  background: #050504;
+  color: var(--text);
   font-family: Arial, sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -183,15 +176,10 @@
 
 .launcher-title {
   display: grid;
+  justify-items: center;
   gap: 0.75rem;
   margin-bottom: 2rem;
-}
-
-.launcher-subtitle {
-  max-width: none;
-  margin: 0;
-  color: rgba(242, 239, 231, 0.5);
-  font-size: 1rem;
+  text-align: center;
 }
 
 .apps-grid {
@@ -256,6 +244,12 @@ a.app-card:hover {
   text-align: center;
 }
 
+.empty-state h1 {
+  display: grid;
+  gap: 1.15rem;
+  line-height: 1.06;
+}
+
 .empty-state p {
   margin: 0;
 }
@@ -294,12 +288,10 @@ a.app-card:hover {
   }
 
   .login-panel {
-    padding: 1.5rem;
+    width: min(100%, 18rem);
   }
 
-  .login-panel h1,
-  .launcher-title h1,
-  .empty-state h2 {
+  .empty-state h1 {
     font-size: 2.25rem;
   }
 
