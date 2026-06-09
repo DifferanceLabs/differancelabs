@@ -17,7 +17,9 @@ html {
 
 body {
   min-height: 100vh;
+  min-height: 100svh;
   margin: 0;
+  overflow: hidden;
   background:
     radial-gradient(circle at 50% 42%, rgba(132, 167, 146, 0.08), transparent 34rem),
     linear-gradient(180deg, #0b0b0a 0%, var(--background) 58%, #060605 100%);
@@ -48,8 +50,11 @@ body::before {
 
 .site-shell {
   display: grid;
+  height: 100dvh;
   min-height: 100vh;
-  padding: 2rem;
+  min-height: 100svh;
+  overflow: hidden;
+  padding: clamp(1rem, 4vh, 2rem);
   place-items: center;
 }
 
@@ -58,13 +63,14 @@ body::before {
   width: min(100%, 44rem);
   justify-items: center;
   text-align: center;
+  transform: translateY(clamp(-2.5rem, -4vh, -1.25rem));
 }
 
 .mark {
   display: block;
-  width: 4.75rem;
-  height: 4.75rem;
-  margin-bottom: 3.5rem;
+  width: 5.25rem;
+  height: 5.25rem;
+  margin-bottom: 2.75rem;
   filter: drop-shadow(0 1.25rem 3rem var(--glow));
   opacity: 0.92;
 }
@@ -99,13 +105,13 @@ p {
 
 @media (max-width: 700px) {
   .site-shell {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
   }
 
   .mark {
-    width: 4rem;
-    height: 4rem;
-    margin-bottom: 2.75rem;
+    width: 4.25rem;
+    height: 4.25rem;
+    margin-bottom: 1.75rem;
   }
 
   h1 {
