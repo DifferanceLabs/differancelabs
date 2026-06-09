@@ -1,4 +1,10 @@
-const { APP_CATALOG, isAdminEmail, normalizeEmail, requireEnv } = require("./_auth");
+const {
+  APP_CATALOG,
+  isAdminEmail,
+  normalizeAppSlug,
+  normalizeEmail,
+  requireEnv,
+} = require("./_auth");
 
 const APP_ORDER = new Map(APP_CATALOG.map((app, index) => [app.key, index]));
 const APP_DEFAULTS = new Map(APP_CATALOG.map((app) => [app.key, app]));
@@ -95,6 +101,31 @@ function toClientApp(row) {
   };
 }
 
+function getAppTargetUrl(app) {
+  return app ? app.url || null : null;
+}
+
+function toLauncherApp(app) {
+  const slug = app.slug || app.key;
+  const targetUrl = getAppTargetUrl(app);
+  const isLaunchable = app.status === "active" && Boolean(targetUrl);
+
+  return {
+    key: slug,
+    slug,
+    name: app.name,
+    kind: app.kind,
+    description: app.description || null,
+    status: app.status,
+    active: isLaunchable,
+    launchPath: isLaunchable
+      ? slug === "admin"
+        ? "/admin"
+        : `/api/apps/launch?app=${encodeURIComponent(slug)}`
+      : null,
+  };
+}
+
 async function upsertUser(profile) {
   const email = normalizeEmail(profile && profile.email);
 
@@ -146,6 +177,48 @@ async function listAppsBySlugs(slugs) {
   return sortApps((rows || []).map(toClientApp));
 }
 
+async function getAppBySlug(slug) {
+  const normalizedSlug = normalizeAppSlug(slug);
+
+  if (!normalizedSlug) {
+    return null;
+  }
+
+  const rows = await supabaseRequest("apps", {
+    query: {
+      select: "slug,name,url,description,status",
+      slug: `eq.${normalizedSlug}`,
+      limit: "1",
+    },
+  });
+
+  return rows && rows[0] ? toClientApp(rows[0]) : null;
+}
+
+async function hasAppGrant(email, slug) {
+  const normalizedEmail = normalizeEmail(email);
+  const normalizedSlug = normalizeAppSlug(slug);
+
+  if (!normalizedEmail || !normalizedSlug) {
+    return false;
+  }
+
+  if (isAdminEmail(normalizedEmail)) {
+    return true;
+  }
+
+  const rows = await supabaseRequest("app_grants", {
+    query: {
+      select: "id",
+      user_email: `eq.${normalizedEmail}`,
+      app_slug: `eq.${normalizedSlug}`,
+      limit: "1",
+    },
+  });
+
+  return Boolean(rows && rows.length);
+}
+
 async function getAppsForUser(email) {
   const normalizedEmail = normalizeEmail(email);
 
@@ -154,7 +227,7 @@ async function getAppsForUser(email) {
   }
 
   if (isAdminEmail(normalizedEmail)) {
-    return listActiveApps();
+    return (await listActiveApps()).map(toLauncherApp);
   }
 
   const grants = await supabaseRequest("app_grants", {
@@ -164,7 +237,9 @@ async function getAppsForUser(email) {
     },
   });
 
-  return listAppsBySlugs((grants || []).map((grant) => grant.app_slug));
+  return (await listAppsBySlugs((grants || []).map((grant) => grant.app_slug))).map(
+    toLauncherApp
+  );
 }
 
 async function createOrRefreshAccessRequest(profile) {
@@ -331,12 +406,16 @@ async function removeGrant({ grantId, userEmail, appSlug }) {
 
 module.exports = {
   createOrRefreshAccessRequest,
+  getAppBySlug,
+  getAppTargetUrl,
   getAdminDashboard,
   getAppsForUser,
   grantApps,
+  hasAppGrant,
   listActiveApps,
   removeGrant,
   resolveAccessRequest,
   toClientApp,
+  toLauncherApp,
   upsertUser,
 };

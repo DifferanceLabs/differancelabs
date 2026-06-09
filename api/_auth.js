@@ -4,6 +4,7 @@ const SESSION_COOKIE = "dl_session";
 const STATE_COOKIE = "dl_oauth_state";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
 const STATE_MAX_AGE_SECONDS = 10 * 60;
+const APP_LAUNCH_TTL_SECONDS = 3 * 60;
 
 const APP_CATALOG = [
   {
@@ -54,6 +55,14 @@ function normalizeEmail(email) {
   return String(email || "")
     .trim()
     .toLowerCase();
+}
+
+function normalizeAppSlug(slug) {
+  const normalized = String(slug || "")
+    .trim()
+    .toLowerCase();
+
+  return /^[a-z0-9-]+$/.test(normalized) ? normalized : "";
 }
 
 function getAdminEmail() {
@@ -119,9 +128,17 @@ function base64UrlDecode(value) {
   return Buffer.from(normalized, "base64").toString("utf8");
 }
 
-function sign(value) {
-  const secret = requireEnv("SESSION_SECRET");
+function signWithSecret(value, secret) {
   return base64UrlEncode(crypto.createHmac("sha256", secret).update(value).digest());
+}
+
+function sign(value) {
+  return signWithSecret(value, requireEnv("SESSION_SECRET"));
+}
+
+function createSignedToken(payload, secret) {
+  const body = base64UrlEncode(JSON.stringify(payload));
+  return `${body}.${signWithSecret(body, secret)}`;
 }
 
 function createSessionToken(user) {
@@ -168,6 +185,21 @@ function verifySessionToken(token) {
   } catch {
     return null;
   }
+}
+
+function createAppLaunchToken(app, email) {
+  const now = Math.floor(Date.now() / 1000);
+
+  return createSignedToken(
+    {
+      app_slug: app.slug || app.key,
+      user_email: normalizeEmail(email),
+      issued_at: now,
+      expires_at: now + APP_LAUNCH_TTL_SECONDS,
+      nonce: crypto.randomBytes(16).toString("base64url"),
+    },
+    requireEnv("DL_APP_LAUNCH_SECRET")
+  );
 }
 
 function parseCookies(req) {
@@ -239,18 +271,21 @@ function redirect(res, location, cookies = []) {
 }
 
 module.exports = {
+  APP_LAUNCH_TTL_SECONDS,
   APP_CATALOG,
   SESSION_COOKIE,
   SESSION_MAX_AGE_SECONDS,
   STATE_COOKIE,
   STATE_MAX_AGE_SECONDS,
   clearCookie,
+  createAppLaunchToken,
   createSessionToken,
   createStateValue,
   getGoogleRedirectUri,
   getOrigin,
   isAdminEmail,
   isSecureRequest,
+  normalizeAppSlug,
   normalizeEmail,
   parseCookies,
   redirect,

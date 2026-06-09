@@ -22,6 +22,7 @@
     <main class="launcher-shell">
       <section class="launcher-title">
         <p class="portal-kicker" id="user-email">Loading</p>
+        <p class="login-message" id="launch-message" hidden></p>
       </section>
 
       <section class="apps-grid" id="apps-grid" aria-live="polite"></section>
@@ -44,20 +45,23 @@
       const requestAccessButton = document.querySelector("#request-access-button");
       const requestAccessStatus = document.querySelector("#request-access-status");
       const userEmail = document.querySelector("#user-email");
+      const launchMessage = document.querySelector("#launch-message");
       const accents = ["#84a792", "#d9b36c", "#c77c64", "#7aa6d9", "#b69ad8", "#79b8a9", "#e2e0d6"];
+      const launchErrors = {
+        app_not_found: "That app is not available.",
+        app_not_granted: "Your account is not granted for that app.",
+        app_inactive: "That app is not active yet.",
+        launch_unavailable: "App launch is temporarily unavailable.",
+      };
 
       function createCard(app, index) {
-        const card = document.createElement(app.url ? "a" : "article");
+        const canLaunch = Boolean(app.launchPath);
+        const card = document.createElement(canLaunch ? "a" : "article");
         card.className = "app-card";
         card.style.setProperty("--card-accent", accents[index % accents.length]);
 
-        if (app.url) {
-          card.href = app.url;
-
-          if (!app.url.startsWith("/") && !app.url.startsWith(window.location.origin)) {
-            card.target = "_blank";
-            card.rel = "noopener noreferrer";
-          }
+        if (canLaunch) {
+          card.href = app.launchPath;
         } else {
           card.setAttribute("aria-disabled", "true");
         }
@@ -72,13 +76,20 @@
 
         const status = document.createElement("span");
         status.className = "app-status";
-        status.textContent = app.url ? "Open" : "URL not configured";
+        status.textContent = canLaunch ? "Launch" : "Unavailable";
 
         card.append(kind, title, status);
         return card;
       }
 
       async function loadApps() {
+        const error = new URLSearchParams(window.location.search).get("error");
+
+        if (launchErrors[error]) {
+          launchMessage.textContent = launchErrors[error];
+          launchMessage.hidden = false;
+        }
+
         emptyState.hidden = true;
         requestAccessStatus.textContent = "";
         const response = await fetch("/api/session", { credentials: "same-origin" });

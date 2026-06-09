@@ -4,6 +4,12 @@ This repository powers differancelabs.com.
 
 This AGENTS.md file is authoritative project context. Before making significant changes, read this file and follow it.
 
+Canonical local checkout:
+
+```text
+C:\Users\BDM\Documents\GitHub\differancelabs
+```
+
 ## Codex Operating Rules
 
 ### Deployment
@@ -74,6 +80,17 @@ Administrators may:
 - Deny requests.
 - Grant app access.
 - Remove app access.
+
+### Alpha App Launch Flow
+
+During alpha, subdomain apps should not be linked directly from the launcher.
+
+- `/api/session` may return app metadata needed to render launcher cards, but it must not expose subdomain app URLs.
+- Launcher cards for subdomain apps should use `/api/apps/launch?app=<slug>`.
+- `api/apps/launch.js` must re-check the signed session cookie, the Supabase app grant, app existence, and `active` app status before redirecting.
+- Launch tokens are server-generated, short-lived, and include only `app_slug`, `user_email`, `issued_at`, `expires_at`, and `nonce`.
+- Launch tokens are signed with `DL_APP_LAUNCH_SECRET`. Never print this secret. If it is missing at launch time, respond with the env var name only: `DL_APP_LAUNCH_SECRET`.
+- Deployed app launch targets should use `https://`; loopback `http://` targets are only for local development.
 
 ### Future Architecture
 
@@ -242,6 +259,7 @@ GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET
 GOOGLE_REDIRECT_URI=https://differancelabs.com/api/auth/callback
 SESSION_SECRET
+DL_APP_LAUNCH_SECRET
 ALLOWED_ADMIN_EMAIL
 PUBLIC_SITE_URL=https://differancelabs.com
 SUPABASE_URL

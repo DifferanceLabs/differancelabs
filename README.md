@@ -10,7 +10,8 @@ Minimal public homepage for differancelabs.com with a Google-authenticated priva
 - `api/auth/callback.js` completes Google OAuth, records the verified user in Supabase, and creates the session cookie.
 - `api/apps-page.js` gates `/apps` before serving the launcher shell.
 - `api/_apps.html` is the protected launcher shell served by `/api/apps-page`.
-- `api/session.js` returns the signed-in user and app cards granted to that user.
+- `api/apps/launch.js` verifies a Supabase grant and creates a short-lived signed app launch token.
+- `api/session.js` returns the signed-in user and launch cards granted to that user.
 - `api/request-access.js` creates or refreshes a pending Supabase access request.
 - `api/admin-page.js` gates `/admin` and `/apps/admin` before serving the admin shell.
 - `api/admin/dashboard.js` returns admin-only requests, users, apps, and grants.
@@ -31,6 +32,7 @@ GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET
 GOOGLE_REDIRECT_URI
 SESSION_SECRET
+DL_APP_LAUNCH_SECRET
 ALLOWED_ADMIN_EMAIL
 PUBLIC_SITE_URL
 SUPABASE_URL
@@ -40,7 +42,7 @@ SUPABASE_SERVICE_ROLE_KEY
 
 Do not expose `SUPABASE_SERVICE_ROLE_KEY` to browser code. It is only used by serverless functions.
 
-Optional app URL variables:
+Optional app URL variables used as launch targets when a Supabase app row does not define a URL:
 
 ```text
 APP_URL_ADME
@@ -51,7 +53,14 @@ APP_URL_PROSPERITY_PLATFORM
 APP_URL_CRIEVE_HALL_PLUMBING
 ```
 
-The Admin card resolves to `/admin` unless an app URL is stored in Supabase.
+The Admin card resolves to the protected local `/admin` page.
+Launch targets should use `https://` in deployed environments. Loopback `http://localhost`, `http://127.0.0.1`, and `http://[::1]` targets are accepted for local development.
+
+`DL_APP_LAUNCH_SECRET` signs app launch tokens. Keep it separate from `SESSION_SECRET`, do not print it, and configure the same value only where a consuming app must verify launch tokens. If the launch route is called without this variable configured, the response body is only:
+
+```text
+DL_APP_LAUNCH_SECRET
+```
 
 ## Auth And Access
 
@@ -70,6 +79,20 @@ divvi
 prosperity-platform
 crieve-hall-plumbing
 ```
+
+## Alpha App Launch Flow
+
+During alpha, subdomain apps are launched through Differance Labs instead of direct launcher links.
+
+1. The user signs in with Google at `differancelabs.com`.
+2. `/apps` serves the launcher after the signed session cookie is verified.
+3. `/api/session` returns granted app cards with `launchPath` values such as `/api/apps/launch?app=nomnomgo`; it does not return subdomain app URLs.
+4. `/api/apps/launch` verifies the user session, checks the Supabase app grant, confirms the app exists, and confirms the app status is `active`.
+5. The server creates a signed token with `app_slug`, `user_email`, `issued_at`, `expires_at`, and `nonce`.
+6. The token expires after 3 minutes and is signed with `DL_APP_LAUNCH_SECRET`.
+7. The server redirects to the configured app URL with `dl_launch_token` in the query string.
+
+The launch token never includes secrets and is generated only on the server. Consuming apps such as NomNomGo should verify the signature, app slug, nonce policy, and expiry before allowing alpha access.
 
 ## Database
 
@@ -140,6 +163,7 @@ GOOGLE_CLIENT_ID=your-google-oauth-client-id
 GOOGLE_CLIENT_SECRET=your-google-oauth-client-secret
 GOOGLE_REDIRECT_URI=http://localhost:3000/api/auth/callback
 SESSION_SECRET=generate-a-long-random-secret
+DL_APP_LAUNCH_SECRET=generate-a-different-long-random-secret
 ALLOWED_ADMIN_EMAIL=you@example.com
 PUBLIC_SITE_URL=http://localhost:3000
 SUPABASE_URL=your-supabase-url
