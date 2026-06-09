@@ -140,3 +140,60 @@ Deployment flow:
 Do not manually upload files to Vercel. Do not create a separate local git repository. Do not change Cloudflare DNS unless explicitly asked.
 
 Redeploy by committing and pushing changes that affect auth, app grants, app URLs, or site files.
+
+### Vercel CLI
+
+Use the Vercel CLI for project access and environment variables. On Windows PowerShell, prefer `npx.cmd`.
+
+Authenticate when needed:
+
+```powershell
+npx.cmd vercel login
+npx.cmd vercel whoami
+```
+
+The production project is `differance-labs-projects/differancelabs`.
+
+Link this checkout if needed:
+
+```powershell
+npx.cmd vercel project ls
+npx.cmd vercel link --yes --project differancelabs
+```
+
+List environment variables:
+
+```powershell
+npx.cmd vercel env ls
+```
+
+Add a production environment variable:
+
+```powershell
+npx.cmd vercel env add NAME production
+```
+
+Required production auth variables:
+
+```text
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+GOOGLE_REDIRECT_URI=https://differancelabs.com/api/auth/callback
+SESSION_SECRET
+ALLOWED_ADMIN_EMAIL
+PUBLIC_SITE_URL=https://differancelabs.com
+APP_GRANTS_JSON={}
+```
+
+Generate `SESSION_SECRET`:
+
+```powershell
+node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+```
+
+After changing env vars, trigger a new production deployment through GitHub. If there are no code changes, push an empty commit:
+
+```powershell
+git commit --allow-empty -m "Redeploy production"
+git push origin main
+```

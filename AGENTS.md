@@ -19,6 +19,76 @@ DifferanceLabs/differancelabs
 - Cloudflare manages DNS for differancelabs.com.
 - Vercel hosts the site.
 
+## Vercel CLI Access
+
+Use the Vercel CLI only for authentication, project inspection, environment variables, and deployment-status troubleshooting. Do not use it to bypass the GitHub-to-Vercel production flow unless explicitly asked.
+
+On Windows PowerShell, prefer `npx.cmd` because script execution policy can block `npx.ps1`.
+
+If the CLI is not authenticated:
+
+```powershell
+npx.cmd vercel login
+```
+
+The command prints a Vercel device-auth URL and code. Ask the user to complete that browser authorization, then verify:
+
+```powershell
+npx.cmd vercel whoami
+```
+
+The known Vercel account/team/project are:
+
+- Account observed: `jmzelnik`
+- Team: `differance-labs-projects`
+- Project: `differancelabs`
+
+If the checkout is not linked:
+
+```powershell
+npx.cmd vercel project ls
+npx.cmd vercel link --yes --project differancelabs
+```
+
+The link command may create local `.vercel` metadata. Keep `.vercel/` ignored and do not commit it.
+
+To inspect Vercel environment variables:
+
+```powershell
+npx.cmd vercel env ls
+```
+
+To add a production environment variable:
+
+```powershell
+npx.cmd vercel env add NAME production
+```
+
+Required production auth variables:
+
+```text
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+GOOGLE_REDIRECT_URI=https://differancelabs.com/api/auth/callback
+SESSION_SECRET
+ALLOWED_ADMIN_EMAIL
+PUBLIC_SITE_URL=https://differancelabs.com
+APP_GRANTS_JSON={}
+```
+
+Generate `SESSION_SECRET` locally when needed:
+
+```powershell
+node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+```
+
+After changing Vercel env vars, trigger a fresh production deployment through the normal GitHub flow. If there are no code changes, use an empty commit and push:
+
+```powershell
+git commit --allow-empty -m "Redeploy production"
+git push origin main
+```
+
 ## Current Domains
 
 - differancelabs.com
@@ -75,7 +145,7 @@ Projects should be designed so they can later move to their own domains without 
 
 ## Authentication Vision
 
-The ∆ logo on the homepage may eventually link to a Google login flow.
+The Delta logo on the homepage may eventually link to a Google login flow.
 
 After login, users may see an application launcher showing only the apps they have access to.
 
