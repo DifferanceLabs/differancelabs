@@ -29,14 +29,19 @@
       <section class="apps-grid" id="apps-grid" aria-live="polite"></section>
 
       <section class="empty-state" id="empty-state" hidden>
-        <h2>No apps yet</h2>
-        <p>Access can be granted by updating the site environment variables.</p>
+        <h2>You've opened the door but no one is home, request access by clicking the button</h2>
+        <button class="request-access-button" id="request-access-button" type="button" aria-label="Request access">
+          <img src="/assets/mark.svg" alt="" width="44" height="44" aria-hidden="true">
+        </button>
+        <p class="request-access-status" id="request-access-status" aria-live="polite"></p>
       </section>
     </main>
 
     <script>
       const grid = document.querySelector("#apps-grid");
       const emptyState = document.querySelector("#empty-state");
+      const requestAccessButton = document.querySelector("#request-access-button");
+      const requestAccessStatus = document.querySelector("#request-access-status");
       const userEmail = document.querySelector("#user-email");
       const accents = ["#84a792", "#d9b36c", "#c77c64", "#7aa6d9", "#b69ad8", "#79b8a9", "#e2e0d6"];
 
@@ -100,6 +105,31 @@
       loadApps().catch(() => {
         userEmail.textContent = "Unavailable";
         emptyState.hidden = false;
+      });
+
+      requestAccessButton.addEventListener("click", async () => {
+        requestAccessButton.disabled = true;
+        requestAccessStatus.textContent = "Sending request";
+
+        try {
+          const response = await fetch("/api/request-access", {
+            method: "POST",
+            credentials: "same-origin",
+          });
+
+          if (response.status === 401) {
+            window.location.replace("/login?error=unauthenticated");
+            return;
+          }
+
+          requestAccessStatus.textContent = response.ok
+            ? "Access request sent."
+            : "Access request could not be sent.";
+        } catch {
+          requestAccessStatus.textContent = "Access request could not be sent.";
+        } finally {
+          requestAccessButton.disabled = false;
+        }
       });
     </script>
   </body>

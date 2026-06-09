@@ -70,34 +70,8 @@ function normalizeAppKey(value) {
     .replace(/[^a-z0-9]/g, "");
 }
 
-function splitList(value) {
-  return String(value || "")
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
-
 function getAdminEmail() {
   return normalizeEmail(process.env.ALLOWED_ADMIN_EMAIL || process.env.ADMIN_EMAIL);
-}
-
-function getAllowedEmails() {
-  const emails = new Set(splitList(process.env.ALLOWED_EMAILS).map(normalizeEmail));
-  const adminEmail = getAdminEmail();
-
-  if (adminEmail) {
-    emails.add(adminEmail);
-  }
-
-  for (const email of Object.keys(getRawAppGrants())) {
-    const normalizedEmail = normalizeEmail(email);
-
-    if (normalizedEmail) {
-      emails.add(normalizedEmail);
-    }
-  }
-
-  return emails;
 }
 
 function getRawAppGrants() {
@@ -134,10 +108,6 @@ function getAppGrants() {
 function isAdminEmail(email) {
   const adminEmail = getAdminEmail();
   return Boolean(adminEmail && normalizeEmail(email) === adminEmail);
-}
-
-function isAllowedEmail(email) {
-  return getAllowedEmails().has(normalizeEmail(email));
 }
 
 function getAppsForEmail(email) {
@@ -344,7 +314,6 @@ module.exports = {
   getGoogleRedirectUri,
   getOrigin,
   isAdminEmail,
-  isAllowedEmail,
   isSecureRequest,
   parseCookies,
   redirect,

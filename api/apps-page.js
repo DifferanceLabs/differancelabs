@@ -2,8 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const {
   SESSION_COOKIE,
-  clearCookie,
-  isAllowedEmail,
   parseCookies,
   redirect,
   verifySessionToken,
@@ -28,11 +26,6 @@ module.exports = async function appsPage(req, res) {
 
   if (!payload) {
     redirect(res, "/login?error=unauthenticated");
-    return;
-  }
-
-  if (!isAllowedEmail(payload.email)) {
-    redirect(res, "/login?error=access_denied", [clearCookie(SESSION_COOKIE, req)]);
     return;
   }
 

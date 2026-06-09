@@ -149,9 +149,23 @@ The Delta logo on the homepage may eventually link to a Google login flow.
 
 After login, users may see an application launcher showing only the apps they have access to.
 
+Any verified Google account may enter the launcher. Users without app grants should see no app cards and may request access through the stubbed access-request flow.
+
 This launcher is an access portal for alpha/beta use and administration.
 
 Production applications should eventually support their own independent authentication systems and must not permanently depend on Differance Labs login.
+
+## Authentication Philosophy
+
+Users are allowed to authenticate with Google even if they have no application access.
+
+Authentication and authorization are separate concerns.
+
+Successful login does not imply access to any applications.
+
+Users without grants should be shown an empty-state experience and offered a Request Access workflow.
+
+Application visibility is determined by grants, not by email allowlists.
 
 ## Repository Governance
 

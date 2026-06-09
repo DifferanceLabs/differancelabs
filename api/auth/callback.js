@@ -5,7 +5,6 @@ const {
   clearCookie,
   createSessionToken,
   getGoogleRedirectUri,
-  isAllowedEmail,
   isSecureRequest,
   parseCookies,
   redirect,
@@ -80,7 +79,7 @@ module.exports = async function googleCallback(req, res) {
     const emailVerified =
       profile.email_verified === true || profile.email_verified === "true";
 
-    if (!profile.email || !emailVerified || !isAllowedEmail(profile.email)) {
+    if (!profile.email || !emailVerified) {
       redirect(res, "/login?error=access_denied", [clearStateCookie]);
       return;
     }

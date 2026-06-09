@@ -108,6 +108,7 @@
 .launcher-brand:focus-visible,
 .sign-out-button:focus-visible,
 .app-card:focus-visible,
+.request-access-button:focus-visible,
 .mark-link:focus-visible {
   outline: 2px solid #d9b36c;
   outline-offset: 4px;
@@ -245,14 +246,46 @@ a.app-card:hover {
 }
 
 .empty-state {
+  display: grid;
   width: min(100%, 34rem);
+  justify-items: center;
+  gap: 1.25rem;
   padding: 1.5rem;
   border: 1px solid rgba(242, 239, 231, 0.12);
   border-radius: 8px;
+  text-align: center;
 }
 
 .empty-state p {
-  margin-top: 0.8rem;
+  margin: 0;
+}
+
+.request-access-button {
+  display: inline-grid;
+  width: 4.5rem;
+  height: 4.5rem;
+  place-items: center;
+  border: 1px solid rgba(242, 239, 231, 0.16);
+  border-radius: 999px;
+  background: rgba(8, 8, 7, 0.42);
+  cursor: pointer;
+}
+
+.request-access-button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
+.request-access-button img {
+  width: 2.75rem;
+  height: 2.75rem;
+  filter: drop-shadow(0 1rem 2.25rem var(--glow));
+}
+
+.request-access-status {
+  min-height: 1.5rem;
+  color: rgba(242, 239, 231, 0.5);
+  font-size: 0.92rem;
 }
 
 @media (max-width: 700px) {

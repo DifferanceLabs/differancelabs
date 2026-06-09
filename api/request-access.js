@@ -1,15 +1,13 @@
 const {
   SESSION_COOKIE,
-  getAppsForEmail,
-  isAdminEmail,
   parseCookies,
   sendJson,
   verifySessionToken,
 } = require("./_auth");
 
-module.exports = async function session(req, res) {
-  if (req.method !== "GET") {
-    res.setHeader("Allow", "GET");
+module.exports = async function requestAccess(req, res) {
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
     sendJson(res, 405, { error: "method_not_allowed" });
     return;
   }
@@ -28,13 +26,13 @@ module.exports = async function session(req, res) {
     return;
   }
 
+  console.log("Access request received", {
+    email: payload.email,
+    requestedAt: new Date().toISOString(),
+  });
+
   sendJson(res, 200, {
-    user: {
-      email: payload.email,
-      name: payload.name,
-      picture: payload.picture,
-      isAdmin: isAdminEmail(payload.email),
-    },
-    apps: getAppsForEmail(payload.email),
+    ok: true,
+    message: "Access request noted.",
   });
 };

@@ -11,6 +11,7 @@ Minimal public homepage for differancelabs.com with a Google-authenticated app l
 - `api/auth/google.js` starts Google OAuth.
 - `api/auth/callback.js` completes Google OAuth and creates the session cookie.
 - `api/session.js` returns the signed-in user and app cards allowed for that email.
+- `api/request-access.js` stubs an authenticated access request notification.
 - `api/logout.js` clears the session cookie.
 - `api/_auth.js` contains the shared session and entitlement logic.
 - `styles.css` contains the public homepage styles.
@@ -27,14 +28,13 @@ GOOGLE_CLIENT_SECRET=your-google-oauth-client-secret
 GOOGLE_REDIRECT_URI=https://differancelabs.com/api/auth/callback
 SESSION_SECRET=generate-a-long-random-secret
 ALLOWED_ADMIN_EMAIL=you@example.com
-ALLOWED_EMAILS=
 APP_GRANTS_JSON={}
 PUBLIC_SITE_URL=https://differancelabs.com
 ```
 
-`ALLOWED_ADMIN_EMAIL` is the admin email. That account sees Admin, AdMe, NomNomGo, PIE, Divvi, Prosperity Platform, and Crieve Hall Plumbing.
+Any verified Google account may sign in. Users without app grants see the empty launcher and can request access.
 
-`ALLOWED_EMAILS` is a comma-separated allowlist for users who may sign in but do not automatically receive app cards.
+`ALLOWED_ADMIN_EMAIL` is the admin email. That account sees Admin, AdMe, NomNomGo, PIE, Divvi, Prosperity Platform, and Crieve Hall Plumbing.
 
 `APP_GRANTS_JSON` grants app cards to non-admin users. Keys may use app keys or app names.
 
@@ -106,7 +106,6 @@ GOOGLE_CLIENT_SECRET=your-google-oauth-client-secret
 GOOGLE_REDIRECT_URI=http://localhost:3000/api/auth/callback
 SESSION_SECRET=generate-a-long-random-secret
 ALLOWED_ADMIN_EMAIL=you@example.com
-ALLOWED_EMAILS=
 APP_GRANTS_JSON={}
 PUBLIC_SITE_URL=http://localhost:3000
 ```
