@@ -167,6 +167,23 @@ Users without grants should be shown an empty-state experience and offered a Req
 
 Application visibility is determined by grants, not by email allowlists.
 
+## Google Authentication Guardrail
+
+Do not modify the Google authentication flow.
+
+You may restyle the container around the login button, spacing, typography, borders, shadows, and layout.
+
+Do not change:
+
+- href
+- onclick
+- form action
+- OAuth routes
+- auth handlers
+- Google button component implementation
+
+If styling is desired, wrap the existing button rather than replacing it.
+
 ## Repository Governance
 
 This AGENTS.md file is authoritative project context.
