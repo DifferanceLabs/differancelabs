@@ -112,6 +112,32 @@ Do not expose `SUPABASE_SERVICE_ROLE_KEY` to the browser.
 
 Use `SUPABASE_SERVICE_ROLE_KEY` only in server-side code or serverless functions.
 
+### Database Changes
+
+Do not directly modify production database structures.
+
+When schema changes are required:
+
+1. Create a migration file.
+2. Explain the change.
+3. Wait for approval before applying.
+
+Prefer migrations over ad hoc SQL.
+
+Keep migrations under:
+
+```text
+supabase/migrations
+```
+
+Database schema changes must be captured as migration files.
+
+Do not directly alter production schema without explicit approval.
+
+Prefer additive migrations.
+
+Never print Supabase secrets.
+
 ### Design Direction
 
 Dark.
