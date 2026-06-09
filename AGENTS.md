@@ -100,6 +100,18 @@ Do not use local file writes for durable storage.
 
 Use Supabase for durable application data.
 
+Configured Supabase production environment variable names:
+
+- SUPABASE_URL
+- SUPABASE_ANON_KEY
+- SUPABASE_SERVICE_ROLE_KEY
+
+Do not print their values.
+
+Do not expose `SUPABASE_SERVICE_ROLE_KEY` to the browser.
+
+Use `SUPABASE_SERVICE_ROLE_KEY` only in server-side code or serverless functions.
+
 ### Design Direction
 
 Dark.
