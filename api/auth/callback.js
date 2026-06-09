@@ -85,11 +85,18 @@ module.exports = async function googleCallback(req, res) {
       return;
     }
 
-    await upsertUser({
-      email: profile.email,
-      name: profile.name,
-      picture: profile.picture,
-    });
+    try {
+      await upsertUser({
+        email: profile.email,
+        name: profile.name,
+        picture: profile.picture,
+      });
+    } catch (syncError) {
+      console.warn("User profile sync failed after Google sign-in", {
+        message: syncError.message,
+        statusCode: syncError.statusCode || null,
+      });
+    }
 
     const sessionToken = createSessionToken({
       email: profile.email,
@@ -104,7 +111,11 @@ module.exports = async function googleCallback(req, res) {
         secure: isSecureRequest(req),
       }),
     ]);
-  } catch {
+  } catch (error) {
+    console.warn("Google callback failed", {
+      message: error.message,
+      statusCode: error.statusCode || null,
+    });
     redirect(res, "/login?error=server", [clearStateCookie]);
   }
 };

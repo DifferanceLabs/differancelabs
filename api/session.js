@@ -1,4 +1,5 @@
 const {
+  APP_CATALOG,
   SESSION_COOKIE,
   isAdminEmail,
   parseCookies,
@@ -6,6 +7,22 @@ const {
   verifySessionToken,
 } = require("./_auth");
 const { getAppsForUser } = require("./_supabase");
+
+function getFallbackAppsForEmail(email) {
+  if (!isAdminEmail(email)) {
+    return [];
+  }
+
+  return APP_CATALOG.map((app) => ({
+    key: app.key,
+    slug: app.key,
+    name: app.name,
+    kind: app.kind,
+    url: app.key === "admin" ? "/admin" : process.env[app.urlEnv] || null,
+    description: null,
+    status: "active",
+  }));
+}
 
 module.exports = async function session(req, res) {
   if (req.method !== "GET") {
@@ -28,17 +45,27 @@ module.exports = async function session(req, res) {
     return;
   }
 
+  const user = {
+    email: payload.email,
+    name: payload.name,
+    picture: payload.picture,
+    isAdmin: isAdminEmail(payload.email),
+  };
+
   try {
     sendJson(res, 200, {
-      user: {
-        email: payload.email,
-        name: payload.name,
-        picture: payload.picture,
-        isAdmin: isAdminEmail(payload.email),
-      },
+      user,
       apps: await getAppsForUser(payload.email),
     });
-  } catch {
-    sendJson(res, 500, { error: "apps_unavailable" });
+  } catch (error) {
+    console.warn("App grants lookup failed", {
+      message: error.message,
+      statusCode: error.statusCode || null,
+    });
+    sendJson(res, 200, {
+      user,
+      apps: getFallbackAppsForEmail(payload.email),
+      degraded: true,
+    });
   }
 };
