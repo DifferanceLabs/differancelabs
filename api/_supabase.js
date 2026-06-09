@@ -4,7 +4,11 @@ const APP_ORDER = new Map(APP_CATALOG.map((app, index) => [app.key, index]));
 const APP_DEFAULTS = new Map(APP_CATALOG.map((app) => [app.key, app]));
 
 function getSupabaseUrl() {
-  return requireEnv("SUPABASE_URL").replace(/\/$/, "");
+  const rawUrl = requireEnv("SUPABASE_URL").trim();
+  const url = new URL(rawUrl);
+  url.pathname = url.pathname.replace(/\/rest\/v1\/?$/, "").replace(/\/auth\/v1\/?$/, "");
+
+  return url.toString().replace(/\/$/, "");
 }
 
 function getServiceRoleKey() {
@@ -43,8 +47,11 @@ async function supabaseRequest(table, options = {}) {
     body: options.body ? JSON.stringify(options.body) : undefined,
   });
 
+  const text = await response.text();
+
   if (!response.ok) {
-    const error = new Error(`Supabase request failed for ${table} (${response.status})`);
+    const detail = text ? `: ${text.slice(0, 240)}` : "";
+    const error = new Error(`Supabase request failed for ${table} (${response.status})${detail}`);
     error.statusCode = 500;
     throw error;
   }
@@ -53,7 +60,6 @@ async function supabaseRequest(table, options = {}) {
     return null;
   }
 
-  const text = await response.text();
   return text ? JSON.parse(text) : null;
 }
 

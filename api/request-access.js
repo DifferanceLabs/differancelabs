@@ -34,7 +34,11 @@ module.exports = async function requestAccess(req, res) {
       ok: true,
       message: "Access request sent.",
     });
-  } catch {
+  } catch (error) {
+    console.warn("Access request persistence failed", {
+      message: error.message,
+      statusCode: error.statusCode || null,
+    });
     sendJson(res, 500, { error: "request_unavailable" });
   }
 };
