@@ -119,15 +119,24 @@ npm run dev
 
 Then visit `http://localhost:3000`.
 
-## Deploying to Vercel
+## Deployment
 
-1. Push this folder to a GitHub repository.
-2. In Vercel, create a project and import that repository.
-3. Use the `Other` framework preset.
-4. Leave the build command empty.
-5. Leave the output directory empty or set it to `.`.
-6. Add all required environment variables in Project Settings.
-7. Deploy.
-8. Add `differancelabs.com` in the Vercel project domain settings and follow Vercel's DNS instructions.
+Production is deployed from GitHub to Vercel.
 
-Redeploy after changing environment variables that affect auth, app grants, or app URLs.
+- GitHub repository: `DifferanceLabs/differancelabs`
+- Production branch: `main`
+- Hosting: Vercel
+- DNS: Cloudflare
+- Production domains: `differancelabs.com`, `www.differancelabs.com`, and `differancelabs.vercel.app`
+
+Deployment flow:
+
+1. Make the minimum required changes in this repository.
+2. Commit the changes to `main`.
+3. Push `main` to GitHub.
+4. Vercel automatically deploys production from `main`.
+5. Confirm the production site after Vercel finishes.
+
+Do not manually upload files to Vercel. Do not create a separate local git repository. Do not change Cloudflare DNS unless explicitly asked.
+
+Redeploy by committing and pushing changes that affect auth, app grants, app URLs, or site files.
