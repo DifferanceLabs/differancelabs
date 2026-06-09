@@ -4,12 +4,23 @@
   "functions": {
     "api/apps-page.js": {
       "includeFiles": "api/_apps.html"
+    },
+    "api/admin-page.js": {
+      "includeFiles": "api/_admin.html"
     }
   },
   "rewrites": [
     {
       "source": "/apps",
       "destination": "/api/apps-page"
+    },
+    {
+      "source": "/apps/admin",
+      "destination": "/api/admin-page"
+    },
+    {
+      "source": "/admin",
+      "destination": "/api/admin-page"
     }
   ]
 }

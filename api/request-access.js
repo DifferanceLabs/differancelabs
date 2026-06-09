@@ -4,6 +4,7 @@ const {
   sendJson,
   verifySessionToken,
 } = require("./_auth");
+const { createOrRefreshAccessRequest } = require("./_supabase");
 
 module.exports = async function requestAccess(req, res) {
   if (req.method !== "POST") {
@@ -26,13 +27,14 @@ module.exports = async function requestAccess(req, res) {
     return;
   }
 
-  console.log("Access request received", {
-    email: payload.email,
-    requestedAt: new Date().toISOString(),
-  });
-
-  sendJson(res, 200, {
-    ok: true,
-    message: "Access request noted.",
-  });
+  try {
+    await createOrRefreshAccessRequest(payload);
+    // TODO: notify the admin when the notification channel is selected.
+    sendJson(res, 200, {
+      ok: true,
+      message: "Access request sent.",
+    });
+  } catch {
+    sendJson(res, 500, { error: "request_unavailable" });
+  }
 };

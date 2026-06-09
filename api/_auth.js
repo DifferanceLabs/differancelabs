@@ -50,82 +50,19 @@ const APP_CATALOG = [
   },
 ];
 
-const APP_ALIASES = new Map(
-  APP_CATALOG.flatMap((app) => [
-    [normalizeAppKey(app.key), app.key],
-    [normalizeAppKey(app.name), app.key],
-  ])
-);
-
 function normalizeEmail(email) {
   return String(email || "")
     .trim()
     .toLowerCase();
 }
 
-function normalizeAppKey(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
-}
-
 function getAdminEmail() {
   return normalizeEmail(process.env.ALLOWED_ADMIN_EMAIL || process.env.ADMIN_EMAIL);
-}
-
-function getRawAppGrants() {
-  if (!process.env.APP_GRANTS_JSON) {
-    return {};
-  }
-
-  try {
-    const parsed = JSON.parse(process.env.APP_GRANTS_JSON);
-    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
-  } catch {
-    return {};
-  }
-}
-
-function getAppGrants() {
-  const grants = {};
-
-  for (const [email, appKeys] of Object.entries(getRawAppGrants())) {
-    const normalizedEmail = normalizeEmail(email);
-
-    if (!normalizedEmail || !Array.isArray(appKeys)) {
-      continue;
-    }
-
-    grants[normalizedEmail] = appKeys
-      .map((appKey) => APP_ALIASES.get(normalizeAppKey(appKey)))
-      .filter(Boolean);
-  }
-
-  return grants;
 }
 
 function isAdminEmail(email) {
   const adminEmail = getAdminEmail();
   return Boolean(adminEmail && normalizeEmail(email) === adminEmail);
-}
-
-function getAppsForEmail(email) {
-  const normalizedEmail = normalizeEmail(email);
-  const appKeys = isAdminEmail(normalizedEmail)
-    ? APP_CATALOG.map((app) => app.key)
-    : getAppGrants()[normalizedEmail] || [];
-  const uniqueAppKeys = [...new Set(appKeys)];
-
-  return uniqueAppKeys
-    .map((appKey) => APP_CATALOG.find((app) => app.key === appKey))
-    .filter(Boolean)
-    .map((app) => ({
-      key: app.key,
-      name: app.name,
-      kind: app.kind,
-      url: process.env[app.urlEnv] || null,
-    }));
 }
 
 function requireEnv(name) {
@@ -310,7 +247,6 @@ module.exports = {
   clearCookie,
   createSessionToken,
   createStateValue,
-  getAppsForEmail,
   getGoogleRedirectUri,
   getOrigin,
   isAdminEmail,

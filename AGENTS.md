@@ -218,8 +218,12 @@ GOOGLE_REDIRECT_URI=https://differancelabs.com/api/auth/callback
 SESSION_SECRET
 ALLOWED_ADMIN_EMAIL
 PUBLIC_SITE_URL=https://differancelabs.com
-APP_GRANTS_JSON={}
+SUPABASE_URL
+SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
 ```
+
+App grants, known users, and access requests are stored in Supabase. Do not use environment variables as the durable grants store.
 
 Generate `SESSION_SECRET` locally when needed:
 

@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#080807">
+    <title>Admin | Differance Labs</title>
+    <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/portal.css">
+  </head>
+  <body class="portal-body">
+    <header class="launcher-header">
+      <a class="launcher-brand" href="/apps" aria-label="Differance Labs launcher">
+        <img src="/assets/mark.svg" alt="" width="36" height="36" aria-hidden="true">
+        <span>Differance Labs</span>
+      </a>
+      <a class="sign-out-button" href="/api/logout">Sign out</a>
+    </header>
+
+    <main class="admin-shell">
+      <section class="admin-title">
+        <p class="portal-kicker">Control</p>
+        <h1>Access</h1>
+        <p class="admin-status" id="admin-status" aria-live="polite"></p>
+      </section>
+
+      <section class="admin-grid" aria-live="polite">
+        <article class="admin-panel">
+          <div class="admin-panel-heading">
+            <h2>Access Requests</h2>
+            <button class="admin-secondary-button" id="refresh-button" type="button">Refresh</button>
+          </div>
+          <div class="admin-list" id="request-list"></div>
+        </article>
+
+        <article class="admin-panel">
+          <div class="admin-panel-heading">
+            <h2>Grant Access</h2>
+          </div>
+          <form class="grant-form" id="grant-form">
+            <label>
+              <span>User</span>
+              <select id="grant-user"></select>
+            </label>
+            <label>
+              <span>Email</span>
+              <input id="grant-email" name="email" type="email" autocomplete="email" required>
+            </label>
+            <div>
+              <span class="admin-field-label">Available Apps</span>
+              <div class="grant-apps" id="grant-apps"></div>
+            </div>
+            <button class="admin-primary-button" type="submit">Grant Selected</button>
+          </form>
+        </article>
+
+        <article class="admin-panel">
+          <div class="admin-panel-heading">
+            <h2>Known Users</h2>
+          </div>
+          <div class="admin-list" id="user-list"></div>
+        </article>
+
+        <article class="admin-panel">
+          <div class="admin-panel-heading">
+            <h2>Current Grants</h2>
+          </div>
+          <div class="admin-list" id="grant-list"></div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const statusEl = document.querySelector("#admin-status");
+      const requestList = document.querySelector("#request-list");
+      const userList = document.querySelector("#user-list");
+      const grantList = document.querySelector("#grant-list");
+      const grantApps = document.querySelector("#grant-apps");
+      const grantForm = document.querySelector("#grant-form");
+      const grantUser = document.querySelector("#grant-user");
+      const grantEmail = document.querySelector("#grant-email");
+      const refreshButton = document.querySelector("#refresh-button");
+      let dashboard = { requests: [], users: [], apps: [], grants: [] };
+
+      function setStatus(message) {
+        statusEl.textContent = message || "";
+      }
+
+      function formatDate(value) {
+        if (!value) {
+          return "Never";
+        }
+
+        return new Intl.DateTimeFormat(undefined, {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        }).format(new Date(value));
+      }
+
+      function findApp(slug) {
+        return dashboard.apps.find((app) => app.slug === slug || app.key === slug);
+      }
+
+      function emptyRow(text) {
+        const row = document.createElement("p");
+        row.className = "admin-empty-row";
+        row.textContent = text;
+        return row;
+      }
+
+      function detail(label, value) {
+        const item = document.createElement("span");
+        item.className = "admin-detail";
+
+        const labelEl = document.createElement("strong");
+        labelEl.textContent = label;
+
+        const valueEl = document.createElement("span");
+        valueEl.textContent = value || "Unknown";
+
+        item.append(labelEl, valueEl);
+        return item;
+      }
+
+      function createRequestRow(request) {
+        const row = document.createElement("div");
+        row.className = "admin-row";
+
+        const body = document.createElement("div");
+        body.className = "admin-row-body";
+
+        const title = document.createElement("strong");
+        title.textContent = request.user_email;
+
+        const meta = document.createElement("div");
+        meta.className = "admin-row-meta";
+        meta.append(
+          detail("Name", request.name),
+          detail("Requested", formatDate(request.requested_at)),
+          detail("Status", request.status)
+        );
+
+        body.append(title, meta);
+        row.append(body);
+
+        if (request.status === "pending") {
+          const actions = document.createElement("div");
+          actions.className = "admin-row-actions";
+
+          const approve = document.createElement("button");
+          approve.className = "admin-secondary-button";
+          approve.type = "button";
+          approve.textContent = "Approve";
+          approve.addEventListener("click", () => updateRequest(request.id, "approved"));
+
+          const deny = document.createElement("button");
+          deny.className = "admin-danger-button";
+          deny.type = "button";
+          deny.textContent = "Deny";
+          deny.addEventListener("click", () => updateRequest(request.id, "denied"));
+
+          actions.append(approve, deny);
+          row.append(actions);
+        }
+
+        return row;
+      }
+
+      function createUserRow(user) {
+        const row = document.createElement("button");
+        row.className = "admin-row admin-user-row";
+        row.type = "button";
+        row.addEventListener("click", () => {
+          grantUser.value = user.email;
+          grantEmail.value = user.email;
+        });
+
+        const body = document.createElement("div");
+        body.className = "admin-row-body";
+
+        const title = document.createElement("strong");
+        title.textContent = user.email;
+
+        const meta = document.createElement("div");
+        meta.className = "admin-row-meta";
+        meta.append(
+          detail("Name", user.name),
+          detail("Last login", formatDate(user.last_login_at)),
+          detail("Created", formatDate(user.created_at))
+        );
+
+        body.append(title, meta);
+        row.append(body);
+        return row;
+      }
+
+      function createGrantRow(grant) {
+        const row = document.createElement("div");
+        row.className = "admin-row";
+        const app = findApp(grant.app_slug);
+
+        const body = document.createElement("div");
+        body.className = "admin-row-body";
+
+        const title = document.createElement("strong");
+        title.textContent = grant.user_email;
+
+        const meta = document.createElement("div");
+        meta.className = "admin-row-meta";
+        meta.append(
+          detail("App", app ? app.name : grant.app_slug),
+          detail("Role", grant.role),
+          detail("Granted", formatDate(grant.granted_at))
+        );
+
+        body.append(title, meta);
+
+        const actions = document.createElement("div");
+        actions.className = "admin-row-actions";
+
+        const remove = document.createElement("button");
+        remove.className = "admin-danger-button";
+        remove.type = "button";
+        remove.textContent = "Remove";
+        remove.addEventListener("click", () => removeGrant(grant.id));
+
+        actions.append(remove);
+        row.append(body, actions);
+        return row;
+      }
+
+      function renderGrantForm() {
+        grantUser.replaceChildren();
+
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = "Select a known user";
+        grantUser.append(placeholder);
+
+        dashboard.users.forEach((user) => {
+          const option = document.createElement("option");
+          option.value = user.email;
+          option.textContent = user.email;
+          grantUser.append(option);
+        });
+
+        grantApps.replaceChildren(
+          ...dashboard.apps.map((app) => {
+            const label = document.createElement("label");
+            label.className = "grant-app-option";
+
+            const input = document.createElement("input");
+            input.type = "checkbox";
+            input.value = app.slug;
+
+            const name = document.createElement("span");
+            name.textContent = app.name;
+
+            label.append(input, name);
+            return label;
+          })
+        );
+      }
+
+      function render() {
+        requestList.replaceChildren(
+          ...(dashboard.requests.length
+            ? dashboard.requests.map(createRequestRow)
+            : [emptyRow("No access requests.")]
+          )
+        );
+
+        userList.replaceChildren(
+          ...(dashboard.users.length ? dashboard.users.map(createUserRow) : [emptyRow("No known users.")])
+        );
+
+        grantList.replaceChildren(
+          ...(dashboard.grants.length ? dashboard.grants.map(createGrantRow) : [emptyRow("No grants yet.")])
+        );
+
+        renderGrantForm();
+      }
+
+      async function loadDashboard() {
+        setStatus("Loading");
+        const response = await fetch("/api/admin/dashboard", { credentials: "same-origin" });
+
+        if (response.status === 401) {
+          window.location.replace("/login?error=unauthenticated");
+          return;
+        }
+
+        if (response.status === 403) {
+          window.location.replace("/apps");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Dashboard unavailable");
+        }
+
+        dashboard = await response.json();
+        render();
+        setStatus("");
+      }
+
+      async function updateRequest(requestId, status) {
+        setStatus("Saving");
+        const response = await fetch("/api/admin/requests", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ requestId, status }),
+        });
+
+        if (!response.ok) {
+          setStatus("Request could not be updated.");
+          return;
+        }
+
+        await loadDashboard();
+      }
+
+      async function removeGrant(grantId) {
+        setStatus("Removing");
+        const response = await fetch("/api/admin/grants", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "remove", grantId }),
+        });
+
+        if (!response.ok) {
+          setStatus("Grant could not be removed.");
+          return;
+        }
+
+        await loadDashboard();
+      }
+
+      grantUser.addEventListener("change", () => {
+        grantEmail.value = grantUser.value;
+      });
+
+      grantForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const appSlugs = [...grantApps.querySelectorAll("input:checked")].map((input) => input.value);
+
+        if (!appSlugs.length) {
+          setStatus("Select at least one app.");
+          return;
+        }
+
+        setStatus("Granting");
+        const response = await fetch("/api/admin/grants", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "grant",
+            userEmail: grantEmail.value,
+            appSlugs,
+            role: "member",
+          }),
+        });
+
+        if (!response.ok) {
+          setStatus("Access could not be granted.");
+          return;
+        }
+
+        [...grantApps.querySelectorAll("input:checked")].forEach((input) => {
+          input.checked = false;
+        });
+        await loadDashboard();
+      });
+
+      refreshButton.addEventListener("click", () => {
+        loadDashboard().catch(() => setStatus("Dashboard unavailable."));
+      });
+
+      loadDashboard().catch(() => setStatus("Dashboard unavailable."));
+    </script>
+  </body>
+</html>

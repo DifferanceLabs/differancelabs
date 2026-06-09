@@ -11,6 +11,7 @@ const {
   requireEnv,
   serializeCookie,
 } = require("../_auth");
+const { upsertUser } = require("../_supabase");
 
 module.exports = async function googleCallback(req, res) {
   if (req.method !== "GET") {
@@ -83,6 +84,12 @@ module.exports = async function googleCallback(req, res) {
       redirect(res, "/login?error=access_denied", [clearStateCookie]);
       return;
     }
+
+    await upsertUser({
+      email: profile.email,
+      name: profile.name,
+      picture: profile.picture,
+    });
 
     const sessionToken = createSessionToken({
       email: profile.email,

@@ -101,7 +101,13 @@
 .sign-out-button:focus-visible,
 .app-card:focus-visible,
 .request-access-button:focus-visible,
-.mark-link:focus-visible {
+.mark-link:focus-visible,
+.admin-primary-button:focus-visible,
+.admin-secondary-button:focus-visible,
+.admin-danger-button:focus-visible,
+.admin-user-row:focus-visible,
+.grant-form input:focus-visible,
+.grant-form select:focus-visible {
   outline: 2px solid #d9b36c;
   outline-offset: 4px;
 }
@@ -281,6 +287,214 @@ a.app-card:hover {
   font-size: 0.92rem;
 }
 
+.admin-shell {
+  width: min(100%, 78rem);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.admin-title {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 2rem;
+}
+
+.admin-title h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 0.95;
+}
+
+.admin-status {
+  min-height: 1.4rem;
+  margin: 0;
+  color: rgba(242, 239, 231, 0.56);
+  font-size: 0.92rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.admin-panel {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(242, 239, 231, 0.12);
+  border-radius: 8px;
+  background: rgba(8, 8, 7, 0.66);
+}
+
+.admin-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-panel h2 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.admin-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.admin-row,
+.admin-empty-row {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid rgba(242, 239, 231, 0.1);
+  border-radius: 8px;
+  background: rgba(242, 239, 231, 0.035);
+}
+
+.admin-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  color: inherit;
+  text-align: left;
+}
+
+.admin-user-row {
+  cursor: pointer;
+  font: inherit;
+}
+
+.admin-row-body {
+  display: grid;
+  min-width: 0;
+  gap: 0.5rem;
+}
+
+.admin-row-body > strong {
+  overflow-wrap: anywhere;
+}
+
+.admin-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.admin-detail {
+  display: inline-flex;
+  max-width: 100%;
+  gap: 0.35rem;
+  color: rgba(242, 239, 231, 0.58);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.admin-detail strong {
+  color: rgba(242, 239, 231, 0.76);
+  font-weight: 650;
+}
+
+.admin-row-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: flex-end;
+}
+
+.admin-empty-row {
+  margin: 0;
+  color: rgba(242, 239, 231, 0.52);
+}
+
+.grant-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.grant-form label,
+.admin-field-label {
+  display: grid;
+  gap: 0.45rem;
+  color: rgba(242, 239, 231, 0.58);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.grant-form input:not([type="checkbox"]),
+.grant-form select {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid rgba(242, 239, 231, 0.14);
+  border-radius: 8px;
+  background: rgba(8, 8, 7, 0.74);
+  color: var(--text);
+  font: inherit;
+}
+
+.grant-form input:not([type="checkbox"]),
+.grant-form select {
+  padding: 0.65rem 0.75rem;
+}
+
+.grant-apps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: 0.5rem;
+}
+
+.grant-app-option {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(242, 239, 231, 0.1);
+  border-radius: 8px;
+  background: rgba(242, 239, 231, 0.035);
+  color: var(--text);
+}
+
+.grant-app-option input {
+  width: 1rem;
+  min-height: 1rem;
+  accent-color: #d9b36c;
+}
+
+.admin-primary-button,
+.admin-secondary-button,
+.admin-danger-button {
+  min-height: 2.45rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.admin-primary-button {
+  border: 1px solid rgba(217, 179, 108, 0.45);
+  background: rgba(217, 179, 108, 0.18);
+  color: var(--text);
+}
+
+.admin-secondary-button {
+  border: 1px solid rgba(242, 239, 231, 0.16);
+  background: transparent;
+  color: var(--text);
+}
+
+.admin-danger-button {
+  border: 1px solid rgba(199, 124, 100, 0.36);
+  background: rgba(199, 124, 100, 0.1);
+  color: #e5ad9a;
+}
+
 @media (max-width: 700px) {
   .portal-shell {
     padding: 1.25rem;
@@ -300,5 +514,25 @@ a.app-card:hover {
 
   .launcher-shell {
     padding: 1rem;
+  }
+
+  .admin-shell {
+    padding: 1rem;
+  }
+
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-panel {
+    padding: 0.85rem;
+  }
+
+  .admin-row {
+    display: grid;
+  }
+
+  .admin-row-actions {
+    justify-content: flex-start;
   }
 }

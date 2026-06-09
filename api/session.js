@@ -1,11 +1,11 @@
 const {
   SESSION_COOKIE,
-  getAppsForEmail,
   isAdminEmail,
   parseCookies,
   sendJson,
   verifySessionToken,
 } = require("./_auth");
+const { getAppsForUser } = require("./_supabase");
 
 module.exports = async function session(req, res) {
   if (req.method !== "GET") {
@@ -28,13 +28,17 @@ module.exports = async function session(req, res) {
     return;
   }
 
-  sendJson(res, 200, {
-    user: {
-      email: payload.email,
-      name: payload.name,
-      picture: payload.picture,
-      isAdmin: isAdminEmail(payload.email),
-    },
-    apps: getAppsForEmail(payload.email),
-  });
+  try {
+    sendJson(res, 200, {
+      user: {
+        email: payload.email,
+        name: payload.name,
+        picture: payload.picture,
+        isAdmin: isAdminEmail(payload.email),
+      },
+      apps: await getAppsForUser(payload.email),
+    });
+  } catch {
+    sendJson(res, 500, { error: "apps_unavailable" });
+  }
 };
