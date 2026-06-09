@@ -1,23 +1,158 @@
 # Differance Labs Agent Instructions
 
-## Project
-
 This repository powers differancelabs.com.
 
-## Hosting
+This AGENTS.md file is authoritative project context. Before making significant changes, read this file and follow it.
 
-Production is deployed on Vercel from the GitHub repository:
-DifferanceLabs/differancelabs
+## Codex Operating Rules
 
-## Deployment Flow
+### Deployment
 
-- Changes should be committed and pushed to the main branch on GitHub.
-- Vercel automatically deploys production from main.
-- Do not manually upload files to Vercel.
-- Do not create a separate local git repository.
-- Do not change Cloudflare DNS unless explicitly asked.
-- Cloudflare manages DNS for differancelabs.com.
-- Vercel hosts the site.
+Production deployment flow is:
+
+GitHub Main Branch
+-> Vercel Production
+-> differancelabs.com
+
+Changes should be committed and pushed to GitHub. Vercel automatically deploys from `main`.
+
+Do not manually upload production files.
+
+Known production repository:
+
+- GitHub: `DifferanceLabs/differancelabs`
+- Vercel team: `differance-labs-projects`
+- Vercel project: `differancelabs`
+
+### Infrastructure Ownership
+
+Codex may:
+
+- Read repository contents.
+- Modify application code.
+- Commit and push code changes.
+- Trigger or verify Vercel deployments.
+- Read non-secret environment variable names.
+- Add documentation.
+
+Codex must not:
+
+- Print secrets.
+- Reveal environment variable values.
+- Reveal OAuth credentials.
+- Reveal API keys.
+- Rotate credentials without explicit instruction.
+- Change Cloudflare DNS without explicit instruction.
+- Change Google OAuth configuration without explicit instruction.
+- Modify domain ownership settings.
+- Delete production data.
+
+### Authentication Philosophy
+
+Authentication and authorization are separate concerns.
+
+Any Google user may authenticate.
+
+Authentication does not imply access.
+
+Application visibility is determined by grants.
+
+Users without grants should see an empty-state experience and be able to request access.
+
+### Access Model
+
+Differance Labs acts as an access portal.
+
+Users may:
+
+- Authenticate.
+- Request access.
+
+Administrators may:
+
+- Approve requests.
+- Deny requests.
+- Grant app access.
+- Remove app access.
+
+### Future Architecture
+
+Public:
+
+- differancelabs.com
+
+Private:
+
+- admin.differancelabs.com
+
+Applications:
+
+- adme.differancelabs.com
+- nomnomgo.differancelabs.com
+- pie.differancelabs.com
+- divvi.differancelabs.com
+
+Applications should be designed so they can later move to independent domains without depending on Differance Labs infrastructure.
+
+### Persistence
+
+Do not use local file writes for durable storage.
+
+Use Supabase for durable application data.
+
+### Design Direction
+
+Dark.
+Minimal.
+Premium.
+Quiet.
+Private lab aesthetic.
+
+Prefer:
+
+- research institute
+- skunkworks
+- workshop
+- incubator
+
+Avoid:
+
+- startup hype
+- marketing language
+- consulting aesthetic
+- AI buzzword design
+
+## Hosting And Domains
+
+Cloudflare manages DNS for differancelabs.com.
+
+Vercel hosts the site.
+
+Do not change Cloudflare DNS unless explicitly asked.
+
+Current domains:
+
+- differancelabs.com
+- www.differancelabs.com
+- differancelabs.vercel.app
+
+## Safe Update Process
+
+Before making changes:
+
+1. Inspect the repository.
+2. Explain the intended change.
+3. Edit the minimum files required.
+4. Commit and push to GitHub.
+5. Confirm Vercel auto-deployed successfully.
+
+Do not create a separate local git repository.
+
+## Site Intent
+
+The public homepage should remain minimal, quiet, and generic.
+
+Do not add navigation, project links, public contact forms, or references to AdMe, NomNomGo, PIE, Divvi, or other projects unless explicitly asked.
 
 ## Vercel CLI Access
 
@@ -37,11 +172,9 @@ The command prints a Vercel device-auth URL and code. Ask the user to complete t
 npx.cmd vercel whoami
 ```
 
-The known Vercel account/team/project are:
+Known observed Vercel account:
 
-- Account observed: `jmzelnik`
-- Team: `differance-labs-projects`
-- Project: `differancelabs`
+- `jmzelnik`
 
 If the checkout is not linked:
 
@@ -52,7 +185,7 @@ npx.cmd vercel link --yes --project differancelabs
 
 The link command may create local `.vercel` metadata. Keep `.vercel/` ignored and do not commit it.
 
-To inspect Vercel environment variables:
+To inspect Vercel environment variable names:
 
 ```powershell
 npx.cmd vercel env ls
@@ -64,7 +197,7 @@ To add a production environment variable:
 npx.cmd vercel env add NAME production
 ```
 
-Required production auth variables:
+Required production auth variable names:
 
 ```text
 GOOGLE_CLIENT_ID
@@ -82,90 +215,14 @@ Generate `SESSION_SECRET` locally when needed:
 node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
 ```
 
+Do not print generated secrets in the final response.
+
 After changing Vercel env vars, trigger a fresh production deployment through the normal GitHub flow. If there are no code changes, use an empty commit and push:
 
 ```powershell
 git commit --allow-empty -m "Redeploy production"
 git push origin main
 ```
-
-## Current Domains
-
-- differancelabs.com
-- www.differancelabs.com
-- differancelabs.vercel.app
-
-## Site Intent
-
-The public homepage should remain minimal, quiet, and generic.
-Do not add navigation, project links, public contact forms, or references to AdMe, NomNomGo, PIE, Divvi, or other projects unless explicitly asked.
-
-## Safe Update Process
-
-Before making changes:
-
-1. Inspect the repository.
-2. Explain the intended change.
-3. Edit the minimum files required.
-4. Commit and push to GitHub.
-5. Confirm Vercel auto-deployed successfully.
-
-## Design Direction
-
-Dark, understated, premium, private-lab feel.
-
-Think:
-
-- research institute
-- skunkworks
-- private workshop
-- incubator
-
-Avoid:
-
-- marketing site
-- consulting company
-- startup hype
-- AI buzzword aesthetic
-
-## Future Architecture
-
-Differance Labs is an incubator and launcher for independent projects.
-
-The long-term structure is:
-
-- differancelabs.com (public homepage)
-- admin.differancelabs.com (private control plane)
-- adme.differancelabs.com
-- nomnomgo.differancelabs.com
-- pie.differancelabs.com
-- divvi.differancelabs.com
-
-Projects should be designed so they can later move to their own domains without depending on Differance Labs infrastructure.
-
-## Authentication Vision
-
-The Delta logo on the homepage may eventually link to a Google login flow.
-
-After login, users may see an application launcher showing only the apps they have access to.
-
-Any verified Google account may enter the launcher. Users without app grants should see no app cards and may request access through the stubbed access-request flow.
-
-This launcher is an access portal for alpha/beta use and administration.
-
-Production applications should eventually support their own independent authentication systems and must not permanently depend on Differance Labs login.
-
-## Authentication Philosophy
-
-Users are allowed to authenticate with Google even if they have no application access.
-
-Authentication and authorization are separate concerns.
-
-Successful login does not imply access to any applications.
-
-Users without grants should be shown an empty-state experience and offered a Request Access workflow.
-
-Application visibility is determined by grants, not by email allowlists.
 
 ## Google Authentication Guardrail
 
@@ -185,8 +242,6 @@ Do not change:
 If styling is desired, wrap the existing button rather than replacing it.
 
 ## Repository Governance
-
-This AGENTS.md file is authoritative project context.
 
 Before making significant changes:
 
