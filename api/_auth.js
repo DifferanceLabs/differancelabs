@@ -189,17 +189,22 @@ function verifySessionToken(token) {
 
 function createAppLaunchToken(app, email) {
   const now = Math.floor(Date.now() / 1000);
-
-  return createSignedToken(
-    {
+  const secret = requireEnv("DL_APP_LAUNCH_SECRET");
+  const encodedHeader = base64UrlEncode(JSON.stringify({ alg: "HS256", typ: "JWT" }));
+  const encodedPayload = base64UrlEncode(
+    JSON.stringify({
       app_slug: app.slug || app.key,
       user_email: normalizeEmail(email),
       issued_at: now,
       expires_at: now + APP_LAUNCH_TTL_SECONDS,
+      iat: now,
+      exp: now + APP_LAUNCH_TTL_SECONDS,
       nonce: crypto.randomBytes(16).toString("base64url"),
-    },
-    requireEnv("DL_APP_LAUNCH_SECRET")
+    })
   );
+  const signedValue = `${encodedHeader}.${encodedPayload}`;
+
+  return `${signedValue}.${signWithSecret(signedValue, secret)}`;
 }
 
 function parseCookies(req) {
