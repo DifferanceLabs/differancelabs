@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#080807">
+    <title>Login | Differance Labs</title>
+    <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/portal.css">
+  </head>
+  <body class="portal-body">
+    <main class="portal-shell login-shell" aria-labelledby="login-title">
+      <a class="portal-mark-link" href="/" aria-label="Differance Labs home">
+        <img
+          class="portal-mark"
+          src="/assets/mark.svg"
+          alt=""
+          width="64"
+          height="64"
+          aria-hidden="true"
+        >
+      </a>
+
+      <section class="login-panel">
+        <p class="portal-kicker">Differance Labs</p>
+        <h1 id="login-title">Login</h1>
+        <a class="google-button" href="/api/auth/google">
+          <span class="google-g" aria-hidden="true">G</span>
+          <span>Continue with Google</span>
+        </a>
+        <p class="login-message" id="login-message" hidden></p>
+      </section>
+    </main>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const message = document.querySelector("#login-message");
+      const messages = {
+        access_denied: "This Google account is not allowed.",
+        google_denied: "Google sign-in was canceled.",
+        invalid_state: "The sign-in request expired. Try again.",
+        token_exchange: "Google sign-in could not be completed.",
+        profile: "Google profile access failed.",
+        server: "Sign-in is temporarily unavailable.",
+        unauthenticated: "Sign in to continue.",
+      };
+      const error = params.get("error");
+
+      if (messages[error]) {
+        message.textContent = messages[error];
+        message.hidden = false;
+      }
+
+      fetch("/api/session", { credentials: "same-origin" })
+        .then((response) => {
+          if (response.ok) {
+            window.location.replace("/apps");
+          }
+        })
+        .catch(() => {});
+    </script>
+  </body>
+</html>

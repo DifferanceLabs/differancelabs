@@ -1,0 +1,15 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "functions": {
+    "api/apps-page.js": {
+      "includeFiles": "apps/index.html"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/apps",
+      "destination": "/api/apps-page"
+    }
+  ]
+}
