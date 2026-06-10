@@ -53,6 +53,8 @@ APP_URL_PROSPERITY_PLATFORM
 APP_URL_CRIEVE_HALL_PLUMBING
 ```
 
+Prosperity Platform has a built-in public fallback target of `https://prosperity.differancelabs.com` so granted launcher cards remain live even if the Supabase app row and optional environment variable do not define a URL.
+
 The Admin card resolves to the protected local `/admin` page.
 Launch targets should use `https://` in deployed environments. Loopback `http://localhost`, `http://127.0.0.1`, and `http://[::1]` targets are accepted for local development.
 

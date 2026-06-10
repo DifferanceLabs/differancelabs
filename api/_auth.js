@@ -41,6 +41,8 @@ const APP_CATALOG = [
     key: "prosperity-platform",
     name: "Prosperity Platform",
     kind: "Platform",
+    url: "https://prosperity.differancelabs.com",
+    statusLabel: "Live",
     urlEnv: "APP_URL_PROSPERITY_PLATFORM",
   },
   {

@@ -20,11 +20,11 @@ function getFallbackAppsForEmail(email) {
     kind: app.kind,
     description: null,
     status: "active",
-    active: app.key === "admin" ? true : Boolean(process.env[app.urlEnv]),
+    active: app.key === "admin" ? true : Boolean(app.url || process.env[app.urlEnv]),
     launchPath:
       app.key === "admin"
         ? "/admin"
-        : process.env[app.urlEnv]
+        : app.url || process.env[app.urlEnv]
           ? `/api/apps/launch?app=${encodeURIComponent(app.key)}`
           : null,
   }));

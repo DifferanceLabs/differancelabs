@@ -76,7 +76,7 @@
 
         const status = document.createElement("span");
         status.className = "app-status";
-        status.textContent = canLaunch ? "Launch" : "Unavailable";
+        status.textContent = canLaunch ? app.statusLabel || "Launch" : "Unavailable";
 
         card.append(kind, title, status);
         return card;

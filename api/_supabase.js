@@ -88,7 +88,10 @@ function sortApps(apps) {
 function toClientApp(row) {
   const slug = row.slug || row.key;
   const defaults = APP_DEFAULTS.get(slug) || {};
-  const fallbackUrl = slug === "admin" ? "/admin" : defaults.urlEnv ? process.env[defaults.urlEnv] || null : null;
+  const fallbackUrl =
+    slug === "admin"
+      ? "/admin"
+      : defaults.url || (defaults.urlEnv ? process.env[defaults.urlEnv] || null : null);
 
   return {
     key: slug,
@@ -98,6 +101,7 @@ function toClientApp(row) {
     url: row.url || fallbackUrl,
     description: row.description || null,
     status: row.status || "active",
+    statusLabel: defaults.statusLabel || null,
   };
 }
 
@@ -117,6 +121,7 @@ function toLauncherApp(app) {
     kind: app.kind,
     description: app.description || null,
     status: app.status,
+    statusLabel: app.statusLabel || null,
     active: isLaunchable,
     launchPath: isLaunchable
       ? slug === "admin"
