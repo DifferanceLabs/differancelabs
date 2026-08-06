@@ -23,6 +23,8 @@ const APP_CATALOG = [
     key: "nomnomgo",
     name: "NomNomGo",
     kind: "App",
+    url: "https://nomnomgo.differancelabs.com",
+    statusLabel: "Alpha",
     urlEnv: "APP_URL_NOMNOMGO",
   },
   {
