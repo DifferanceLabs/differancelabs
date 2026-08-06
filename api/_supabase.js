@@ -214,7 +214,7 @@ async function hasAppGrant(email, slug) {
 
   const rows = await supabaseRequest("app_grants", {
     query: {
-      select: "id",
+      select: "app_slug",
       user_email: `eq.${normalizedEmail}`,
       app_slug: `eq.${normalizedSlug}`,
       limit: "1",

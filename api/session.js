@@ -20,13 +20,8 @@ function getFallbackAppsForEmail(email) {
     kind: app.kind,
     description: null,
     status: "active",
-    active: app.key === "admin" ? true : Boolean(app.url || process.env[app.urlEnv]),
-    launchPath:
-      app.key === "admin"
-        ? "/admin"
-        : app.url || process.env[app.urlEnv]
-          ? `/api/apps/launch?app=${encodeURIComponent(app.key)}`
-          : null,
+    active: app.key === "admin",
+    launchPath: app.key === "admin" ? "/admin" : null,
   }));
 }
 
@@ -75,3 +70,5 @@ module.exports = async function session(req, res) {
     });
   }
 };
+
+module.exports.getFallbackAppsForEmail = getFallbackAppsForEmail;
