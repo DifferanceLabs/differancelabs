@@ -2,6 +2,7 @@
 // locally; Supabase requests use the selected environment's real HTTPS API.
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
+import sharp from "sharp";
 import { loadEnvironment } from "./tool-env.mjs";
 import { app } from "../server/app.ts";
 
@@ -226,10 +227,77 @@ try {
       .status,
     200,
   );
+  // An unlinked fictional adult keeps the synthetic storage-test image away
+  // from the normal demo's pickup permissions. Reuse it on subsequent runs.
+  const storageName = "Fictional storage verification";
+  let storageAdult = data.adults.find(
+    (adult) => adult.data.name === storageName,
+  );
+  if (!storageAdult) {
+    const created = await change(administrator, "adult.save", {
+      data: { name: storageName, phone: "" },
+    });
+    storageAdult = (
+      await request("/api/session", administrator)
+    ).value.adults.find((adult) => adult.id === created.id);
+  }
+  assert.ok(storageAdult);
+  const portrait = await sharp({
+    create: { width: 80, height: 100, channels: 3, background: "#567566" },
+  })
+    .png()
+    .toBuffer();
+  const form = new FormData();
+  form.set("version", String(storageAdult.version));
+  form.set(
+    "photo",
+    new File([new Uint8Array(portrait)], "fictional-reference.png", {
+      type: "image/png",
+    }),
+  );
+  const photoPath = "/api/photos/" + storageAdult.id;
+  const upload = (client) =>
+    app.request(origin + photoPath, {
+      method: "POST",
+      headers: {
+        Origin: origin,
+        Cookie: client.cookie,
+        "X-CSRF-Token": client.csrf,
+      },
+      body: form,
+    });
+  assert.equal(
+    (await upload(first)).status,
+    403,
+    "Staff could change a reference photo",
+  );
+  assert.equal(
+    (await upload(administrator)).status,
+    200,
+    "Cloud photo save failed",
+  );
+  const photo = await request(photoPath, second);
+  assert.equal(photo.response.status, 200);
+  assert.equal(photo.response.headers.get("content-type"), "image/webp");
+  assert.ok(photo.response.headers.get("cache-control").includes("no-store"));
+  assert.equal((await request(photoPath)).response.status, 401);
+  const savedAdult = (
+    await request("/api/session", administrator)
+  ).value.adults.find((adult) => adult.id === storageAdult.id);
+  const publicPhoto = await fetch(
+    process.env.SUPABASE_URL +
+      "/storage/v1/object/public/art-checkin-photos/" +
+      savedAdult.data.photoPath,
+  );
+  assert.equal(
+    publicPhoto.ok,
+    false,
+    "Cloud storage exposed a private photo publicly",
+  );
   await request("/api/auth/logout", second, {});
   assert.equal((await request("/api/session", second)).response.status, 401);
   console.log(
-    "PASS: cloud identity, unsigned access, separate sessions, persistence, idempotent retry, concurrent release/payment, paper payment times, audited history, private PDFs/CSV, and logout.",
+    "PASS: cloud identity, unsigned access, separate sessions, persistence, idempotent retry, concurrent release/payment, paper payment times, audited history, private PDFs/CSV/photos, and logout.",
   );
   console.log(
     "Server handlers ran locally against the configured Supabase API. This does not verify a hosted frontend or physical devices.",

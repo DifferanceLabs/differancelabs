@@ -108,7 +108,7 @@ npm.cmd run verify:preview
 Remove-Item Env:ART_ENV_FILE
 ```
 
-Expected: `PASS` for cloud identity, unsigned access, independent sessions/persistence, idempotent requests, concurrent release/payment edits, paper payment times, audit history, private PDFs/CSV and logout. This refuses live mode, creates a fictional verification class/session, archives that class and retains its audit/history. Server handlers run locally against the real cloud Supabase API; this is not a hosted-frontend or physical-device test. The normal demo class is **After-School Art Studio**, instructor **Morgan Ellis**. No production migration has been applied.
+Expected: `PASS` for cloud identity, unsigned access, independent sessions/persistence, idempotent requests, concurrent release/payment edits, paper payment times, audit history, private PDFs/CSV/photos and logout. This refuses live mode, creates a fictional verification class/session, archives that class and retains its audit/history. It also creates/reuses an unlinked adult named **Fictional storage verification** with a synthetic color sample, testing private Storage without changing the normal roster's pickup photos. Server handlers run locally against the real cloud Supabase API; this is not a hosted-frontend or physical-device test. The normal demo class is **After-School Art Studio**, instructor **Morgan Ellis**. No production migration has been applied.
 
 ## 5. Trigger and verify the Git preview
 
