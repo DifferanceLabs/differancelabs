@@ -82,6 +82,8 @@ Use one stable branch alias as ART_APP_ORIGIN and open that alias while testing.
 
 **In Supabase:** sign in to the owner's existing account at [the dashboard](https://supabase.com/dashboard). Its available dashboard was signed out; the existing cloud project's plan, activity and credentials could not be inspected. Complete your login/MFA personally. Codex can then inspect permitted projects and configure the preview.
 
+For browser-assisted setup, complete this sign-in in the **connected Codex browser tab** so the authorized session is available there. Signing into an unrelated phone Safari tab does not transfer its cookies to Windows. Alternatively, **on the connected Windows computer**, from this app folder run `npx.cmd supabase login --no-browser --agent no --output-format text`. Open its generated login URL on your phone, complete login/MFA, and enter the returned verification code directly into the waiting terminal. Keep codes and tokens out of chat. The explicit text/agent flags avoid this CLI version's noninteractive JSON-mode prompt error. Codex has prepared this flow; regenerate expired links rather than reuse them.
+
 Choose/create an **empty, separate project** called **art-class-checkin-demo** if available at no extra charge. Do not seed the existing portal project. Check organization billing first: an additional project in a Pro organization can add compute charges. The free-project quota may also already be used. Do not authorize a paid project implicitly.
 
 Wait for **Active/Healthy**, then use its **Connect** dialog and **API Keys** page to set the matching private `.env.preview` fields. Apply the prepared fixture/migration using PowerShell in the app folder:
