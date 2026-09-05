@@ -100,6 +100,8 @@ Local migration/API tests have passed. **No production or cloud test migration h
 
 **In GitHub:** the implementation is prepared on `feat/art-class-checkin`. Review its PR and the **Art Class Check-In** workflow. Once the new Vercel Git project and preview database variables exist, have Codex push a task-specific follow-up commit to the branch. A Git-ref deployment from Vercel's **Create Deployment** screen is also a Git-based preview.
 
+The implementation is pushed in [draft PR #1](https://github.com/DifferanceLabs/differancelabs/pull/1), and its [Linux verification passed](https://github.com/DifferanceLabs/differancelabs/actions/runs/33992512958). The existing main project also produced a protected [main-site preview](https://differancelabs-git-feat-art-cla-0fa671-differance-labs-projects.vercel.app). That is a regression-review address for the main site, **not the new art app's preview**.
+
 **In Vercel → art-class-checkin → Deployments:** choose the deployment whose source is **feat/art-class-checkin** and whose commit matches GitHub. Expected build result: **Ready**. Open its branch alias, verify `/api/health` returns `ok: true`, and verify **FICTIONAL DEMO** in the app.
 
 Record the actual alias here after creation: **not available yet — account sign-in is the blocker**. Do not infer an address from the project name. A successful build without a working database/authenticated workflow is insufficient. If a build fails, Codex should inspect its log and fix/redeploy the branch before returning it to you.

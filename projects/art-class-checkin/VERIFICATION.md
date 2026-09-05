@@ -14,7 +14,8 @@ Checked September 5, 2026 on the connected Windows computer. This is a working l
 | Printing | Authenticated US Letter PDFs generated; all **3 roster pages and 4 staff-reference pages** rendered and visually inspected, including the long name, repeated headers, saved Paid status, notes space, contacts and fictional-data labels |
 | Local persistence | Supabase Docker services active; independent browser cookie jars share server records; reload and foreground polling verified |
 | Backup recovery | Encrypted archive restores durable records/events into a separate empty local database, restores no sessions, refuses a second overwrite and leaves the original database unchanged |
-| GitHub CI | Workflow prepared to run root tests, isolated Supabase setup, app tests, build and all 12 built-PWA browser checks on Linux. See the feature branch's Actions/checks for its actual remote result |
+| GitHub CI | **Passed on Linux** for implementation commit `f2b2308`: fresh isolated Supabase setup, 5 root tests, 18 app tests, production build and all 12 built-PWA browser checks. [Verified run](https://github.com/DifferanceLabs/differancelabs/actions/runs/33992512958) |
+| Review | Implementation pushed; [draft PR #1](https://github.com/DifferanceLabs/differancelabs/pull/1) is ready for review. Subsequent documentation-only commits do not change the tested implementation |
 | Cloud app preview | **Not deployed**: no authenticated Vercel CLI/dashboard or Supabase dashboard session; no cloud secrets available |
 | Production | **Not deployed**. No live migrations, main merge, subscription purchase, OAuth change, DNS change, or app domain change |
 
@@ -30,7 +31,9 @@ Browser checks cover check-in → Paid → approved adult → release, two indep
 
 ## Main-site preservation
 
-The public main-site baseline returned homepage/login 200, protected launcher/launch redirects to login, and unauthenticated session 401 with no-store. These read-only checks do not constitute an authenticated production Google sign-in test. The Google handlers, public homepage, login markup, CSS, protected launcher shell and root routing configuration have not been edited.
+The public main-site baseline and post-push checks returned homepage/login 200, protected launcher/launch redirects to login, and unauthenticated session 401 with no-store. These read-only checks do not constitute an authenticated production Google sign-in test. The Google handlers, public homepage, login markup, CSS, protected launcher shell and root routing configuration have not been edited.
+
+Vercel's existing **differancelabs** Git project successfully built this branch. Its actual [main-site preview](https://differancelabs-git-feat-art-cla-0fa671-differance-labs-projects.vercel.app) redirects to Vercel SSO protection. That protection was preserved. This URL is **not the art app**, and access to it was insufficient to verify the new source-exclusion URLs or authenticated launcher behavior. The separate art Vercel project still needs to be created after owner sign-in.
 
 The main project still serves static files and existing Vercel functions. Root `.vercelignore` excludes this app and internal migrations/docs; this app has its own ignore file and `dist` output. Before production review, verify the main project's Git preview returns 404 for `/projects/art-class-checkin/server/app.ts` and `/supabase/migrations/002_art_class_launcher.sql`, and verify its protected routes with an authorized session. [Vercel exclusion documentation](https://vercel.com/docs/deployments/vercel-ignore).
 
