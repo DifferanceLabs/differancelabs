@@ -16,7 +16,8 @@ Checked September 5, 2026 on the connected Windows computer. This is a working l
 | Backup recovery | Encrypted archive restores durable records/events into a separate empty local database, restores no sessions, refuses a second overwrite and leaves the original database unchanged |
 | GitHub CI | **Passed on Linux** for implementation commit `f2b2308`: fresh isolated Supabase setup, 5 root tests, 18 app tests, production build and all 12 built-PWA browser checks. [Verified run](https://github.com/DifferanceLabs/differancelabs/actions/runs/33992512958) |
 | Review | Implementation pushed; [draft PR #1](https://github.com/DifferanceLabs/differancelabs/pull/1) is ready for review. Subsequent documentation-only commits do not change the tested implementation |
-| Cloud app preview | **Not deployed**: no authenticated Vercel CLI/dashboard or Supabase dashboard session; no cloud secrets available |
+| Vercel access / plan | CLI authentication verified as `jmzelnik`; team `differance-labs-projects`, OWNER access, active **Hobby** billing, no Pro trial. Existing project/environment metadata inspected without printing values |
+| Cloud app preview | **Not deployed**: Supabase access remains unavailable and hosting eligibility for paid-class use is unresolved; no preview database/configuration created |
 | Production | **Not deployed**. No live migrations, main merge, subscription purchase, OAuth change, DNS change, or app domain change |
 
 ## Risks exercised
@@ -33,7 +34,7 @@ Browser checks cover check-in → Paid → approved adult → release, two indep
 
 The public main-site baseline and post-push checks returned homepage/login 200, protected launcher/launch redirects to login, and unauthenticated session 401 with no-store. These read-only checks do not constitute an authenticated production Google sign-in test. The Google handlers, public homepage, login markup, CSS, protected launcher shell and root routing configuration have not been edited.
 
-Vercel's existing **differancelabs** Git project successfully built this branch. Its actual [main-site preview](https://differancelabs-git-feat-art-cla-0fa671-differance-labs-projects.vercel.app) redirects to Vercel SSO protection. That protection was preserved. This URL is **not the art app**, and access to it was insufficient to verify the new source-exclusion URLs or authenticated launcher behavior. The separate art Vercel project still needs to be created after owner sign-in.
+Vercel's existing **differancelabs** Git project successfully built this branch. Its actual [main-site preview](https://differancelabs-git-feat-art-cla-0fa671-differance-labs-projects.vercel.app) redirects to Vercel SSO protection. That protection was preserved. This URL is **not the art app**, and access to it was insufficient to verify the new source-exclusion URLs or authenticated launcher behavior. Authenticated deployment inspection now confirms subsequent branch deployments are Ready. The file-tree endpoint returned 404, so it did not establish source exclusions. The separate art Vercel project still needs to be created after the hosting arrangement is resolved.
 
 The main project still serves static files and existing Vercel functions. Root `.vercelignore` excludes this app and internal migrations/docs; this app has its own ignore file and `dist` output. Before production review, verify the main project's Git preview returns 404 for `/projects/art-class-checkin/server/app.ts` and `/supabase/migrations/002_art_class_launcher.sql`, and verify its protected routes with an authorized session. [Vercel exclusion documentation](https://vercel.com/docs/deployments/vercel-ignore).
 
@@ -55,9 +56,11 @@ The main project still serves static files and existing Vercel functions. Root `
 
 ## Outstanding owner/account acceptance
 
-The available Vercel CLI attempted device authentication; its dashboard showed Login. Supabase's dashboard showed Sign In. These need the owner's interactive login/MFA. GitHub access works. After authorized access, Codex can inspect plans/quotas, create the separate Git-connected app project and free eligible preview database, configure private variables, migrate only that test database, deploy the Git preview and verify its real HTTPS address.
+Vercel device authentication is complete; GitHub access also works. Supabase's CLI still reports no access token, and its connected dashboard showed Sign In. Supabase needs the owner's interactive login/MFA. Existing Vercel metadata confirms the portal's Supabase variable names and launch secret exist as Sensitive entries; no values were retrieved or printed. No existing project-scoped Vercel integration was returned that resolves Supabase account access.
 
-No actual recurring bill or existing paid coverage can be confirmed until those accounts are inspected. Published plan limits, commercial restrictions and price sources are in [README.md](README.md). No new subscription charge was incurred by this run.
+The verified Vercel Hobby base subscription is $0, with no existing Pro coverage. Private access does not settle commercial eligibility: the requested paid-class use is being treated as commercial under Vercel's purpose-of-financial-gain definition. Pro would introduce a $20/month base fee plus applicable taxes/usage; no purchase is authorized yet. A different eligible hosting arrangement or Vercel clarification remains possible. Supabase costs/quotas are still unknown. Published sources are in [README.md](README.md). No subscription charge was incurred by this run.
+
+After Supabase access and hosting eligibility are resolved, Codex can inspect database plans/quotas, create the separate Git-connected app project and a no-extra-charge eligible preview database, configure private variables, migrate only that test database, deploy the Git preview and verify its real HTTPS address.
 
 Physical iPhone/iPad Safari, Home Screen installation and cookie behavior, AirPrint/Files sharing, two physical devices, actual mobile network interruption and a supervised handoff rehearsal remain untested. No physical Apple device was represented as tested. Cloud database activity, deployed API permissions, real portal-token exchange, cloud private storage, preview access protection, live backups/restore and production rollback compatibility also require the configured cloud environment.
 

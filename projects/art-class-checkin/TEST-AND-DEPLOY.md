@@ -2,9 +2,9 @@
 
 Prepared September 5, 2026 for an owner working remotely from a phone with Codex on Windows.
 
-**Current addresses:** the runnable local demo is `http://localhost:5173` **on the Windows computer**. An isolated cloud HTTPS app preview has **not** been created because Vercel and Supabase account access requires sign-in. `https://art-checkin.differancelabs.com` is **proposed**, not live. A root-site Vercel preview, if GitHub reports one for this branch, is not the art app.
+**Current addresses:** the runnable local demo is `http://localhost:5173` **on the Windows computer**. An isolated cloud HTTPS app preview has **not** been created. Vercel CLI access now works; Supabase sign-in and hosting eligibility remain unresolved. `https://art-checkin.differancelabs.com` is **proposed**, not live. A root-site Vercel preview, if GitHub reports one for this branch, is not the art app.
 
-Most implementation/testing work below is already completed; it is documented so you can reproduce it. Codex can perform the remaining infrastructure work after account access is restored. You do not need to manually repeat work that is already verified.
+Most implementation/testing work below is already completed; it is documented so you can reproduce it. Codex can perform the remaining infrastructure work after Supabase access and the hosting arrangement are resolved. You do not need to manually repeat work that is already verified.
 
 ## 1. Select the right project and run setup
 
@@ -28,11 +28,13 @@ For a clean fictional reset, stop other demo testing and run `npm.cmd run demo:r
 
 ## 2. Restore hosting access and create the isolated project
 
-**On the connected Windows computer:** from the repository, run `npx.cmd vercel login`. **On your phone/iPad:** open the device authorization URL shown by that command, sign in to the owner's existing Vercel account, and complete authorization. The agent cannot perform your login/MFA. A timed-out device code must be regenerated, not reused. Verify with `npx.cmd vercel whoami`.
+**Already completed:** Vercel CLI authentication was verified as `jmzelnik` on September 5, 2026. Do not repeat login unless it expires. For future reconnection, **on the connected Windows computer**, run `npx.cmd vercel login` from the repository. **On your phone/iPad:** open the generated device authorization URL, sign in to the owner's existing Vercel account, and complete authorization. Enter the CLI's device code, not an authenticator code, when the device authorization page requests it. The agent cannot perform your login/MFA. Regenerate timed-out device codes. Verify with `npx.cmd vercel whoami`.
 
-The repository [AGENTS.md](../../AGENTS.md), section “Vercel CLI Access,” specifically directs this login when unauthenticated. Both CLI and the available Vercel dashboard were signed out in this run. The main project's local `.vercel` metadata was preserved.
+The repository [AGENTS.md](../../AGENTS.md), section “Vercel CLI Access,” directs login when unauthenticated. CLI access now permits authorized project inspection without requiring a separate dashboard login. The main project's local `.vercel` metadata was preserved.
 
-**In Vercel:** choose team **differance-labs-projects**, then **Settings → Billing**. Verify the actual plan, available project/usage allowance and commercial eligibility. Hobby's personal/noncommercial restriction is unsuitable for this business. Create a new project only if the account permits it without a new subscription charge; stop for owner approval if a purchase is required.
+**Verified in Vercel:** team **differance-labs-projects** is on active **Hobby**, with no Pro trial. Hobby permits personal, noncommercial use. Staff-only access does not itself establish eligibility: Vercel defines commercial use by the purpose of financial gain. The requested paid-art-class workflow is being treated as commercial; Vercel support can confirm an uncertain case. A Pro upgrade would add a $20/month base fee plus applicable taxes and possible usage charges. The owner's instruction prohibits an unapproved purchase, so no upgrade or trial has been started. Resolve this through approved suitable hosting, or confirmation that the actual intended use qualifies for Hobby, before deployment. [Plan terms](https://vercel.com/docs/limits/fair-use-guidelines#commercial-usage), [Pro pricing](https://vercel.com/docs/plans/pro-plan).
+
+**In Vercel:** the owner can review the plan under **differance-labs-projects → Settings → Billing**. After hosting is resolved, Codex can create the separate project and verify its allowances; the owner need not manually perform the setup below if connected access is available.
 
 Use **Add New → Project → Import Git Repository → DifferanceLabs/differancelabs**. Name the separate project **art-class-checkin** if available. Use these settings:
 
@@ -65,7 +67,7 @@ The app folder currently exists on the feature branch. If the import screen only
 | SUPABASE_URL | Server configuration | Matching Supabase project's **Connect** dialog / Data API URL |
 | SUPABASE_SERVICE_ROLE_KEY | **Secret, server only** | Matching project **Settings → API Keys**, service-role/secret server key with service-role RPC access. Never an anon/publishable browser key |
 | DL_PORTAL_ORIGIN | Public portal address, server setting | `https://www.differancelabs.com`; app adds `/apps` |
-| DL_APP_LAUNCH_SECRET | **Secret, server only** | Existing main Vercel project's same launch-signing secret; required only for live portal-token integration. **Do not copy production secrets into the public fictional preview** |
+| DL_APP_LAUNCH_SECRET | **Secret, server only** | Same signing secret as the main project, obtained securely from its original protected source; the existing Vercel variable is marked Sensitive. Required only for live portal-token integration. **Do not copy production secrets into the public fictional preview** |
 | ART_MIGRATION_DATABASE_URL | **Secret; tooling only, never Vercel** | Supabase **Connect → Session pooler** PostgreSQL connection, including the database password, for approved migrations/backups |
 | ART_BACKUP_PASSPHRASE | **Secret; backup tooling only** | Owner-generated long passphrase stored separately in a password manager; minimum 20 characters |
 | ART_DATABASE_CA_PATH | Tooling only; certificate path, not a credential | Optional path to the official database CA certificate downloaded from the matching Supabase project's SSL settings; use if that connection requires its CA |
@@ -106,7 +108,7 @@ The implementation is pushed in [draft PR #1](https://github.com/DifferanceLabs/
 
 **In Vercel → art-class-checkin → Deployments:** choose the deployment whose source is **feat/art-class-checkin** and whose commit matches GitHub. Expected build result: **Ready**. Open its branch alias, verify `/api/health` returns `ok: true`, and verify **FICTIONAL DEMO** in the app.
 
-Record the actual alias here after creation: **not available yet — account sign-in is the blocker**. Do not infer an address from the project name. A successful build without a working database/authenticated workflow is insufficient. If a build fails, Codex should inspect its log and fix/redeploy the branch before returning it to you.
+Record the actual alias here after creation: **not available yet — Supabase access and hosting eligibility remain unresolved**. Do not infer an address from the project name. A successful build without a working database/authenticated workflow is insufficient. If a build fails, Codex should inspect its log and fix/redeploy the branch before returning it to you.
 
 ## 6. Understand preview protection
 
@@ -186,7 +188,7 @@ npm.cmd run db:migrate -- --approved-production
 Remove-Item Env:ART_ENV_FILE
 ```
 
-The private file must point to the verified existing portal database and set `ART_APP_MODE=live`. Do not run the demo fixture/seed there. Put the generated identity and matching live server variables in **Vercel → art-class-checkin → Settings → Environment Variables → Production**. Copy the existing launch secret securely from the main project's Production configuration. Main Google OAuth remains unchanged.
+The private file must point to the verified existing portal database and set `ART_APP_MODE=live`. Do not run the demo fixture/seed there. Put the generated identity and matching live server variables in **Vercel → art-class-checkin → Settings → Environment Variables → Production**. Supply the existing launch secret from its original protected source. Vercel metadata confirms the current variable is Sensitive; do not assume it can be revealed from the dashboard or rotate it to recover access. If the original value is unavailable, prepare a separately reviewed integration/credential change before proceeding with live sign-in. Main Google OAuth remains unchanged.
 
 Before activation, prepare the exact target URL and owner/staff emails. After the app deployment and HTTPS are verified, the app catalog needs `APP_URL_ART_CLASS_CHECKIN` in the main project or its art app row URL, and only that row's status changed to active. The intended URL is the verified new subdomain, not an arbitrary redirect. These production configuration/activation changes must be included in the final review. No values were invented or applied in this run.
 
