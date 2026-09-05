@@ -1,0 +1,16 @@
+tests/
+backups/
+scripts/backup.mjs
+scripts/restore.mjs
+scripts/migrate.mjs
+scripts/migration-lib.mjs
+scripts/local-demo.mjs
+scripts/demo-seed.mjs
+scripts/tool-env.mjs
+supabase/
+*.md
+test-results/
+playwright-report/
+tmp/
+output/
+.env*

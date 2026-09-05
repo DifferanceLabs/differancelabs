@@ -1,0 +1,13 @@
+node_modules/
+backups/
+dist/
+.env*
+!.env.example
+.vercel/
+supabase/.temp/
+supabase/.branches/
+test-results/
+playwright-report/
+tmp/
+output/
+*.log

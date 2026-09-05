@@ -208,7 +208,7 @@ async function hasAppGrant(email, slug) {
     return false;
   }
 
-  if (isAdminEmail(normalizedEmail)) {
+  if (isAdminEmail(normalizedEmail) && normalizedSlug !== "art-class-checkin") {
     return true;
   }
 
@@ -232,7 +232,15 @@ async function getAppsForUser(email) {
   }
 
   if (isAdminEmail(normalizedEmail)) {
-    return (await listActiveApps()).map(toLauncherApp);
+    const apps = await listActiveApps();
+    // Student records always require an explicit art-app grant, including the
+    // global portal administrator. Other apps retain their existing behavior.
+    let artGranted = false;
+    if (apps.some((app) => app.slug === "art-class-checkin")) {
+      try { artGranted = await hasAppGrant(normalizedEmail, "art-class-checkin"); }
+      catch { /* Art access fails closed without hiding unrelated apps. */ }
+    }
+    return apps.filter((app) => app.slug !== "art-class-checkin" || artGranted).map(toLauncherApp);
   }
 
   const grants = await supabaseRequest("app_grants", {

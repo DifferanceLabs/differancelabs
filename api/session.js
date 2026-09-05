@@ -13,7 +13,7 @@ function getFallbackAppsForEmail(email) {
     return [];
   }
 
-  return APP_CATALOG.map((app) => ({
+  return APP_CATALOG.filter((app) => app.key !== "art-class-checkin").map((app) => ({
     key: app.key,
     slug: app.key,
     name: app.name,

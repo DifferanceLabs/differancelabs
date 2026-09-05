@@ -309,3 +309,26 @@ Before making significant changes:
 - Follow deployment instructions.
 - Preserve the site's minimalist intent unless explicitly instructed otherwise.
 - Keep architecture decisions documented here as the project evolves.
+
+## Isolated Art Class Check-In
+
+The new PWA is under `projects/art-class-checkin/`, with its own package,
+lockfile, tests, Vercel settings and app-relative `supabase/migrations`.
+Its separate Vercel project must use that folder as Root Directory. Never relink
+the main project's local Vercel configuration to it. Root `.vercelignore`
+excludes isolated app source, migration files and internal documentation from
+the main static deployment.
+
+Art Class Check-In requires an explicit `art-class-checkin` app grant even for
+the portal administrator. App-local staff/admin roles do not grant portal
+administration. Its launch token uses the documented five claims and a fragment
+transport removed immediately by the receiving shell; other apps retain their
+existing transport. Google OAuth handlers are unchanged.
+
+Live records are proposed in the existing Supabase project's private
+`art_checkin` schema and private `art-checkin-photos` bucket, sharing current
+portal access records and project capacity. Preview must use a separate
+fictional-data database and credentials. Existing production migration
+approval requirements above apply to both the root launcher migration and
+the app-relative migrations. No approval, DNS change or production deployment
+is implied by this architecture note.

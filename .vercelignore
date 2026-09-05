@@ -1,0 +1,8 @@
+# The main project serves its repository root as static files. Never publish
+# isolated app source, tooling, database migrations, or internal documentation.
+projects/
+supabase/
+tests/
+.github/
+*.md
+.env*
