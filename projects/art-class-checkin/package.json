@@ -12,6 +12,7 @@
     "check": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "verify:preview": "node --import tsx scripts/verify-preview.mjs",
     "demo:setup": "node scripts/local-demo.mjs",
     "demo:reset": "node scripts/local-demo.mjs --reset",
     "db:migrate": "node scripts/migrate.mjs",

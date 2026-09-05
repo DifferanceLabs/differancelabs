@@ -2,9 +2,9 @@
 
 Prepared September 5, 2026 for an owner working remotely from a phone with Codex on Windows.
 
-**Current addresses:** the runnable local demo is `http://localhost:5173` **on the Windows computer**. An isolated cloud HTTPS app preview has **not** been created. Vercel CLI access now works; Supabase sign-in and hosting eligibility remain unresolved. `https://art-checkin.differancelabs.com` is **proposed**, not live. A root-site Vercel preview, if GitHub reports one for this branch, is not the art app.
+**Current addresses:** the runnable local demo is `http://localhost:5173` **on the Windows computer**. The separate cloud demo database is active, but an HTTPS app frontend preview has **not** been created. Vercel and Supabase CLI access work; hosting eligibility remains unresolved. `https://art-checkin.differancelabs.com` is **proposed**, not live. A root-site Vercel preview is not the art app.
 
-Most implementation/testing work below is already completed; it is documented so you can reproduce it. Codex can perform the remaining infrastructure work after Supabase access and the hosting arrangement are resolved. You do not need to manually repeat work that is already verified.
+Most implementation/testing work below is already completed; it is documented so you can reproduce it. Codex can perform the remaining deployment work once the hosting arrangement is resolved. You do not need to repeat completed account login, database creation or test migrations.
 
 ## 1. Select the right project and run setup
 
@@ -82,13 +82,13 @@ Use one stable branch alias as ART_APP_ORIGIN and open that alias while testing.
 
 ## 4. Prepare the cloud test database
 
-**In Supabase:** sign in to the owner's existing account at [the dashboard](https://supabase.com/dashboard). Its available dashboard was signed out; the existing cloud project's plan, activity and credentials could not be inspected. Complete your login/MFA personally. Codex can then inspect permitted projects and configure the preview.
+**Already completed:** Supabase CLI sign-in works. Organization **Differance Labs** is on Free. The existing project `differancelabs` (`prlisuyxqxgohznhcefh`) is Active/Healthy; read-only inspection confirmed the expected portal access tables and no existing art schema. A separate [art-class-checkin-demo project](https://supabase.com/dashboard/project/lvfyzarxputeafslrjwe) is now Active/Healthy in US East (Northern Virginia). It uses the second free project slot and has no paid add-ons. Its API key, connection and database identity are saved in the app's ignored `.env.preview`. The main database has not been migrated.
 
-For browser-assisted setup, complete this sign-in in the **connected Codex browser tab** so the authorized session is available there. Signing into an unrelated phone Safari tab does not transfer its cookies to Windows. Alternatively, **on the connected Windows computer**, from this app folder run `npx.cmd supabase login --no-browser --agent no --output-format text`. Open its generated login URL on your phone, complete login/MFA, and enter the returned verification code directly into the waiting terminal. Keep codes and tokens out of chat. The explicit text/agent flags avoid this CLI version's noninteractive JSON-mode prompt error. Codex has prepared this flow; regenerate expired links rather than reuse them.
+For future reconnection only, **on the connected Windows computer**, run `npx.cmd supabase login --no-browser --agent no --output-format text` in this app folder. **On your phone/iPad:** copy the generated URL into the mobile browser where you are signed into Supabase, authorize the Windows login, and enter its one-time verification code into that waiting login. A mobile browser sign-in alone does not authorize Windows. Codex can keep the login running between messages when remote terminal input is unavailable. Use only the latest link/code pair. Keep passwords, API keys and persistent access tokens out of chat. Verify with `npx.cmd supabase projects list --output json`; do not print API key values.
 
-Choose/create an **empty, separate project** called **art-class-checkin-demo** if available at no extra charge. Do not seed the existing portal project. Check organization billing first: an additional project in a Pro organization can add compute charges. The free-project quota may also already be used. Do not authorize a paid project implicitly.
+For a future replacement test environment, use an empty, separate project. Both free slots are now occupied, so inspect billing and available capacity before creating another project. An additional project in a Pro organization can add compute charges. Do not seed the existing portal project or implicitly authorize a paid project.
 
-Wait for **Active/Healthy**, then use its **Connect** dialog and **API Keys** page to set the matching private `.env.preview` fields. Apply the prepared fixture/migration using PowerShell in the app folder:
+The current preview already has the prepared fixture/migration and fictional seed. To reproduce an approved test setup later, wait for **Active/Healthy**, securely configure the matching environment, then use PowerShell in the app folder:
 
 ```powershell
 $env:ART_ENV_FILE = ".env.preview"
@@ -98,7 +98,17 @@ Remove-Item Env:ART_ENV_FILE
 
 The private file must specify `ART_APP_MODE=demo`. The script refuses a new demo if the public schema contains existing user tables. It applies `supabase/fixtures/demo_access.sql`, `supabase/migrations/001_art_checkin.sql`, and fictional seeds, records migration checksums, and writes the database identity back into the same private file. Copy the identity securely into this app's matching Preview variables. A health request must report `ok: true` before testing.
 
-Local migration/API tests have passed. **No production or cloud test migration has been applied by this run.** A SQL Editor alternative can run the same files in the separate test project, but the script is preferable because it validates identity and migration history.
+**Completed on the cloud test project only:** `supabase/fixtures/demo_access.sql`, `supabase/migrations/001_art_checkin.sql`, fictional seeds and migration identity/ledger. Certificate-verified TLS uses the session pooler on port 5432. The private configuration points to `tmp/supabase-production-ca.pem`, containing the production roots from the [official CLI 2021 certificate](https://github.com/supabase/cli/blob/v2.116.0/apps/cli-go/internal/gen/types/templates/prod-ca-2021.crt) and [2025 certificate](https://github.com/supabase/cli/blob/v2.116.0/apps/cli-go/internal/gen/types/templates/prod-ca-2025.crt). No system-wide trust settings were changed. Obtain current certificates from Supabase's database settings if rebuilding this private tooling setup.
+
+To rerun the focused cloud demo verification, **on the connected Windows computer**, from `projects/art-class-checkin`:
+
+```powershell
+$env:ART_ENV_FILE = ".env.preview"
+npm.cmd run verify:preview
+Remove-Item Env:ART_ENV_FILE
+```
+
+Expected: `PASS` for cloud identity, unsigned access, independent sessions/persistence, idempotent requests, concurrent release/payment edits, paper payment times, audit history, private PDFs/CSV and logout. This refuses live mode, creates a fictional verification class/session, archives that class and retains its audit/history. Server handlers run locally against the real cloud Supabase API; this is not a hosted-frontend or physical-device test. The normal demo class is **After-School Art Studio**, instructor **Morgan Ellis**. No production migration has been applied.
 
 ## 5. Trigger and verify the Git preview
 
@@ -108,7 +118,7 @@ The implementation is pushed in [draft PR #1](https://github.com/DifferanceLabs/
 
 **In Vercel → art-class-checkin → Deployments:** choose the deployment whose source is **feat/art-class-checkin** and whose commit matches GitHub. Expected build result: **Ready**. Open its branch alias, verify `/api/health` returns `ok: true`, and verify **FICTIONAL DEMO** in the app.
 
-Record the actual alias here after creation: **not available yet — Supabase access and hosting eligibility remain unresolved**. Do not infer an address from the project name. A successful build without a working database/authenticated workflow is insufficient. If a build fails, Codex should inspect its log and fix/redeploy the branch before returning it to you.
+Record the actual alias here after creation: **not available yet — hosting eligibility remains unresolved**. The matching cloud demo database and private configuration are prepared. Replace ART_APP_ORIGIN's local verification address with the actual verified HTTPS branch alias when deploying. Do not infer an address from the project name. A successful build without a working database/authenticated workflow is insufficient. If a build fails, Codex should inspect its log and fix/redeploy the branch before returning it to you.
 
 ## 6. Understand preview protection
 
