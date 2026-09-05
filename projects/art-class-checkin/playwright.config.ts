@@ -5,7 +5,7 @@ export default defineConfig({
   workers: 1,
   timeout: 40000,
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: process.env.ART_BROWSER_URL || "http://localhost:5173",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
@@ -37,10 +37,14 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: process.env.ART_BROWSER_BUILT ? "npm run preview" : "npm run dev",
-    url: "http://localhost:5173/api/health",
-    reuseExistingServer: !process.env.CI,
-    timeout: 60000,
-  },
+  webServer: process.env.ART_BROWSER_URL
+    ? undefined
+    : {
+        command: process.env.ART_BROWSER_BUILT
+          ? "npm run preview"
+          : "npm run dev",
+        url: "http://localhost:5173/api/health",
+        reuseExistingServer: !process.env.CI,
+        timeout: 60000,
+      },
 });

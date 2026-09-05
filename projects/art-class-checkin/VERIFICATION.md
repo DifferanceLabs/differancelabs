@@ -11,6 +11,7 @@ Checked September 5, 2026 on the connected Windows computer. This is a working f
 | Root regression tests | **5 passed**, including existing launcher/grant fallback tests and the new art-specific explicit-grant/token-transport checks |
 | App tests | **18 passed** against real local Supabase/PostgreSQL and the HTTP handlers |
 | Built PWA browser tests | **12 passed**: four workflows in WebKit phone 390×844, WebKit tablet portrait 820×1180, and Chromium tablet landscape 1180×820 |
+| Netlify alternative | Pinned CLI 27.5.0 local production build/function packaging **passed**. The HTTP verification passed through its Windows server, including server database identity, atomic handoffs, current roles, payment conflicts, PDFs/CSV and private photos. All **12 built-PWA browser checks passed again through Netlify**, including direct view reloads, lost responses, offline failure, paper reconciliation and shell-only caching. This is local emulation, not a hosted Netlify deployment |
 | Printing | Authenticated US Letter PDFs generated; all **3 roster pages and 4 staff-reference pages** rendered and visually inspected, including the long name, repeated headers, saved Paid status, notes space, contacts and fictional-data labels |
 | Local persistence | Supabase Docker services active; independent browser cookie jars share server records; reload and foreground polling verified |
 | Backup recovery | Encrypted archive restores durable records/events into a separate empty local database, restores no sessions, refuses a second overwrite and leaves the original database unchanged |
@@ -20,7 +21,7 @@ Checked September 5, 2026 on the connected Windows computer. This is a working f
 | Cloud database | **Active/Healthy**: separate `art-class-checkin-demo` (`lvfyzarxputeafslrjwe`), same Free organization as existing `differancelabs` (`prlisuyxqxgohznhcefh`); second free slot, no paid add-ons. Only the demo received the app fixture/migration/seed |
 | Cloud API verification | **Passed** via `npm run verify:preview`: server handlers executed locally against the cloud HTTPS Data API; independent sessions, persistence, duplicate/concurrent handoffs, payment conflicts, paper payment times, audit history, private PDFs/CSV and logout. Cloud photo upload/retrieval passed; staff uploads and unsigned/public retrieval were rejected |
 | Cloud backup | Encrypted full app archive, including the synthetic private reference photo, created from the cloud demo at `backups/art-checkin-2026-09-05T23-31-04.845Z.artbackup`; passphrase stored separately in the owner's protected local task directory. Platform backup count 0; PITR disabled |
-| Cloud app preview | **Frontend not deployed**: hosting eligibility for paid-class use remains unresolved. Cloud demo database and private environment are prepared |
+| Cloud app preview | **Frontend not deployed**: Vercel Hobby eligibility is unresolved. A Netlify Free adapter and deployment guide are prepared; Netlify account authorization is missing. Cloud demo database and private environment are prepared |
 | Production | **Not deployed**. No live migrations, main merge, subscription purchase, OAuth change, DNS change, or app domain change |
 
 ## Risks exercised
@@ -53,7 +54,7 @@ The main project still serves static files and existing Vercel functions. Root `
 | `.vercelignore` | Excludes app source/server files, migrations and internal docs from the main static deployment |
 | `tests/artClassAccess.test.js` | Verifies the narrow launcher integration and existing-app behavior |
 | `package.json` | Limits root Node test discovery to root tests, keeping this app's separate test runner isolated |
-| `.github/workflows/art-class-checkin.yml` | Adds repeatable GitHub verification for this app and the root integration |
+| `.github/workflows/art-class-checkin.yml` | Adds repeatable GitHub verification for this app, both hosting builds and the root integration |
 | `README.md` | Links app documentation and records the narrowly scoped integration/exclusions |
 | `AGENTS.md` | Records the new isolated architecture while retaining all existing migration, deployment, DNS and OAuth guardrails |
 
@@ -63,9 +64,9 @@ Vercel and Supabase device authentication are complete; GitHub access also works
 
 The verified Vercel Hobby base subscription is $0, with no existing Pro coverage. Private access does not settle commercial eligibility: the requested paid-class use is being treated as commercial under Vercel's purpose-of-financial-gain definition. Pro would introduce a $20/month base fee plus applicable taxes/usage; no purchase is authorized yet. A different eligible hosting arrangement or Vercel clarification remains possible. Supabase is verified Free, with two projects now using its free slots and $0 added subscription cost. Actual entitlements show zero backup retention, no backup schedule and pausing enabled. Published sources are in [README.md](README.md). No subscription charge was incurred by this run.
 
-An alternative account check found Netlify CLI `loggedIn: false` / `NOT_LOGGED_IN`. Netlify permits commercial projects on its Free plan; its current credit plan has a 300-credit monthly hard limit and pauses sites when exhausted. No Netlify account, hosting project or application adapter has been created. It remains an option if the owner prefers that account setup to a Vercel subscription. [Free commercial eligibility](https://www.netlify.com/blog/introducing-netlify-free-plan/), [current pricing and limits](https://www.netlify.com/pricing/).
+An alternative account check found Netlify CLI `loggedIn: false` / `NOT_LOGGED_IN`. Netlify permits commercial projects on its Free plan; its current credit plan has a 300-credit monthly hard limit and pauses sites when exhausted. A Node function adapter, pinned local CLI helper and [exact deployment guide](NETLIFY.md) are now prepared. No Netlify account or hosting project has been created. The account authorization is the remaining prerequisite for attempting this free Git-based preview. [Free commercial eligibility](https://www.netlify.com/blog/introducing-netlify-free-plan/), [current pricing and limits](https://www.netlify.com/pricing/).
 
-After hosting eligibility is resolved, Codex can create the separate Git-connected hosting project, transfer the prepared preview-only server configuration securely, set its exact HTTPS origin, deploy the Git preview and verify the phone-accessible address. Database creation, test migration, cloud API checks and an encrypted cloud app backup are already complete.
+After Netlify account authorization, Codex can inspect actual Free plan capacity, create the separate Git-connected demo project, transfer the prepared preview-only server configuration securely, set its exact HTTPS origin, deploy the Git preview and verify the phone-accessible address. The preferred Vercel path also remains available if its eligibility is resolved. Database creation, test migration, cloud API checks and an encrypted cloud app backup are already complete.
 
 Physical iPhone/iPad Safari, Home Screen installation and cookie behavior, AirPrint/Files sharing, two physical devices, actual mobile network interruption and a supervised handoff rehearsal remain untested. No physical Apple device was represented as tested. Hosting-specific API permissions, real portal-token exchange, cloud photo upload/retrieval through the hosted app, preview access protection, live backup scheduling/restore and production rollback compatibility still require the remaining deployment and acceptance work.
 

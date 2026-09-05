@@ -2,7 +2,7 @@
 
 Prepared September 5, 2026 for an owner working remotely from a phone with Codex on Windows.
 
-**Current addresses:** the runnable local demo is `http://localhost:5173` **on the Windows computer**. The separate cloud demo database is active, but an HTTPS app frontend preview has **not** been created. Vercel and Supabase CLI access work; hosting eligibility remains unresolved. `https://art-checkin.differancelabs.com` is **proposed**, not live. A root-site Vercel preview is not the art app.
+**Current addresses:** the runnable local demo is `http://localhost:5173` **on the Windows computer**. The separate cloud demo database is active, but an HTTPS app frontend preview has **not** been created. Vercel and Supabase CLI access work. A free [Netlify deployment option](NETLIFY.md) is prepared and needs account authorization; Vercel Hobby eligibility remains unresolved. `https://art-checkin.differancelabs.com` is **proposed**, not live. A root-site Vercel preview is not the art app.
 
 Most implementation/testing work below is already completed; it is documented so you can reproduce it. Codex can perform the remaining deployment work once the hosting arrangement is resolved. You do not need to repeat completed account login, database creation or test migrations.
 
@@ -27,6 +27,8 @@ Expected branch: `feat/art-class-checkin` during review. Node 24 and Docker Desk
 For a clean fictional reset, stop other demo testing and run `npm.cmd run demo:reset` in this app folder. It is restricted to the app's loopback Docker database and demo mode. It does not reset any cloud database.
 
 ## 2. Restore hosting access and create the isolated project
+
+**Prepared no-subscription option:** follow [NETLIFY.md](NETLIFY.md), steps 1–4, for Netlify Free account authorization, the separate Git-connected demo project, configuration and deployment. Those steps replace the Vercel-specific parts of steps 2, 3, 5 and 6 below. The database, phone/iPad testing, daily use and production-approval requirements still apply. No Netlify project has been created yet. The Vercel instructions below remain available if its hosting eligibility is resolved.
 
 **Already completed:** Vercel CLI authentication was verified as `jmzelnik` on September 5, 2026. Do not repeat login unless it expires. For future reconnection, **on the connected Windows computer**, run `npx.cmd vercel login` from the repository. **On your phone/iPad:** open the generated device authorization URL, sign in to the owner's existing Vercel account, and complete authorization. Enter the CLI's device code, not an authenticator code, when the device authorization page requests it. The agent cannot perform your login/MFA. Regenerate timed-out device codes. Verify with `npx.cmd vercel whoami`.
 

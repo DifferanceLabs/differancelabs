@@ -13,11 +13,25 @@ if (!process.env.ART_ENV_FILE)
 loadEnvironment();
 if (process.env.ART_APP_MODE !== "demo")
   throw new Error("Preview verification refuses live mode.");
-const origin = process.env.ART_APP_ORIGIN;
+const httpIndex = process.argv.indexOf("--http");
+const httpUrl = httpIndex >= 0 ? new URL(process.argv[httpIndex + 1]) : null;
+if (
+  httpUrl &&
+  httpUrl.protocol !== "https:" &&
+  !(
+    httpUrl.protocol === "http:" &&
+    ["localhost", "127.0.0.1"].includes(httpUrl.hostname)
+  )
+)
+  throw new Error(
+    "HTTP verification requires HTTPS or a loopback test server.",
+  );
+const origin = httpUrl?.origin || process.env.ART_APP_ORIGIN;
+const send = httpUrl ? fetch : app.request.bind(app);
 const clients = [];
 let administrator, testClassId;
 async function request(path, client, body) {
-  const response = await app.request(origin + path, {
+  const response = await send(origin + path, {
     method: body === undefined ? "GET" : "POST",
     headers: {
       Origin: origin,
@@ -62,10 +76,16 @@ async function change(
   return result.value;
 }
 try {
+  const health = await request("/api/health");
   assert.equal(
-    (await request("/api/health")).response.status,
+    health.response.status,
     200,
-    "Configured database identity/health failed",
+    "Configured database health failed",
+  );
+  assert.equal(
+    health.value.ok,
+    true,
+    "Health route did not reach the configured API",
   );
   for (const path of ["/api/session", "/api/history", "/api/export.csv"])
     assert.equal(
@@ -78,6 +98,11 @@ try {
     second = await login("staff");
   const data = (await request("/api/session", administrator)).value;
   assert.equal(data.settings.kind, "demo");
+  assert.equal(
+    data.settings.id,
+    process.env.ART_EXPECTED_DATABASE_ID,
+    "The HTTP server is connected to a different database than the selected test environment",
+  );
   assert.ok(data.students.length >= 2, "Preview needs fictional students");
   const testClass = await change(administrator, "class.save", {
     data: {
@@ -257,7 +282,7 @@ try {
   );
   const photoPath = "/api/photos/" + storageAdult.id;
   const upload = (client) =>
-    app.request(origin + photoPath, {
+    send(origin + photoPath, {
       method: "POST",
       headers: {
         Origin: origin,
@@ -297,10 +322,12 @@ try {
   await request("/api/auth/logout", second, {});
   assert.equal((await request("/api/session", second)).response.status, 401);
   console.log(
-    "PASS: cloud identity, unsigned access, separate sessions, persistence, idempotent retry, concurrent release/payment, paper payment times, audited history, private PDFs/CSV/photos, and logout.",
+    "PASS: database identity, unsigned access, separate sessions, persistence, idempotent retry, concurrent release/payment, paper payment times, audited history, private PDFs/CSV/photos, and logout.",
   );
   console.log(
-    "Server handlers ran locally against the configured Supabase API. This does not verify a hosted frontend or physical devices.",
+    httpUrl
+      ? "Verified the HTTP server and configured Supabase API. This does not verify physical devices."
+      : "Server handlers ran locally against the configured Supabase API. This does not verify a hosted frontend or physical devices.",
   );
 } finally {
   if (administrator && testClassId) {

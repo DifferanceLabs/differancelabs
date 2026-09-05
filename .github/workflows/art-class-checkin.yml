@@ -41,6 +41,8 @@ jobs:
       - run: npm test
       - run: npm run demo:reset
       - run: npm run build
+      - name: Build optional Netlify adapter
+        run: npx --yes netlify-cli@27.5.0 build --offline --context deploy-preview
       - run: npx playwright install --with-deps chromium webkit
       - run: npm run test:e2e
         env:

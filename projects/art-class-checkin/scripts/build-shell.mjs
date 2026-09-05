@@ -12,7 +12,10 @@ const shell = [
   "/icons/icon-512.png",
   ...assets,
 ];
-const version = process.env.VERCEL_GIT_COMMIT_SHA || String(Date.now());
+const version =
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  process.env.COMMIT_REF ||
+  String(Date.now());
 writeFileSync(
   "dist/sw.js",
   [

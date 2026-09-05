@@ -24,7 +24,10 @@ import type {
   AdultData,
 } from "../src/types";
 type Vars = { session: string; token: string };
-export const app = new Hono<{ Variables: Vars }>();
+export const app = new Hono<{
+  Variables: Vars;
+  Bindings: { deploymentVersion?: string };
+}>();
 app.use(
   "/api/*",
   bodyLimit({
@@ -62,7 +65,10 @@ app.get("/api/health", async (c) => {
     await assertEnvironment();
     return c.json({
       ok: true,
-      version: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) || "local",
+      version:
+        process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ||
+        c.env?.deploymentVersion ||
+        "local",
     });
   } catch {
     return c.json({ ok: false }, 503);
@@ -74,7 +80,10 @@ app.get("/api/config", (c) =>
     portal:
       (process.env.DL_PORTAL_ORIGIN || "https://www.differancelabs.com") +
       "/apps",
-    version: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) || "local",
+    version:
+      process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ||
+      c.env?.deploymentVersion ||
+      "local",
   }),
 );
 async function limit(c: any, key: string, count: number) {

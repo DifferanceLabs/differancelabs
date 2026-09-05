@@ -49,7 +49,7 @@ test("phone/tablet handoff, payment, second device, reload and paper print", asy
   await first.getByRole("button", { name: "Check in", exact: true }).click();
   await expect(first.getByText("Present", { exact: true })).toBeVisible();
   const context = await browser.newContext({
-    baseURL: "http://localhost:5173",
+    baseURL: new URL(page.url()).origin,
   });
   const other = await context.newPage();
   await login(other);
