@@ -4,6 +4,12 @@ Minimal public homepage for differancelabs.com with a Google-authenticated priva
 
 ## Structure
 
+The isolated staff PWA lives in [projects/art-class-checkin](projects/art-class-checkin/README.md).
+It has separate dependencies, build, Vercel project settings and private database
+tables; the root remains the static site. See its owner guide for setup and current
+deployment status. Root `.vercelignore` prevents its server/source files and
+migrations from being published by this static project.
+
 - `index.html` is the public homepage.
 - `login/index.html` is the Google login page at `/login`.
 - `api/auth/google.js` starts Google OAuth.
@@ -51,6 +57,7 @@ APP_URL_PIE
 APP_URL_DIVVI
 APP_URL_PROSPERITY_PLATFORM
 APP_URL_CRIEVE_HALL_PLUMBING
+APP_URL_ART_CLASS_CHECKIN
 ```
 
 Prosperity Platform has a built-in public fallback target of `https://prosperity.differancelabs.com` so granted launcher cards remain live even if the Supabase app row and optional environment variable do not define a URL.
@@ -95,6 +102,15 @@ During alpha, subdomain apps are launched through Differance Labs instead of dir
 7. The server redirects to the configured app URL with `dl_launch_token` in the query string.
 
 The launch token never includes secrets and is generated only on the server. Consuming apps such as NomNomGo should verify the signature, app slug, nonce policy, and expiry before allowing alpha access.
+
+Art Class Check-In is an explicit-grant exception to global-admin app access.
+Its card is omitted without that grant, including during degraded lookups.
+For this app only, the redirect carries the five-claim token in a fragment,
+which the receiving shell removes immediately before a server-side exchange.
+Its database records nonce consumption and checks current grants on every
+protected operation. Existing app token formats/transports and Google OAuth
+remain unchanged. The prepared root migration registers it inactive; production
+application and later activation require the documented review/approval.
 
 ## Database
 

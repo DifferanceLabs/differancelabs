@@ -120,7 +120,16 @@ module.exports = async function launchApp(req, res) {
     return;
   }
 
-  destination.searchParams.set("dl_launch_token", createAppLaunchToken(app, payload.email));
+  const token = createAppLaunchToken(app, payload.email);
+  if (appSlug === "art-class-checkin") {
+    // A fragment is never sent to hosting request logs. The receiving shell
+    // removes it synchronously before loading the app and exchanges via POST.
+    destination.searchParams.delete("dl_launch_token");
+    destination.hash = new URLSearchParams({ dl_launch_token: token }).toString();
+    res.setHeader("Referrer-Policy", "no-referrer");
+  } else {
+    destination.searchParams.set("dl_launch_token", token);
+  }
   res.setHeader("Cache-Control", "no-store");
   redirect(res, destination.toString());
 };

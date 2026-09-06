@@ -1,0 +1,52 @@
+{
+  "name": "art-class-checkin",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev:netlify": "node scripts/netlify-dev.mjs",
+    "dev": "concurrently -k \"node --watch --env-file=.env.local --import tsx server/dev.ts\" \"vite --host 127.0.0.1\"",
+    "build": "npm run check && vite build && node scripts/build-shell.mjs && node scripts/build-studio-design.mjs",
+    "check": "tsc --noEmit && tsc --project tsconfig.server.json --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:simulation:browser": "playwright test --config playwright.simulation.config.ts",
+    "verify:preview": "node --import tsx scripts/verify-preview.mjs",
+    "demo:setup": "node scripts/local-demo.mjs",
+    "demo:reset": "node scripts/local-demo.mjs --reset",
+    "db:migrate": "node scripts/migrate.mjs",
+    "backup": "node scripts/backup.mjs",
+    "restore": "node scripts/restore.mjs",
+    "preview": "node --env-file=.env.local --import tsx server/dev.ts --built"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "@supabase/supabase-js": "^2.115.0",
+    "hono": "^4.13.7",
+    "pdfkit": "^0.20.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sharp": "^0.35.4",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.4.1",
+    "@types/pdfkit": "^0.17.6",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "concurrently": "^10.0.5",
+    "pg": "^8.23.0",
+    "prettier": "^3.9.6",
+    "supabase": "^2.116.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2",
+    "vitest": "^5.0.0"
+  }
+}

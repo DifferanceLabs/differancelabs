@@ -8,6 +8,12 @@ const APP_LAUNCH_TTL_SECONDS = 3 * 60;
 
 const APP_CATALOG = [
   {
+    key: "art-class-checkin",
+    name: "Art Class Check-In",
+    kind: "App",
+    urlEnv: "APP_URL_ART_CLASS_CHECKIN",
+  },
+  {
     key: "admin",
     name: "Admin",
     kind: "App",
@@ -201,8 +207,11 @@ function createAppLaunchToken(app, email) {
       user_email: normalizeEmail(email),
       issued_at: now,
       expires_at: now + APP_LAUNCH_TTL_SECONDS,
-      iat: now,
-      exp: now + APP_LAUNCH_TTL_SECONDS,
+      // Preserve legacy consumers; the art app uses the documented five claims.
+      ...((app.slug || app.key) === "art-class-checkin" ? {} : {
+        iat: now,
+        exp: now + APP_LAUNCH_TTL_SECONDS,
+      }),
       nonce: crypto.randomBytes(16).toString("base64url"),
     })
   );

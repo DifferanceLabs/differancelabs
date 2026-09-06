@@ -1,0 +1,597 @@
+#art-school-desk {
+  --sd-bg: #14201e;
+  --sd-panel: #1d2d29;
+  --sd-panel2: #243730;
+  --sd-text: #edf2e9;
+  --sd-muted: #bac8c0;
+  --sd-line: #40534b;
+  --sd-accent: #c9e7ac;
+  --sd-ink: #17241e;
+  --sd-gold: #efd49d;
+  --sd-pad: 22px;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  color: var(--sd-text);
+  color-scheme: dark;
+  font-size: 15px;
+  line-height: 1.5;
+  width: 100%;
+  background: var(--sd-bg);
+  border-radius: 16px;
+  overflow: clip;
+  text-align: left;
+}
+#art-school-desk * {
+  box-sizing: border-box;
+}
+#art-school-desk [hidden] {
+  display: none !important;
+}
+#art-school-desk h1,
+#art-school-desk h2,
+#art-school-desk h3,
+#art-school-desk p {
+  margin: 0;
+}
+#art-school-desk h1 {
+  font-size: clamp(25px, 3vw, 34px);
+  line-height: 1.18;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+#art-school-desk h2 {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+#art-school-desk h3 {
+  font-size: 17px;
+  font-weight: 500;
+}
+#art-school-desk button,
+#art-school-desk input,
+#art-school-desk textarea,
+#art-school-desk select {
+  font: inherit;
+}
+#art-school-desk button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+#art-school-desk button:disabled {
+  opacity: 0.48;
+  cursor: default;
+}
+#art-school-desk button:focus-visible,
+#art-school-desk input:focus-visible,
+#art-school-desk textarea:focus-visible,
+#art-school-desk select:focus-visible {
+  outline: 3px solid var(--sd-gold);
+  outline-offset: 3px;
+}
+#art-school-desk .sd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 16px;
+  border: 1px solid #66786c;
+  border-radius: 10px;
+  color: var(--sd-text);
+  background: var(--sd-panel2);
+  font-weight: 500;
+  white-space: normal;
+  text-align: center;
+  max-width: 100%;
+}
+#art-school-desk .sd-btn:hover {
+  filter: brightness(1.12);
+}
+#art-school-desk .sd-primary {
+  background: var(--sd-accent);
+  color: var(--sd-ink);
+  border-color: var(--sd-accent);
+}
+#art-school-desk .sd-quiet {
+  background: transparent;
+  border-color: var(--sd-line);
+}
+#art-school-desk .sd-wide {
+  width: 100%;
+}
+#art-school-desk .sd-muted {
+  color: var(--sd-muted);
+}
+#art-school-desk .sd-small {
+  font-size: 13px;
+}
+#art-school-desk .sd-eyebrow {
+  color: var(--sd-muted);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+#art-school-desk .sd-gap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+#art-school-desk .sd-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+#art-school-desk .sd-stack {
+  display: grid;
+  gap: 16px;
+}
+#art-school-desk .sd-tight {
+  display: grid;
+  gap: 7px;
+}
+#art-school-desk .sd-head {
+  padding: 18px var(--sd-pad);
+  border-bottom: 1px solid var(--sd-line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+#art-school-desk .sd-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+#art-school-desk .sd-mark {
+  background: var(--sd-accent);
+  color: var(--sd-ink);
+  font-family: Georgia, serif;
+  font-size: 29px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px 12px 4px 12px;
+}
+#art-school-desk .sd-brand-name {
+  font-size: 17px;
+  letter-spacing: -0.025em;
+}
+#art-school-desk .sd-switch {
+  display: flex;
+  gap: 4px;
+  border-radius: 11px;
+  background: #0e1815;
+  padding: 4px;
+}
+#art-school-desk .sd-switch button {
+  min-height: 44px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+#art-school-desk .sd-switch button[aria-pressed="true"] {
+  color: var(--sd-ink);
+  background: var(--sd-accent);
+}
+#art-school-desk .sd-concept {
+  padding: 8px var(--sd-pad);
+  background: #322d21;
+  color: var(--sd-gold);
+  font-size: 12px;
+}
+#art-school-desk .sd-shell {
+  display: grid;
+  grid-template-columns: 166px minmax(0, 1fr);
+}
+#art-school-desk .sd-sidebar {
+  padding: 20px 12px;
+  border-right: 1px solid var(--sd-line);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background: #17241f;
+}
+#art-school-desk .sd-nav {
+  display: grid;
+  gap: 5px;
+}
+#art-school-desk .sd-nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--sd-muted);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  text-align: left;
+}
+#art-school-desk .sd-nav button[aria-current="page"] {
+  background: var(--sd-panel2);
+  color: var(--sd-accent);
+  border-color: var(--sd-line);
+}
+#art-school-desk .sd-nav i,
+#art-school-desk .sd-nav svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+#art-school-desk .sd-nav-extra {
+  border-top: 1px solid var(--sd-line);
+  padding-top: 16px;
+}
+#art-school-desk .sd-user {
+  margin-top: auto;
+  padding: 20px 10px 4px;
+}
+#art-school-desk .sd-main {
+  padding: var(--sd-pad);
+  min-width: 0;
+}
+#art-school-desk .sd-page-title {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 23px;
+}
+#art-school-desk .sd-two {
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  gap: 18px;
+}
+#art-school-desk .sd-panel {
+  background: var(--sd-panel);
+  border: 1px solid var(--sd-line);
+  padding: var(--sd-pad);
+  border-radius: 13px;
+  min-width: 0;
+}
+#art-school-desk .sd-hero {
+  border-color: #6a7b5b;
+  background: #26372c;
+}
+#art-school-desk .sd-pill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  background: #34463a;
+  color: var(--sd-accent);
+  font-weight: 500;
+}
+#art-school-desk .sd-pill-warm {
+  background: #3b3525;
+  color: var(--sd-gold);
+}
+#art-school-desk .sd-rule {
+  border: 0;
+  border-top: 1px solid var(--sd-line);
+  margin: 18px 0;
+}
+#art-school-desk .sd-action-list {
+  display: grid;
+  margin-top: 6px;
+}
+#art-school-desk .sd-action {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  border-bottom: 1px solid var(--sd-line);
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
+  width: 100%;
+  text-align: left;
+}
+#art-school-desk .sd-action:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+#art-school-desk .sd-action .sd-small {
+  display: block;
+}
+#art-school-desk .sd-arrow {
+  color: var(--sd-accent);
+  font-size: 20px;
+}
+#art-school-desk .sd-line-item {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--sd-line);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+#art-school-desk .sd-line-item:last-child {
+  border-bottom: 0;
+}
+#art-school-desk .sd-kpis {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 17px 0;
+}
+#art-school-desk .sd-number {
+  display: block;
+  font-size: 25px;
+  line-height: 1.2;
+  color: var(--sd-text);
+  font-variant-numeric: tabular-nums;
+}
+#art-school-desk .sd-time {
+  min-width: 56px;
+  color: var(--sd-accent);
+  font-variant-numeric: tabular-nums;
+}
+#art-school-desk .sd-form {
+  display: grid;
+  gap: 15px;
+}
+#art-school-desk .sd-field {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--sd-muted);
+}
+#art-school-desk .sd-field input,
+#art-school-desk .sd-field textarea,
+#art-school-desk .sd-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 12px;
+  background: #12211b;
+  color: var(--sd-text);
+  border: 1px solid #68776b;
+  border-radius: 9px;
+  font-size: 16px;
+}
+#art-school-desk .sd-field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+#art-school-desk .sd-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  cursor: pointer;
+}
+#art-school-desk .sd-check input {
+  width: 21px;
+  height: 21px;
+  accent-color: var(--sd-accent);
+  flex-shrink: 0;
+}
+#art-school-desk .sd-avatar {
+  flex-shrink: 0;
+  width: 41px;
+  height: 41px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #30453b;
+  color: var(--sd-accent);
+  font-size: 13px;
+}
+#art-school-desk .sd-money {
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+#art-school-desk .sd-money-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+}
+#art-school-desk .sd-art {
+  height: 150px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background: #c9c5af;
+}
+#art-school-desk .sd-art::before {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 100px;
+  border-radius: 45% 50% 25% 30%;
+  background: #597b68;
+  left: 20%;
+  top: 33px;
+  transform: rotate(-13deg);
+}
+#art-school-desk .sd-art::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #b9755d;
+  right: 13%;
+  top: 20px;
+}
+#art-school-desk .sd-art-two {
+  background: #dcbd91;
+}
+#art-school-desk .sd-art-two::before {
+  background: #696883;
+  border-radius: 10px;
+  transform: rotate(24deg);
+}
+#art-school-desk .sd-art-two::after {
+  background: #eee0b9;
+  border-radius: 0 50% 50% 50%;
+}
+#art-school-desk .sd-roster {
+  display: grid;
+  gap: 10px;
+}
+#art-school-desk .sd-student {
+  padding: 15px;
+  background: var(--sd-panel);
+  border: 1px solid var(--sd-line);
+  border-radius: 11px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+#art-school-desk .sd-student-name {
+  font-size: 19px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+#art-school-desk .sd-payment-label {
+  color: var(--sd-muted);
+  font-size: 12px;
+  margin-top: 5px;
+}
+#art-school-desk .sd-attendance {
+  font-size: 13px;
+  margin-top: 3px;
+  color: var(--sd-accent);
+}
+#art-school-desk .sd-notice {
+  padding: 13px 15px;
+  background: #333122;
+  border: 1px solid #746641;
+  color: var(--sd-gold);
+  border-radius: 9px;
+}
+#art-school-desk .sd-detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 12px;
+}
+#art-school-desk .sd-footer {
+  border-top: 1px solid var(--sd-line);
+  padding: 11px var(--sd-pad);
+  color: var(--sd-muted);
+  font-size: 12px;
+  min-height: 44px;
+}
+#art-school-desk .sd-timeline {
+  border-left: 1px solid #677e66;
+  padding-left: 17px;
+  display: grid;
+  gap: 18px;
+}
+#art-school-desk .sd-text-link {
+  color: var(--sd-accent);
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 10px 0;
+  min-height: 44px;
+}
+#art-school-desk .sd-parent {
+  max-width: 490px;
+  margin: 0 auto;
+}
+@media (max-width: 850px) {
+  #art-school-desk .sd-two {
+    grid-template-columns: 1fr;
+  }
+  #art-school-desk .sd-shell {
+    grid-template-columns: 144px minmax(0, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  #art-school-desk {
+    border-radius: 10px;
+    --sd-pad: 16px;
+  }
+  #art-school-desk .sd-shell {
+    display: flex;
+    flex-direction: column;
+  }
+  #art-school-desk .sd-sidebar {
+    padding: 8px;
+    gap: 5px;
+    border-right: 0;
+    border-bottom: 1px solid var(--sd-line);
+  }
+  #art-school-desk .sd-nav {
+    display: flex;
+    gap: 3px;
+  }
+  #art-school-desk .sd-nav button {
+    justify-content: center;
+    padding: 7px 2px;
+    gap: 3px;
+    font-size: 12px;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+  #art-school-desk .sd-nav-extra {
+    border-top: 0;
+    padding: 0;
+    justify-content: flex-end;
+  }
+  #art-school-desk .sd-nav-extra button {
+    flex: 0 1 auto;
+    width: auto;
+    min-width: 78px;
+    flex-direction: row;
+  }
+  #art-school-desk .sd-user {
+    display: none;
+  }
+  #art-school-desk .sd-head {
+    padding: 15px;
+  }
+  #art-school-desk .sd-switch {
+    width: 100%;
+  }
+  #art-school-desk .sd-switch button {
+    flex: 1;
+  }
+  #art-school-desk .sd-between {
+    flex-wrap: wrap;
+  }
+  #art-school-desk .sd-student {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #art-school-desk .sd-student .sd-btn {
+    width: 100%;
+  }
+  #art-school-desk .sd-line-item {
+    flex-wrap: wrap;
+  }
+  #art-school-desk .sd-page-title {
+    margin-bottom: 17px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #art-school-desk * {
+    scroll-behavior: auto;
+  }
+}
