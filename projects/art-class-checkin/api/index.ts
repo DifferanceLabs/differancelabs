@@ -4,6 +4,12 @@ import { app } from "../server/app.js";
 // The standalone Node listener is only needed by the local development server.
 export default {
   fetch(request: Request) {
-    return app.fetch(request);
+    // Vercel adds the named :path* rewrite capture to the query string.
+    // Remove only that transport parameter before strict application validation.
+    const url = new URL(request.url);
+    url.searchParams.delete("path");
+    return app.fetch(
+      url.href === request.url ? request : new Request(url, request),
+    );
   },
 };

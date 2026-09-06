@@ -5,6 +5,7 @@ import { randomUUID, createHmac } from "node:crypto";
 import pg from "pg";
 import sharp from "sharp";
 import { app } from "../server/app";
+import vercelHandler from "../api/index";
 import { hash, localCookie } from "../server/auth";
 import type { Bootstrap, Snapshot, RosterRow } from "../src/types";
 Object.assign(process.env, parseEnv(readFileSync(".env.local", "utf8")));
@@ -25,16 +26,20 @@ async function req(
   body?: unknown,
   headers: Record<string, string> = {},
 ) {
-  const response = await app.request(address + path, {
-    method: body === undefined ? "GET" : "POST",
-    headers: {
-      Origin: address,
-      "Content-Type": "application/json",
-      ...(client ? { Cookie: client.cookie, "X-CSRF-Token": client.csrf } : {}),
-      ...headers,
-    },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
+  const response = await vercelHandler.fetch(
+    new Request(address + path, {
+      method: body === undefined ? "GET" : "POST",
+      headers: {
+        Origin: address,
+        "Content-Type": "application/json",
+        ...(client
+          ? { Cookie: client.cookie, "X-CSRF-Token": client.csrf }
+          : {}),
+        ...headers,
+      },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    }),
+  );
   const contentType = response.headers.get("content-type") || "";
   const value = contentType.includes("json")
     ? await response.json()
@@ -114,6 +119,23 @@ afterAll(async () => {
   await db.end();
 });
 describe("Real PostgreSQL + HTTP authorization and handoffs", () => {
+  it("preserves history filters through Vercel rewrite parameters", async () => {
+    const plain = await req("/api/history?session=" + sessionId, staff);
+    const rewritten = await req(
+      "/api/history?path=history&session=" + sessionId,
+      staff,
+    );
+    expect(rewritten.response.status).toBe(200);
+    expect(rewritten.value).toEqual(plain.value);
+    expect(
+      (await req("/api/history?path=history&session=invalid", staff)).response
+        .status,
+    ).toBe(422);
+    expect(
+      (await req("/api/export.csv?path=export.csv&session=" + sessionId, staff))
+        .response.status,
+    ).toBe(200);
+  });
   it("denies direct APIs, forged browser identities, CSRF and staff administration", async () => {
     for (const path of [
       "/api/session",

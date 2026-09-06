@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import sharp from "sharp";
 import { loadEnvironment } from "./tool-env.mjs";
-import { app } from "../server/app.ts";
+import vercelHandler from "../api/index.ts";
 
 if (!process.env.ART_ENV_FILE)
   throw new Error(
@@ -27,7 +27,10 @@ if (
     "HTTP verification requires HTTPS or a loopback test server.",
   );
 const origin = httpUrl?.origin || process.env.ART_APP_ORIGIN;
-const send = httpUrl ? fetch : app.request.bind(app);
+const send = httpUrl
+  ? (input, init) =>
+      fetch(input, { ...init, signal: AbortSignal.timeout(35000) })
+  : (input, init) => vercelHandler.fetch(new Request(input, init));
 const clients = [];
 let administrator, testClassId;
 async function request(path, client, body) {
@@ -225,8 +228,13 @@ try {
   assert.ok(
     Date.parse(paperSaved.payment.recordedAt) > Date.parse(originalTime),
   );
-  const history = (await request("/api/history?session=" + session.id, first))
-    .value;
+  const historyResult = await request(
+    "/api/history?session=" + session.id,
+    first,
+  );
+  assert.equal(historyResult.response.status, 200, "Filtered history failed");
+  const history = historyResult.value;
+  assert.ok(Array.isArray(history), "History must return a record list");
   const studentHistory = history.find((r) => r.id === id);
   assert.equal(
     studentHistory.events.filter((e) => e.kind === "attendance.release").length,
