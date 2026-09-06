@@ -1,5 +1,5 @@
 import PDFDocument from "pdfkit";
-import type { Snapshot, HistoryRow } from "../src/types";
+import type { Snapshot, HistoryRow } from "../src/types.js";
 export function formatTime(value: string | null | undefined, zone: string) {
   return value
     ? new Intl.DateTimeFormat("en-US", {

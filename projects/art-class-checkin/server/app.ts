@@ -12,17 +12,17 @@ import {
   verifyLaunch,
   sessionCookie,
   localCookie,
-} from "./auth";
-import { database, rpc, assertEnvironment, ApiError } from "./db";
-import { changes, changeEnvelope, historyQuery } from "./validation";
-import { backupPdf, historyCsv } from "./reports";
+} from "./auth.js";
+import { database, rpc, assertEnvironment, ApiError } from "./db.js";
+import { changes, changeEnvelope, historyQuery } from "./validation.js";
+import { backupPdf, historyCsv } from "./reports.js";
 import type {
   Bootstrap,
   Snapshot,
   HistoryRow,
   Entity,
   AdultData,
-} from "../src/types";
+} from "../src/types.js";
 type Vars = { session: string; token: string };
 export const app = new Hono<{
   Variables: Vars;

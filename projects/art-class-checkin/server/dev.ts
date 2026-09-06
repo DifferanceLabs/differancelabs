@@ -1,6 +1,6 @@
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { app } from "./app";
+import { app } from "./app.js";
 import { readFileSync } from "node:fs";
 if (process.argv.includes("--built")) {
   const headers = JSON.parse(readFileSync("vercel.json", "utf8")).headers[0]
