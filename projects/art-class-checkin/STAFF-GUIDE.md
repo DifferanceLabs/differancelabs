@@ -2,6 +2,8 @@
 
 Use only the authorized live app for real students. A gold **FICTIONAL DEMO** banner means practice data only.
 
+**Try the proof of concept:** open **https://art-class-checkin-poc.vercel.app** and choose **Enter demo as staff**. Select **After-School Art Studio** and a dated session, or create a new session. Use **Enter demo as app administrator** when practicing setup and corrections. These demonstration roles need no Google or Vercel login; enter fictional information only. On the installed demo icon, choose a demo role again if its session expires. The live sign-in instructions below apply only after a later live deployment.
+
 1. **Before class:** connect to the internet, open the app, sign in through Differance Labs if asked, and select the correct dated class under **Today**. Tap **Print backup** and print both the attendance roster and the separate staff pickup/contact reference. Keep both under staff control.
 2. **Drop-off:** search the child's name. At the physical handoff to staff, tap **Check in**. Wait for server confirmation and **Present**. A child remains Present until an actual release is recorded, even after midnight.
 3. **Paid:** independently confirm payment in Square, Venmo, cash records or another method, then check the clearly labeled **Paid** box. Wait for **Confirmed**. **Details** accepts optional method, amount, actual payment date and note. Unchecked means **Not confirmed**, not a debt. Payment never blocks a handoff. Clearing/correcting a confirmation requires a reason and never issues a refund.

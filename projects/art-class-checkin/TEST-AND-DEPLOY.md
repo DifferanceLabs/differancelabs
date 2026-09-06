@@ -2,9 +2,9 @@
 
 Prepared September 5, 2026 for an owner working remotely from a phone with Codex on Windows.
 
-**Current addresses:** the runnable local demo is `http://localhost:5173` **on the Windows computer**. The separate cloud demo database is active, but an HTTPS app frontend preview has **not** been created. Vercel and Supabase CLI access work. A free [Netlify deployment option](NETLIFY.md) is prepared and needs account authorization; Vercel Hobby eligibility remains unresolved. `https://art-checkin.differancelabs.com` is **proposed**, not live. A root-site Vercel preview is not the art app.
+**Current addresses:** **https://art-class-checkin-poc.vercel.app** is the configured Hobby proof-of-concept address; hosted API checks and all twelve phone/tablet browser checks passed. It uses the active, separate cloud demo database and fictional roles. `https://art-checkin.differancelabs.com` remains proposed, not live. Local Windows testing remains `http://localhost:5173`; a phone cannot use the Windows localhost address.
 
-Most implementation/testing work below is already completed; it is documented so you can reproduce it. Codex can perform the remaining deployment work once the hosting arrangement is resolved. You do not need to repeat completed account login, database creation or test migrations.
+The code, account logins, separate cloud database and test migrations are already completed. The Vercel project and its preview variables are configured. The steps below document the setup for reproduction; do not repeat account login, database creation or migrations for this prepared preview.
 
 ## 1. Select the right project and run setup
 
@@ -26,19 +26,19 @@ Expected branch: `feat/art-class-checkin` during review. Node 24 and Docker Desk
 
 For a clean fictional reset, stop other demo testing and run `npm.cmd run demo:reset` in this app folder. It is restricted to the app's loopback Docker database and demo mode. It does not reset any cloud database.
 
-## 2. Restore hosting access and create the isolated project
+## 2. Inspect the isolated Vercel proof of concept
 
-**Prepared no-subscription option:** follow [NETLIFY.md](NETLIFY.md), steps 1–4, for Netlify Free account authorization, the separate Git-connected demo project, configuration and deployment. Those steps replace the Vercel-specific parts of steps 2, 3, 5 and 6 below. The database, phone/iPad testing, daily use and production-approval requirements still apply. No Netlify project has been created yet. The Vercel instructions below remain available if its hosting eligibility is resolved.
+**Hosting choice:** the owner requested Hobby for a fictional proof of concept. Netlify is deferred; [NETLIFY.md](NETLIFY.md) is optional and no Netlify authorization is needed.
 
 **Already completed:** Vercel CLI authentication was verified as `jmzelnik` on September 5, 2026. Do not repeat login unless it expires. For future reconnection, **on the connected Windows computer**, run `npx.cmd vercel login` from the repository. **On your phone/iPad:** open the generated device authorization URL, sign in to the owner's existing Vercel account, and complete authorization. Enter the CLI's device code, not an authenticator code, when the device authorization page requests it. The agent cannot perform your login/MFA. Regenerate timed-out device codes. Verify with `npx.cmd vercel whoami`.
 
 The repository [AGENTS.md](../../AGENTS.md), section “Vercel CLI Access,” directs login when unauthenticated. CLI access now permits authorized project inspection without requiring a separate dashboard login. The main project's local `.vercel` metadata was preserved.
 
-**Verified in Vercel:** team **differance-labs-projects** is on active **Hobby**, with no Pro trial. Hobby permits personal, noncommercial use. Staff-only access does not itself establish eligibility: Vercel defines commercial use by the purpose of financial gain. The requested paid-art-class workflow is being treated as commercial; Vercel support can confirm an uncertain case. A Pro upgrade would add a $20/month base fee plus applicable taxes and possible usage charges. The owner's instruction prohibits an unapproved purchase, so no upgrade or trial has been started. Resolve this through approved suitable hosting, or confirmation that the actual intended use qualifies for Hobby, before deployment. [Plan terms](https://vercel.com/docs/limits/fair-use-guidelines#commercial-usage), [Pro pricing](https://vercel.com/docs/plans/pro-plan).
+**Verified in Vercel:** team **differance-labs-projects** remains on active **Hobby**, with no Pro trial or purchase. This run is a fictional proof of concept, as clarified by the owner. Review Hobby's personal/noncommercial terms again before using the app for a paid business. Pro would introduce a $20/month base fee plus applicable taxes and possible usage charges; no upgrade is authorized or performed. [Plan terms](https://vercel.com/docs/limits/fair-use-guidelines#commercial-usage), [Pro pricing](https://vercel.com/docs/plans/pro-plan).
 
-**In Vercel:** the owner can review the plan under **differance-labs-projects → Settings → Billing**. After hosting is resolved, Codex can create the separate project and verify its allowances; the owner need not manually perform the setup below if connected access is available.
+**Already completed in Vercel:** separate project **art-class-checkin-poc** (`prj_clc9hoYqMtTnhr6ytl7EQhwQPb4A`) is connected to the existing GitHub repository. The Vercel-provided domain **art-class-checkin-poc.vercel.app** is verified and assigned to **feat/art-class-checkin**. No Differance Labs DNS was changed.
 
-Use **Add New → Project → Import Git Repository → DifferanceLabs/differancelabs**. Name the separate project **art-class-checkin** if available. Use these settings:
+For a future replacement project, use **Add New → Project → Import Git Repository → DifferanceLabs/differancelabs**. Use the settings below. The existing proof-of-concept project already has them. A later live project should be separate, named **art-class-checkin** if available, preserving the fictional demo project.
 
 | Setting | Value |
 | --- | --- |
@@ -59,7 +59,7 @@ The app folder currently exists on the feature branch. If the import screen only
 
 ## 3. Configure an isolated preview environment
 
-**In Vercel → art-class-checkin → Settings → Environment Variables:** select **Preview** and, where supported, scope to the feature branch. Development uses the ignored local file. Production receives different live values only after review.
+**In Vercel → art-class-checkin-poc → Settings → Environment Variables:** the six runtime settings below are already Sensitive entries scoped to **Preview → feat/art-class-checkin**; the launch secret and local-tool settings are not uploaded. The exact configured origin is **https://art-class-checkin-poc.vercel.app**. No Production variables are configured on this POC project. A later live project receives separate live values after review.
 
 | Variable | Public or private | Where its value comes from / environments |
 | --- | --- | --- |
@@ -114,17 +114,20 @@ Expected: `PASS` for cloud identity, unsigned access, independent sessions/persi
 
 ## 5. Trigger and verify the Git preview
 
-**In GitHub:** the implementation is prepared on `feat/art-class-checkin`. Review its PR and the **Art Class Check-In** workflow. Once the new Vercel Git project and preview database variables exist, have Codex push a task-specific follow-up commit to the branch. A Git-ref deployment from Vercel's **Create Deployment** screen is also a Git-based preview.
+**In GitHub:** the implementation is prepared on `feat/art-class-checkin`. Review its PR and the **Art Class Check-In** workflow. The separate Vercel project and Preview variables are already configured. A push of a task-specific commit to this branch triggers its Preview deployment; no main merge is needed for this proof of concept. A Git-ref deployment from Vercel's **Create Deployment** screen is also a Git-based preview.
 
-The implementation is pushed in [draft PR #1](https://github.com/DifferanceLabs/differancelabs/pull/1), and its [Linux verification passed](https://github.com/DifferanceLabs/differancelabs/actions/runs/33992512958). The existing main project also produced a protected [main-site preview](https://differancelabs-git-feat-art-cla-0fa671-differance-labs-projects.vercel.app). That is a regression-review address for the main site, **not the new art app's preview**.
+The implementation is pushed in [draft PR #1](https://github.com/DifferanceLabs/differancelabs/pull/1), and its [Linux verification passed](https://github.com/DifferanceLabs/differancelabs/actions/runs/34004754413). The existing main project also produced a protected [main-site preview](https://differancelabs-git-feat-art-cla-0fa671-differance-labs-projects.vercel.app). That is a regression-review address for the main site, **not the new art app's preview**.
 
-**In Vercel → art-class-checkin → Deployments:** choose the deployment whose source is **feat/art-class-checkin** and whose commit matches GitHub. Expected build result: **Ready**. Open its branch alias, verify `/api/health` returns `ok: true`, and verify **FICTIONAL DEMO** in the app.
+**In Vercel → art-class-checkin-poc → Deployments:** choose the **Preview** deployment from **feat/art-class-checkin** whose commit matches GitHub. Expected build result: **Ready**. Open **https://art-class-checkin-poc.vercel.app**, verify `/api/health` returns `ok: true`, and verify **FICTIONAL DEMO** in the app.
 
-Record the actual alias here after creation: **not available yet — hosting eligibility remains unresolved**. The matching cloud demo database and private configuration are prepared. Replace ART_APP_ORIGIN's local verification address with the actual verified HTTPS branch alias when deploying. Do not infer an address from the project name. A successful build without a working database/authenticated workflow is insufficient. If a build fails, Codex should inspect its log and fix/redeploy the branch before returning it to you.
+**Configured stable alias:** **https://art-class-checkin-poc.vercel.app**. Hosted API verification passed, including persistence, concurrent release/payment conflicts, paper times, private PDFs/CSV/photos, and logout. The domain is attached to the feature branch and the server origin matches it. Vercel automatically labeled the first bootstrap build Production; it has no live environment values and is not a live service. Later branch pushes create Preview deployments. A successful build alone is insufficient: verify the database and authenticated workflows before sharing the result.
+
+
+**Hosted verification completed:** from the same Windows app folder, set `$env:ART_ENV_FILE='.env.preview'` and run `npm.cmd run verify:preview -- --http https://art-class-checkin-poc.vercel.app`, then `Remove-Item Env:ART_ENV_FILE`. This passed through the actual deployed Vercel function and cloud database. All twelve WebKit/Chromium phone/tablet browser workflows also passed against this HTTPS address. See [PROOF-OF-CONCEPT.md](PROOF-OF-CONCEPT.md) for commands and preview-only updates/rollback. Physical devices remain untested.
 
 ## 6. Understand preview protection
 
-**On your phone/iPad:** Vercel may first show a Vercel account/access page. This is deployment protection, separate from staff app sign-in. Use the authorized owner's access. Inspect **Vercel → Settings → Deployment Protection** before sharing the preview; leave existing protections intact. Do not place bypass tokens in app URLs or source.
+**On your phone/iPad:** this fictional POC opens without Vercel Authentication. Its demo screen intentionally allows anyone with the address to choose a fictional staff/admin role. Enter fictional records only. Vercel protection on the main site is unchanged. Any future private preview may show Vercel's access page separately from app staff sign-in; do not place access tokens in shared URLs.
 
 The fictional demo intentionally offers fictional staff/admin identities and must contain no real data. Production must run live mode, require an explicit portal grant, and must never offer demo login.
 
@@ -180,6 +183,8 @@ Do not interrupt connectivity or experiment with real handoffs during a live cla
 
 ## 12. Prepare live database and staff access — approval required
 
+Keep **art-class-checkin-poc** and its database fictional. Create the later live **art-class-checkin** Vercel project with the same app Root Directory, using reviewed `main` and separate live variables. This future setup is not needed to try the proof of concept.
+
 **In Supabase:** inspect the existing portal project's status, billing/usage, database backups and private storage first. The implementation is designed to use its existing `public.users/apps/app_grants`, with separate `art_checkin` tables and a private `art-checkin-photos` bucket. This shares project compute/quota and the server credential but does not mix student rows with unrelated tables.
 
 The concrete migration package is:
@@ -219,7 +224,7 @@ This does not change global portal administration. Later app administrators can 
 
 **In Vercel → art-class-checkin → Settings → Domains:** after domain-change approval, add **art-checkin.differancelabs.com**. Copy the **exact DNS record type, name and value shown for this project** into the proposed change for review.
 
-**In Cloudflare:** only after the required approval, create that specific new record using Vercel's supplied value. Do not guess a CNAME/IP, modify apex/www records, change nameservers, change Google OAuth, or alter existing app domains. No DNS values can be provided yet because this separate hosting project has not been created.
+**In Cloudflare:** only after the required approval, create that specific new record using Vercel's supplied value. Do not guess a CNAME/IP, modify apex/www records, change nameservers, change Google OAuth, or alter existing app domains. No Differance Labs DNS change was made for the proof of concept, which uses a Vercel-provided address. The later live project and custom-domain setup must supply the actual DNS values before any change.
 
 Wait for Vercel to show **Valid Configuration** and a valid HTTPS certificate, then set the app's live ART_APP_ORIGIN to the verified origin. Keep demo preview variables separate.
 
