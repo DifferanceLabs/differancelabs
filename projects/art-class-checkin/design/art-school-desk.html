@@ -1,0 +1,561 @@
+<div id="art-school-desk" aria-label="Art School Desk design">
+  <style>
+    #art-school-desk {
+      --sd-bg: #14201e; --sd-panel: #1d2d29; --sd-panel2: #243730;
+      --sd-text: #edf2e9; --sd-muted: #bac8c0; --sd-line: #40534b;
+      --sd-accent: #c9e7ac; --sd-ink: #17241e; --sd-gold: #efd49d;
+      --sd-pad: 22px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--sd-text); color-scheme: dark; font-size: 15px; line-height: 1.5;
+      width: 100%; background: var(--sd-bg); border-radius: 16px; overflow: clip;
+      text-align: left;
+    }
+    #art-school-desk * { box-sizing: border-box; }
+    #art-school-desk [hidden] { display: none !important; }
+    #art-school-desk h1, #art-school-desk h2, #art-school-desk h3, #art-school-desk p { margin: 0; }
+    #art-school-desk h1 { font-size: clamp(25px, 3vw, 34px); line-height: 1.18; font-weight: 500; letter-spacing: -.035em; }
+    #art-school-desk h2 { font-size: 21px; font-weight: 500; line-height: 1.25; letter-spacing: -.02em; }
+    #art-school-desk h3 { font-size: 17px; font-weight: 500; }
+    #art-school-desk button, #art-school-desk input, #art-school-desk textarea, #art-school-desk select { font: inherit; }
+    #art-school-desk button { cursor: pointer; touch-action: manipulation; }
+    #art-school-desk button:disabled { opacity: .48; cursor: default; }
+    #art-school-desk button:focus-visible, #art-school-desk input:focus-visible,
+    #art-school-desk textarea:focus-visible, #art-school-desk select:focus-visible { outline: 3px solid var(--sd-gold); outline-offset: 3px; }
+    #art-school-desk .sd-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 46px; padding: 10px 16px; border: 1px solid #66786c;
+      border-radius: 10px; color: var(--sd-text); background: var(--sd-panel2);
+      font-weight: 500; white-space: normal; text-align: center; max-width: 100%;
+    }
+    #art-school-desk .sd-btn:hover { filter: brightness(1.12); }
+    #art-school-desk .sd-primary { background: var(--sd-accent); color: var(--sd-ink); border-color: var(--sd-accent); }
+    #art-school-desk .sd-quiet { background: transparent; border-color: var(--sd-line); }
+    #art-school-desk .sd-wide { width: 100%; }
+    #art-school-desk .sd-muted { color: var(--sd-muted); }
+    #art-school-desk .sd-small { font-size: 13px; }
+    #art-school-desk .sd-eyebrow { color: var(--sd-muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; }
+    #art-school-desk .sd-gap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #art-school-desk .sd-between { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    #art-school-desk .sd-stack { display: grid; gap: 16px; }
+    #art-school-desk .sd-tight { display: grid; gap: 7px; }
+    #art-school-desk .sd-head { padding: 18px var(--sd-pad); border-bottom: 1px solid var(--sd-line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+    #art-school-desk .sd-brand { display: flex; align-items: center; gap: 11px; }
+    #art-school-desk .sd-mark { background: var(--sd-accent); color: var(--sd-ink); font-family: Georgia, serif; font-size: 29px; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px 12px 4px 12px; }
+    #art-school-desk .sd-brand-name { font-size: 17px; letter-spacing: -.025em; }
+    #art-school-desk .sd-switch { display: flex; gap: 4px; border-radius: 11px; background: #0e1815; padding: 4px; }
+    #art-school-desk .sd-switch button { min-height: 44px; padding: 8px 12px; background: transparent; border: 0; border-radius: 8px; color: var(--sd-muted); font-size: 13px; }
+    #art-school-desk .sd-switch button[aria-pressed="true"] { color: var(--sd-ink); background: var(--sd-accent); }
+    #art-school-desk .sd-concept { padding: 8px var(--sd-pad); background: #322d21; color: var(--sd-gold); font-size: 12px; }
+    #art-school-desk .sd-shell { display: grid; grid-template-columns: 166px minmax(0, 1fr); }
+    #art-school-desk .sd-sidebar { padding: 20px 12px; border-right: 1px solid var(--sd-line); display: flex; flex-direction: column; gap: 22px; background: #17241f; }
+    #art-school-desk .sd-nav { display: grid; gap: 5px; }
+    #art-school-desk .sd-nav button { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 46px; padding: 10px 12px; background: transparent; color: var(--sd-muted); border: 1px solid transparent; border-radius: 10px; text-align: left; }
+    #art-school-desk .sd-nav button[aria-current="page"] { background: var(--sd-panel2); color: var(--sd-accent); border-color: var(--sd-line); }
+    #art-school-desk .sd-nav i, #art-school-desk .sd-nav svg { width: 18px; height: 18px; flex-shrink: 0; }
+    #art-school-desk .sd-nav-extra { border-top: 1px solid var(--sd-line); padding-top: 16px; }
+    #art-school-desk .sd-user { margin-top: auto; padding: 20px 10px 4px; }
+    #art-school-desk .sd-main { padding: var(--sd-pad); min-width: 0; }
+    #art-school-desk .sd-page-title { display: grid; gap: 6px; margin-bottom: 23px; }
+    #art-school-desk .sd-two { display: grid; grid-template-columns: 1.12fr 1fr; gap: 18px; }
+    #art-school-desk .sd-panel { background: var(--sd-panel); border: 1px solid var(--sd-line); padding: var(--sd-pad); border-radius: 13px; min-width: 0; }
+    #art-school-desk .sd-hero { border-color: #6a7b5b; background: #26372c; }
+    #art-school-desk .sd-pill { display: inline-flex; align-items: center; width: fit-content; padding: 3px 9px; border-radius: 6px; font-size: 12px; background: #34463a; color: var(--sd-accent); font-weight: 500; }
+    #art-school-desk .sd-pill-warm { background: #3b3525; color: var(--sd-gold); }
+    #art-school-desk .sd-rule { border: 0; border-top: 1px solid var(--sd-line); margin: 18px 0; }
+    #art-school-desk .sd-action-list { display: grid; margin-top: 6px; }
+    #art-school-desk .sd-action { background: transparent; color: inherit; border: 0; border-bottom: 1px solid var(--sd-line); padding: 15px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; width: 100%; text-align: left; }
+    #art-school-desk .sd-action:last-child { border-bottom: 0; padding-bottom: 0; }
+    #art-school-desk .sd-action .sd-small { display: block; }
+    #art-school-desk .sd-arrow { color: var(--sd-accent); font-size: 20px; }
+    #art-school-desk .sd-line-item { padding: 15px 0; border-bottom: 1px solid var(--sd-line); display: flex; gap: 12px; justify-content: space-between; align-items: center; }
+    #art-school-desk .sd-line-item:last-child { border-bottom: 0; }
+    #art-school-desk .sd-kpis { display: flex; gap: 18px; flex-wrap: wrap; margin: 17px 0; }
+    #art-school-desk .sd-number { display: block; font-size: 25px; line-height: 1.2; color: var(--sd-text); font-variant-numeric: tabular-nums; }
+    #art-school-desk .sd-time { min-width: 56px; color: var(--sd-accent); font-variant-numeric: tabular-nums; }
+    #art-school-desk .sd-form { display: grid; gap: 15px; }
+    #art-school-desk .sd-field { display: grid; gap: 6px; font-size: 13px; color: var(--sd-muted); }
+    #art-school-desk .sd-field input, #art-school-desk .sd-field textarea, #art-school-desk .sd-field select { width: 100%; min-width: 0; min-height: 46px; padding: 10px 12px; background: #12211b; color: var(--sd-text); border: 1px solid #68776b; border-radius: 9px; font-size: 16px; }
+    #art-school-desk .sd-field textarea { min-height: 100px; resize: vertical; }
+    #art-school-desk .sd-check { display: flex; align-items: center; gap: 10px; min-height: 46px; cursor: pointer; }
+    #art-school-desk .sd-check input { width: 21px; height: 21px; accent-color: var(--sd-accent); flex-shrink: 0; }
+    #art-school-desk .sd-avatar { flex-shrink: 0; width: 41px; height: 41px; display: grid; place-items: center; border-radius: 50%; background: #30453b; color: var(--sd-accent); font-size: 13px; }
+    #art-school-desk .sd-money { font-size: 28px; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+    #art-school-desk .sd-money-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; }
+    #art-school-desk .sd-art { height: 150px; border-radius: 10px; position: relative; overflow: hidden; background: #c9c5af; }
+    #art-school-desk .sd-art::before { content: ""; position: absolute; width: 90px; height: 100px; border-radius: 45% 50% 25% 30%; background: #597b68; left: 20%; top: 33px; transform: rotate(-13deg); }
+    #art-school-desk .sd-art::after { content: ""; position: absolute; width: 80px; height: 80px; border-radius: 50%; background: #b9755d; right: 13%; top: 20px; }
+    #art-school-desk .sd-art-two { background: #dcbd91; }
+    #art-school-desk .sd-art-two::before { background: #696883; border-radius: 10px; transform: rotate(24deg); }
+    #art-school-desk .sd-art-two::after { background: #eee0b9; border-radius: 0 50% 50% 50%; }
+    #art-school-desk .sd-roster { display: grid; gap: 10px; }
+    #art-school-desk .sd-student { padding: 15px; background: var(--sd-panel); border: 1px solid var(--sd-line); border-radius: 11px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+    #art-school-desk .sd-student-name { font-size: 19px; line-height: 1.3; overflow-wrap: anywhere; }
+    #art-school-desk .sd-payment-label { color: var(--sd-muted); font-size: 12px; margin-top: 5px; }
+    #art-school-desk .sd-attendance { font-size: 13px; margin-top: 3px; color: var(--sd-accent); }
+    #art-school-desk .sd-notice { padding: 13px 15px; background: #333122; border: 1px solid #746641; color: var(--sd-gold); border-radius: 9px; }
+    #art-school-desk .sd-detail-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; gap: 12px; }
+    #art-school-desk .sd-footer { border-top: 1px solid var(--sd-line); padding: 11px var(--sd-pad); color: var(--sd-muted); font-size: 12px; min-height: 44px; }
+    #art-school-desk .sd-timeline { border-left: 1px solid #677e66; padding-left: 17px; display: grid; gap: 18px; }
+    #art-school-desk .sd-text-link { color: var(--sd-accent); border: 0; background: transparent; text-align: left; padding: 10px 0; min-height: 44px; }
+    #art-school-desk .sd-parent { max-width: 490px; margin: 0 auto; }
+    @media(max-width: 850px) {
+      #art-school-desk .sd-two { grid-template-columns: 1fr; }
+      #art-school-desk .sd-shell { grid-template-columns: 144px minmax(0, 1fr); }
+    }
+    @media(max-width: 620px) {
+      #art-school-desk { border-radius: 10px; --sd-pad: 16px; }
+      #art-school-desk .sd-shell { display: flex; flex-direction: column; }
+      #art-school-desk .sd-sidebar { padding: 8px; gap: 5px; border-right: 0; border-bottom: 1px solid var(--sd-line); }
+      #art-school-desk .sd-nav { display: flex; gap: 3px; }
+      #art-school-desk .sd-nav button { justify-content: center; padding: 7px 2px; gap: 3px; font-size: 12px; flex: 1; flex-direction: column; min-width: 0; }
+      #art-school-desk .sd-nav-extra { border-top: 0; padding: 0; justify-content: flex-end; }
+      #art-school-desk .sd-nav-extra button { flex: 0 1 auto; width: auto; min-width: 78px; flex-direction: row; }
+      #art-school-desk .sd-user { display: none; }
+      #art-school-desk .sd-head { padding: 15px; }
+      #art-school-desk .sd-switch { width: 100%; }
+      #art-school-desk .sd-switch button { flex: 1; }
+      #art-school-desk .sd-between { flex-wrap: wrap; }
+      #art-school-desk .sd-student { grid-template-columns: minmax(0, 1fr); }
+      #art-school-desk .sd-student .sd-btn { width: 100%; }
+      #art-school-desk .sd-line-item { flex-wrap: wrap; }
+      #art-school-desk .sd-page-title { margin-bottom: 17px; }
+    }
+    @media(prefers-reduced-motion: reduce) { #art-school-desk * { scroll-behavior: auto; } }
+  </style>
+  <header class="sd-head">
+    <div class="sd-brand">
+      <span class="sd-mark" aria-hidden="true">a.</span>
+      <div><div class="sd-brand-name">Art School Desk</div><div class="sd-small sd-muted">A place for the whole studio.</div></div>
+    </div>
+    <div class="sd-switch" aria-label="Explore a workspace">
+      <button type="button" data-mode="owner" aria-pressed="true">Manage studio</button>
+      <button type="button" data-mode="operator" aria-pressed="false">Run class</button>
+    </div>
+  </header>
+  <div class="sd-concept">FICTIONAL DESIGN CONCEPT · No messages, payments or live changes</div>
+  <div class="sd-shell">
+    <aside class="sd-sidebar">
+      <nav class="sd-nav" id="sd-owner-nav" aria-label="Manage studio">
+        <button type="button" data-view="owner-today" aria-current="page"><i data-lucide="sun" aria-hidden="true"></i>Today</button>
+        <button type="button" data-view="schedule"><i data-lucide="calendar-days" aria-hidden="true"></i>Schedule</button>
+        <button type="button" data-view="families"><i data-lucide="users-round" aria-hidden="true"></i>Families</button>
+        <button type="button" data-view="money"><i data-lucide="wallet" aria-hidden="true"></i>Money</button>
+        <button type="button" data-view="growth"><i data-lucide="sprout" aria-hidden="true"></i>Growth</button>
+      </nav>
+      <nav class="sd-nav" id="sd-operator-nav" aria-label="Run class" hidden>
+        <button type="button" data-view="operator-today"><i data-lucide="sun" aria-hidden="true"></i>Today</button>
+        <button type="button" data-view="roster"><i data-lucide="clipboard-check" aria-hidden="true"></i>Roster</button>
+        <button type="button" data-view="messages"><i data-lucide="messages-square" aria-hidden="true"></i>Messages</button>
+        <button type="button" data-view="tasks"><i data-lucide="list-checks" aria-hidden="true"></i>Tasks</button>
+      </nav>
+      <nav class="sd-nav sd-nav-extra" id="sd-owner-extra" aria-label="Studio tools">
+        <button type="button" data-view="inbox"><i data-lucide="inbox" aria-hidden="true"></i>Inbox <span class="sd-pill">2</span></button>
+        <button type="button" data-view="studio"><i data-lucide="settings-2" aria-hidden="true"></i>Studio</button>
+      </nav>
+      <div class="sd-user"><div id="sd-user-name">Morgan Ellis</div><div class="sd-small sd-muted" id="sd-user-role">Owner · Practice view</div></div>
+    </aside>
+    <main class="sd-main">
+      <section data-page="owner-today">
+        <div class="sd-page-title"><div class="sd-eyebrow">Tuesday, September 8 · Practice day</div><h1>A little space to create.</h1><p class="sd-muted">Two classes today. Three things need your attention.</p></div>
+        <div class="sd-two">
+          <div class="sd-panel sd-hero sd-stack">
+            <div class="sd-between"><span class="sd-eyebrow">Next class</span><span class="sd-pill">3:30–4:30 PM</span></div>
+            <h2>After-School<br>Art Studio</h2>
+            <p class="sd-muted">Color & collage · Room 1<br>Morgan + Riley · 16 enrolled</p>
+            <button class="sd-btn sd-primary sd-wide" type="button" data-action="run">Open class</button>
+            <button class="sd-text-link" type="button" data-action="prep">View lesson & materials →</button>
+          </div>
+          <div class="sd-panel">
+            <h3>Your next decisions</h3>
+            <div class="sd-action-list">
+              <button class="sd-action" type="button" data-action="waitlist"><span>Two places opened<span class="sd-small sd-muted">Saturday workshop · 3 on waitlist</span></span><span class="sd-arrow">→</span></button>
+              <button class="sd-action" type="button" data-action="permission"><span>A pickup request<span class="sd-small sd-muted">Brooks family · verify with parent</span></span><span class="sd-arrow">→</span></button>
+              <button class="sd-action" type="button" data-action="campaign"><span>Fall class invitation<span class="sd-small sd-muted">Draft ready for your review</span></span><span class="sd-arrow">→</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="sd-panel" style="margin-top:18px">
+          <div class="sd-between"><h3>Later today</h3><button type="button" class="sd-btn sd-quiet" data-view="schedule">View schedule</button></div>
+          <div class="sd-line-item"><div class="sd-gap"><span class="sd-time">4:45 PM</span><div>Little Makers<div class="sd-small sd-muted">Clay creatures · Room 2 · 8 enrolled</div></div></div><span class="sd-pill">Prep ready</span></div>
+        </div>
+      </section>
+      <section data-page="schedule" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Schedule</div><h1>Plan once. Teach well.</h1><p class="sd-muted">Classes, camps and workshops share one calendar.</p></div>
+        <div class="sd-between" style="margin-bottom:16px"><span>September 8–12</span><button class="sd-btn sd-primary" type="button" data-action="new-course">New course</button></div>
+        <div class="sd-panel">
+          <div class="sd-eyebrow">Tuesday · 8</div>
+          <div class="sd-line-item"><div><h3>After-School Art Studio</h3><p class="sd-small sd-muted">3:30–4:30 PM · Morgan · Room 1</p></div><button class="sd-btn sd-quiet" type="button" data-action="course">16 / 16 enrolled</button></div>
+          <div class="sd-line-item"><div><h3>Little Makers</h3><p class="sd-small sd-muted">4:45–5:30 PM · Riley · Room 2</p></div><button class="sd-btn sd-quiet" type="button" data-action="makers">8 / 10 enrolled</button></div>
+          <hr class="sd-rule"><div class="sd-eyebrow">Saturday · 12</div>
+          <div class="sd-line-item"><div><h3>Family Printmaking</h3><p class="sd-small sd-muted">10:00–11:30 AM · Morgan · Room 1</p></div><button class="sd-btn sd-primary" type="button" data-action="waitlist">Fill 2 places</button></div>
+        </div>
+        <div class="sd-gap" style="margin-top:16px"><button class="sd-btn sd-quiet" type="button" data-action="copy-week">Copy next week</button><button class="sd-btn sd-quiet" type="button" data-action="calendar">Calendar options</button></div>
+      </section>
+      <section data-page="families" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Families</div><h1>Know the whole family.</h1><p class="sd-muted">Students, permissions, forms and conversations together.</p></div>
+        <div class="sd-panel">
+          <button type="button" class="sd-action" data-action="family" data-family="Brooks"><span class="sd-gap"><span class="sd-avatar">BR</span><span>Brooks family<span class="sd-small sd-muted">Amelia + Ezra · 2 enrolled students</span></span></span><span class="sd-pill sd-pill-warm">Request</span></button>
+          <button type="button" class="sd-action" data-action="family" data-family="Thompson"><span class="sd-gap"><span class="sd-avatar">TH</span><span>Thompson family<span class="sd-small sd-muted">Noah · After-School Art Studio</span></span></span><span class="sd-arrow">→</span></button>
+          <button type="button" class="sd-action" data-action="family" data-family="Martinez"><span class="sd-gap"><span class="sd-avatar">MA</span><span>Martinez family<span class="sd-small sd-muted">Aria · After-School Art Studio</span></span></span><span class="sd-arrow">→</span></button>
+          <button type="button" class="sd-action" data-action="family" data-family="Chen"><span class="sd-gap"><span class="sd-avatar">CH</span><span>Chen family<span class="sd-small sd-muted">Lily · After-School Art Studio</span></span></span><span class="sd-arrow">→</span></button>
+        </div>
+        <button class="sd-btn sd-quiet" style="margin-top:16px" type="button" data-action="invite-family">Invite a family</button>
+      </section>
+      <section data-page="money" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Money · Sample September</div><h1>Know what came in.</h1><p class="sd-muted">Payment records, family balances and expenses.</p></div>
+        <div class="sd-two">
+          <div class="sd-panel sd-stack"><div class="sd-eyebrow">Sample course · 16 students × $180</div><div class="sd-money">$2,880 billed</div><div><div class="sd-money-row"><span class="sd-muted">Collected</span><span>$2,520</span></div><div class="sd-money-row"><span class="sd-muted">Open invoices</span><span>$360</span></div></div><button type="button" class="sd-btn sd-primary" data-action="invoice">Review an invoice</button></div>
+          <div class="sd-panel"><h3>Close the loop</h3><div class="sd-action-list">
+            <button type="button" class="sd-action" data-action="match-payment"><span>Match a Venmo payment<span class="sd-small sd-muted">$180 · family reference needed</span></span><span class="sd-arrow">→</span></button>
+            <button type="button" class="sd-action" data-action="receipt"><span>Add a supply receipt<span class="sd-small sd-muted">Attach it once. Keep it with the expense.</span></span><span class="sd-arrow">→</span></button>
+            <button type="button" class="sd-action" data-action="month"><span>Prepare accountant package<span class="sd-small sd-muted">Sales, fees, refunds and expenses</span></span><span class="sd-arrow">→</span></button>
+          </div></div>
+        </div>
+        <div class="sd-notice sd-small" style="margin-top:18px">Square connection is proposed. These amounts illustrate the design.</div>
+      </section>
+      <section data-page="growth" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Growth</div><h1>Share what you're making.</h1><p class="sd-muted">One class story. An update, a post and an invitation.</p></div>
+        <div class="sd-two">
+          <div class="sd-panel sd-stack"><div class="sd-art" role="img" aria-label="Illustrative abstract student artwork, fictional"></div><span class="sd-pill">Artwork illustration · no child pictured</span><h3>A world of color & collage</h3><p class="sd-small sd-muted">Class update · Blog · Instagram · Email</p><button type="button" class="sd-btn sd-primary" data-action="campaign">Prepare update</button></div>
+          <div class="sd-panel"><h3>Make room for more artists</h3><div class="sd-action-list">
+            <button class="sd-action" type="button" data-action="parent"><span>See the parent's experience<span class="sd-small sd-muted">Browse → register → pay in a browser</span></span><span class="sd-arrow">→</span></button>
+            <button class="sd-action" type="button" data-action="invite-family"><span>Invite families to fall classes<span class="sd-small sd-muted">Choose the audience before sending</span></span><span class="sd-arrow">→</span></button>
+            <button class="sd-action" type="button" data-action="photos"><span>Photo library<span class="sd-small sd-muted">Private by default · consent per use</span></span><span class="sd-arrow">→</span></button>
+            <button class="sd-action" type="button" data-action="referrals"><span>Referrals & inquiries<span class="sd-small sd-muted">See how families find the studio</span></span><span class="sd-arrow">→</span></button>
+          </div></div>
+        </div>
+      </section>
+      <section data-page="inbox" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Inbox</div><h1>Every conversation has a home.</h1><p class="sd-muted">Assign it, reply, and see what still needs attention.</p></div>
+        <div class="sd-panel">
+          <button class="sd-action" type="button" data-action="permission"><span><span class="sd-small sd-muted">Jordan Brooks · Email · 2:42 PM</span>Can Avery pick up today?<span class="sd-small sd-muted">Pickup change · assigned to Morgan</span></span><span class="sd-pill sd-pill-warm">Verify</span></button>
+          <button class="sd-action" type="button" data-action="reply"><span><span class="sd-small sd-muted">Alex Thompson · Email · 1:15 PM</span>Should Noah bring an apron?<span class="sd-small sd-muted">Class question · assigned to Riley</span></span><span class="sd-arrow">→</span></button>
+        </div>
+        <p class="sd-small sd-muted" style="margin-top:16px">Email threads here. Social inboxes stay in their own apps until a supported connection is added.</p>
+      </section>
+      <section data-page="studio" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Studio</div><h1>The things behind a good class.</h1><p class="sd-muted">Set up once. Keep the daily view simple.</p></div>
+        <div class="sd-two">
+          <div class="sd-panel"><h3>People & preparation</h3><div class="sd-action-list">
+            <button type="button" class="sd-action" data-action="team"><span>Team & permissions<span class="sd-small sd-muted">Owner, instructor, junior assistant</span></span><span class="sd-arrow">→</span></button>
+            <button type="button" class="sd-action" data-action="training"><span>First-hour training<span class="sd-small sd-muted">Five short exercises with fictional records</span></span><span class="sd-arrow">→</span></button>
+            <button type="button" class="sd-action" data-action="prep"><span>Lessons & supplies<span class="sd-small sd-muted">Plans, material lists and restock tasks</span></span><span class="sd-arrow">→</span></button>
+            <button type="button" class="sd-action" data-action="records"><span>Records & recovery<span class="sd-small sd-muted">History, retention and backup checks</span></span><span class="sd-arrow">→</span></button>
+          </div></div>
+          <div class="sd-panel"><h3>Planned connections</h3><div class="sd-action-list">
+            <button class="sd-action" type="button" data-action="connections"><span>Square<span class="sd-small sd-muted">Checkout & invoices</span></span><span class="sd-pill sd-pill-warm">Planned</span></button>
+            <button class="sd-action" type="button" data-action="connections"><span>Resend<span class="sd-small sd-muted">Email, newsletters & replies</span></span><span class="sd-pill sd-pill-warm">Planned</span></button>
+            <button class="sd-action" type="button" data-action="connections"><span>Buffer<span class="sd-small sd-muted">Supported social publishing</span></span><span class="sd-pill sd-pill-warm">Planned</span></button>
+            <button class="sd-action" type="button" data-action="connections"><span>Calendar & accounting<span class="sd-small sd-muted">Begin with calendar files and exports</span></span><span class="sd-arrow">→</span></button>
+          </div></div>
+        </div>
+      </section>
+      <section data-page="operator-today" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Riley's shift · Tuesday, September 8</div><h1>Ready for your artists?</h1><p class="sd-muted">Everything you need for this afternoon.</p></div>
+        <div class="sd-panel sd-hero sd-stack">
+          <div class="sd-between"><span class="sd-pill">3:30–4:30 PM</span><span class="sd-small sd-muted">Room 1 · 16 enrolled</span></div>
+          <h2>After-School Art Studio</h2><p class="sd-muted">Today's project: color & collage.</p>
+          <div class="sd-gap"><button class="sd-btn sd-primary" type="button" data-view="roster">Open roster</button><button class="sd-btn sd-quiet" type="button" data-action="print">Print backup</button></div>
+        </div>
+        <div class="sd-panel" style="margin-top:18px"><h3>Before the door opens</h3>
+          <label class="sd-check"><input type="checkbox" data-task="supplies"><span>Set out 16 collage kits</span></label>
+          <label class="sd-check"><input type="checkbox" data-task="backup"><span>Print and secure the paper backup</span></label>
+          <label class="sd-check"><input type="checkbox" data-task="safety"><span>Review class safety notes</span></label>
+          <button class="sd-text-link" type="button" data-action="prep">Open the teaching plan →</button>
+        </div>
+      </section>
+      <section data-page="roster" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">3:30–4:30 PM · Room 1 · Sep 8</div><h1>After-School Art Studio</h1><p class="sd-muted">Record each handoff when it happens.</p></div>
+        <div id="sd-counts" class="sd-kpis" aria-label="Attendance counts"></div>
+        <div class="sd-between" style="margin-bottom:16px">
+          <label class="sd-field" style="flex:1;min-width:160px">Find a student<input id="sd-search" type="search" placeholder="Student name" autocomplete="off"></label>
+          <button type="button" class="sd-btn sd-quiet" data-action="print">Print backup</button>
+        </div>
+        <div id="sd-roster" class="sd-roster"></div>
+        <button id="sd-roster-more" class="sd-btn sd-quiet sd-wide" style="margin-top:12px" type="button" data-action="roster-more">Show all 16 students</button>
+      </section>
+      <section data-page="messages" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Messages · Assigned classes</div><h1>A quick, thoughtful reply.</h1><p class="sd-muted">Use a saved answer or ask Morgan for help.</p></div>
+        <div class="sd-panel sd-stack"><span class="sd-small sd-muted">Alex Thompson · Noah's parent</span><h3>Should Noah bring an apron?</h3><p class="sd-muted">We have a new one at home if that helps!</p><button type="button" class="sd-btn sd-primary" data-action="reply">Use class-prep reply</button></div>
+        <div class="sd-notice sd-small" style="margin-top:16px">Pickup changes go to the owner for verification using the contact on file.</div>
+      </section>
+      <section data-page="tasks" hidden>
+        <div class="sd-page-title"><div class="sd-eyebrow">Tasks · Riley's shift</div><h1>A good finish.</h1><p class="sd-muted">Take care of the room and the records.</p></div>
+        <div class="sd-panel">
+          <label class="sd-check"><input type="checkbox" data-task="clean"><span>Clean tables and put away materials</span></label>
+          <label class="sd-check"><input type="checkbox" data-task="restock"><span>Flag supplies that need restocking</span></label>
+          <div class="sd-action-list">
+            <button class="sd-action" type="button" data-action="upload"><span>Add class photos<span class="sd-small sd-muted">Private upload · owner reviews sharing</span></span><span class="sd-arrow">→</span></button>
+            <button class="sd-action" type="button" data-action="paper"><span>Enter paper attendance<span class="sd-small sd-muted">Actual times and later entry stay separate</span></span><span class="sd-arrow">→</span></button>
+            <button class="sd-action" type="button" data-action="incident"><span>Report an incident<span class="sd-small sd-muted">Private record and owner follow-up</span></span><span class="sd-arrow">→</span></button>
+          </div>
+        </div>
+        <button class="sd-btn sd-primary sd-wide" style="margin-top:16px" type="button" data-action="finish">Finish shift</button>
+      </section>
+      <section id="sd-detail" hidden aria-label="Selected record">
+        <div class="sd-detail-head"><span id="sd-detail-label" class="sd-eyebrow">Record</span><button id="sd-back" type="button" class="sd-btn sd-quiet" data-action="back">← Back</button></div>
+        <div id="sd-detail-content"></div>
+      </section>
+    </main>
+  </div>
+  <div class="sd-footer" id="sd-status" role="status" aria-live="polite">Explore either workspace. Every action is a local design simulation.</div>
+</div>
+<script>
+(() => {
+  const root = document.getElementById('art-school-desk');
+  const $ = (selector) => root.querySelector(selector);
+  const all = (selector) => Array.from(root.querySelectorAll(selector));
+  const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[char]));
+  const state = { mode: 'owner', view: 'owner-today', allStudents: false, pickup: null, adult: '', method: '', tasks: {}, campaign: false };
+  const students = [
+    {name:'Amelia Brooks', status:'Expected', paid:true}, {name:'Noah Thompson', status:'Present', paid:false},
+    {name:'Aria Martinez', status:'Present', paid:true}, {name:'Ezra Brooks', status:'Expected', paid:true},
+    {name:'Lily Chen', status:'Released', paid:true}, {name:'Owen Patel', status:'Absent', paid:false},
+    {name:'Sofia Rivera', status:'Expected', paid:false}, {name:'Liam Garcia', status:'Expected', paid:true},
+    {name:'Isabella-Rose Montgomery-Wellington', status:'Expected', paid:true}, {name:'Mason Lee', status:'Expected', paid:false},
+    {name:'Charlotte Davis', status:'Expected', paid:true}, {name:'Elijah Wilson', status:'Expected', paid:false},
+    {name:'Harper Nguyen', status:'Expected', paid:true}, {name:'Henry Robinson', status:'Expected', paid:true},
+    {name:'Evelyn Scott', status:'Expected', paid:false}, {name:'Lucas Adams', status:'Expected', paid:false}
+  ].map((student, index) => ({...student, id:'student-' + index}));
+  const button = (label, action, primary=false) => '<button type="button" class="sd-btn ' + (primary?'sd-primary':'sd-quiet') + '" data-action="' + action + '">' + label + '</button>';
+  const heading = (title, subtitle) => '<div class="sd-page-title"><h1>' + title + '</h1>' + (subtitle?'<p class="sd-muted">' + subtitle + '</p>':'') + '</div>';
+  const note = (text) => '<div class="sd-notice sd-small">' + text + '</div>';
+  const status = (text) => { $('#sd-status').textContent = text; };
+  const findStudent = (id) => students.find((student) => student.id === id);
+  function roster() {
+    $('#sd-counts').innerHTML = ['Expected','Present','Released','Absent'].map((value) =>
+      '<div class="sd-small sd-muted"><span class="sd-number">' + students.filter((s)=>s.status===value).length + '</span>' + value + '</div>').join('');
+    const search = $('#sd-search').value.toLocaleLowerCase().trim();
+    let list = students.filter((s)=>s.name.toLocaleLowerCase().includes(search));
+    const total = list.length;
+    if (!state.allStudents && !search) list = list.slice(0,4);
+    $('#sd-roster').innerHTML = list.map((student) => '<article class="sd-student"><div><div class="sd-student-name">' +
+      escape(student.name) + '</div><div class="sd-attendance">' + student.status + '</div><div class="sd-payment-label">Payment · ' +
+      (student.paid?'Paid · manual confirmation':'Not confirmed') + '</div></div>' +
+      (student.status==='Expected'?'<button class="sd-btn sd-primary" type="button" data-action="checkin" data-id="'+student.id+'">Check in</button>':
+      student.status==='Present'?'<button class="sd-btn sd-primary" type="button" data-action="pickup" data-id="'+student.id+'">Pick up</button>':
+      '<span class="sd-small sd-muted">'+(student.status==='Released'?'Handoff recorded':'Separate from payment')+'</span>') + '</article>').join('') || '<p class="sd-muted">No matching students.</p>';
+    $('#sd-roster-more').hidden = !!search || total<=4;
+    $('#sd-roster-more').textContent = state.allStudents?'Show fewer students':'Show all 16 students';
+  }
+  function show(view) {
+    state.view = view;
+    $('#sd-detail').hidden = true;
+    all('[data-page]').forEach((page) => { page.hidden = page.dataset.page !== view; });
+    all('[data-view]').forEach((control) => {
+      if(control.dataset.view===view) control.setAttribute('aria-current','page');
+      else control.removeAttribute('aria-current');
+    });
+    roster();
+  }
+  function mode(next) {
+    state.mode = next;
+    $('#sd-owner-nav').hidden = next!=='owner';
+    $('#sd-owner-extra').hidden = next!=='owner';
+    $('#sd-operator-nav').hidden = next!=='operator';
+    $('#sd-user-name').textContent = next==='owner'?'Morgan Ellis':'Riley Park';
+    $('#sd-user-role').textContent = next==='owner'?'Owner · Practice view':'Assistant · Practice view';
+    all('[data-mode]').forEach((control)=>control.setAttribute('aria-pressed',String(control.dataset.mode===next)));
+    show(next==='owner'?'owner-today':'operator-today');
+    status(next==='owner'?'Owner workspace · plan, review and resolve.':'Assistant workspace · assigned classes and daily tasks.');
+  }
+  function detail(label, content) {
+    all('[data-page]').forEach((page)=>{page.hidden=true;});
+    $('#sd-detail-label').textContent = label;
+    $('#sd-detail-content').innerHTML = content;
+    $('#sd-detail').hidden = false;
+    $('#sd-back').focus({preventScroll:true});
+  }
+  function simple(label, title, content) { detail(label, heading(title,'') + '<div class="sd-panel sd-stack">' + content + '</div>'); }
+  function family(name) {
+    state.family = name;
+    const child = {Brooks:'Amelia + Ezra',Thompson:'Noah',Martinez:'Aria',Chen:'Lily'}[name] || 'Amelia + Ezra';
+    const adult = {Brooks:'Jordan Brooks',Thompson:'Alex Thompson',Martinez:'Casey Martinez',Chen:'Jamie Chen'}[name] || 'Jordan Brooks';
+    detail('Family record', heading(escape(name) + ' family','One record for contacts, classes, permissions and history.') +
+      '<div class="sd-two"><div class="sd-panel sd-stack"><div class="sd-eyebrow">Students</div><h2>'+child+'</h2><p class="sd-muted">After-School Art Studio · Tuesdays</p><hr class="sd-rule"><div><h3>'+adult+'</h3><p class="sd-small sd-muted">Parent · Contact and pickup approved</p><p class="sd-small">Fictional phone · (312) 555-0142</p></div>'+button(name==='Brooks'?'Review pickup request':'View pickup permission',name==='Brooks'?'permission':'family-adults')+'</div>'+
+      '<div class="sd-panel sd-stack"><h3>Separate permissions</h3><div class="sd-line-item"><span>Private family gallery</span><span class="sd-pill">Allowed</span></div><div class="sd-line-item"><span>Public student photos</span><span class="sd-pill sd-pill-warm">Not granted</span></div><div class="sd-line-item"><span>Class invitations by email</span><span class="sd-pill">Subscribed</span></div>'+button('View family timeline','timeline')+'</div></div>');
+  }
+  function pickup(id) {
+    const student = findStudent(id);
+    if(!student || student.status!=='Present') return status('This child is not Present. A release cannot be recorded.');
+    state.pickup = id; state.adult=''; state.method='';
+    const adults = student.name.includes('Brooks')?['Jordan Brooks · Parent','Taylor Brooks · Grandparent']:
+      student.name.includes('Thompson')?['Alex Thompson · Parent','Dana Thompson · Aunt']:['Casey Martinez · Parent','Robin Martinez · Grandparent'];
+    detail('Physical handoff',heading('Release '+escape(student.name),'Select the approved adult who is here, then verify them.')+
+      '<div class="sd-panel sd-stack"><div><div class="sd-eyebrow">Currently approved adults</div>'+adults.map((adult)=>'<label class="sd-check"><input type="radio" name="pickup-adult" value="'+adult+'"><span>'+adult+'</span></label>').join('')+'</div><hr class="sd-rule"><div><div class="sd-eyebrow">Verification</div><label class="sd-check"><input type="radio" name="verification" value="Known to staff"><span>Known to staff</span></label><label class="sd-check"><input type="radio" name="verification" value="Photo ID checked"><span>Photo ID checked</span></label></div>'+note('Keep the child Present until the physical handoff. Confirm each sibling separately.')+
+      '<button type="button" class="sd-btn sd-primary" id="sd-release" data-action="release" disabled>Confirm release</button>'+button('Adult is not listed','unapproved')+'</div>');
+  }
+  function campaign() {
+    detail('Prepare a story',heading('Color, collage & a little courage.','A single class story, adapted for each destination.')+
+      '<div class="sd-two"><div class="sd-panel sd-stack"><div class="sd-art sd-art-two" role="img" aria-label="Fictional abstract artwork illustration"></div><span class="sd-pill">Illustration · no child pictured</span><label class="sd-field">Story<textarea id="sd-story">This week our artists explored bold colors and unexpected shapes. Our next art studio course opens soon. Come make something with us!</textarea></label></div>'+
+      '<div class="sd-panel sd-stack"><h3>Prepare destinations</h3><label class="sd-check"><input type="checkbox" name="destination" value="Family email" checked><span>Email · 24 subscribed families</span></label><label class="sd-check"><input type="checkbox" name="destination" value="Blog" checked><span>Studio blog</span></label><label class="sd-check"><input type="checkbox" name="destination" value="Instagram" checked><span>Instagram · via planned Buffer connection</span></label>'+note('Student photos need permission for each use. This sample uses an illustration.')+button('Review drafts','review-campaign',true)+'</div></div>');
+  }
+  function parent(step=1) {
+    const top = '<div class="sd-parent">';
+    if(step===1) detail('Parent browser experience',top+heading('After-School Art Studio','Six Tuesdays of making, exploring and trying something new.')+
+      '<div class="sd-panel sd-stack"><div class="sd-art" role="img" aria-label="Illustrative course artwork"></div><span class="sd-pill">Ages 6–10 · Materials included</span><p>September 15–October 20<br>3:30–4:30 PM · Room 1</p><div class="sd-money">$180 per student</div>'+button('Register in browser','parent-form',true)+'<p class="sd-small sd-muted">No app or account download. Fictional course.</p></div></div>');
+    else if(step===2) detail('Parent · registration',top+heading('Tell us who is coming.','A short form. Siblings can register together.')+
+      '<div id="sd-parent-form" class="sd-panel sd-form" role="form" aria-label="Sample parent registration"><label class="sd-field">Parent name<input name="parentName" value="Sam Example" required></label><label class="sd-field">Student name<input name="studentName" value="Alex Example" required></label><label class="sd-field">Parent email<input type="email" name="parentEmail" value="sam@example.com" required></label><label class="sd-check"><input type="checkbox" required><span>I reviewed the sample class and cancellation details.</span></label><label class="sd-check"><input type="checkbox"><span>Email me about future classes (optional).</span></label><button type="button" data-action="parent-review" class="sd-btn sd-primary">Review registration</button><p class="sd-small sd-muted">Design preview. Use fictional details only.</p></div></div>');
+    else detail('Parent · payment handoff',top+heading('A place to make something.','Registration review → Square checkout → confirmation.')+
+      '<div class="sd-panel sd-stack"><h3>After-School Art Studio</h3><p>1 student · 6 sessions · $180 total</p>'+note('The implemented flow would open Square’s secure checkout. No card details are collected by this concept.')+button('Simulate verified payment','parent-complete',true)+'<p class="sd-small sd-muted">A browser redirect alone never marks an enrollment paid.</p></div></div>');
+  }
+  const actions = {
+    back:()=>show(state.view),
+    run:()=>{mode('operator');show('roster');},
+    'roster-more':()=>{state.allStudents=!state.allStudents;roster();},
+    checkin:(control)=>{const s=findStudent(control.dataset.id);if(!s||s.status!=='Expected')return; s.status='Present';roster();status('Practice check-in recorded for '+s.name+'. No live record changed.');},
+    pickup:(control)=>pickup(control.dataset.id),
+    release:()=>{
+      const s=findStudent(state.pickup);
+      const adult=$('input[name="pickup-adult"]:checked'), method=$('input[name="verification"]:checked');
+      if(!s||s.status!=='Present'||!adult||!method)return status('Select an approved adult and verification method.');
+      s.status='Released';s.release={adult:adult.value,method:method.value};
+      show('roster');status('Practice release recorded for '+s.name+' · '+adult.value+' · '+method.value+'.');
+    },
+    unapproved:()=>simple('Pickup exception','Contact the parent on file.',
+      '<p>Fictional stored phone: (312) 555-0142</p><p class="sd-muted">Keep the child Present. Ask the owner to verify the request and update permission with a reason.</p>'+button('Return to pickup','resume-pickup',true)),
+    'resume-pickup':()=>pickup(state.pickup),
+    family:(control)=>family(control.dataset.family),
+    'family-adults':()=>simple('Pickup permission',escape(state.family)+' family.',
+      '<p>The parent on the family record is approved for pickup.</p>'+note('Emergency contact, billing contact and pickup approval remain separate. Changes require an authorized administrator and a verification note.')),
+    timeline:()=>simple('Family history','A clear record of what happened.',
+      '<div class="sd-timeline"><div><h3>September 8 · Class session</h3><p class="sd-small sd-muted">Check-in and release show the actual time and staff member.</p></div><div><h3>September 5 · Payment confirmed</h3><p class="sd-small sd-muted">Manual confirmation · Morgan · $180 course allocation</p></div><div><h3>September 1 · Form completed</h3><p class="sd-small sd-muted">Private sharing allowed. Public photos not granted.</p></div></div>'),
+    permission:()=>simple('Owner review','Verify the pickup request.',
+      '<p>Jordan Brooks asks whether Avery Brooks can pick up Amelia and Ezra.</p><div class="sd-notice">This message does not authorize pickup.</div><p class="sd-muted">Call the parent using the stored contact: (312) 555-0142. Confirm which children, the adult, and the dates.</p><label class="sd-field">Verification note<textarea id="sd-permission-note" placeholder="Use a fictional verification note"></textarea></label>'+button('Record verified request (demo)','permission-save',true)),
+    'permission-save':()=>{
+      if(!$('#sd-permission-note').value.trim())return status('A verification note is required.');
+      simple('Owner review','Request recorded in this concept.',note('The live approved-adult list has not changed. A real implementation records the actor, note and before/after permission for each child.'));
+      status('Practice verification note recorded. No pickup permission changed.');
+    },
+    waitlist:()=>simple('Waitlist offer','Invite the next family.',
+      '<span class="sd-pill">Family Printmaking · Saturday, Sep 12</span><p>2 places available. The next family requested 2 places together.</p><div><h3>Reed family</h3><p class="sd-muted">Mia + Theo · joined September 2</p></div><label class="sd-field">Offer expires<select><option>Tomorrow at 6:00 PM</option><option>In 48 hours</option><option>Owner follows up manually</option></select></label>'+note('The real workflow reserves the offered seats and tracks acceptance. No other family gets the same seats while held.')+button('Approve invitation draft','waitlist-save',true)),
+    'waitlist-save':()=>{simple('Waitlist offer','Invitation draft approved.', '<p>Reed family · 2 places · Family Printmaking</p>'+note('Local concept only. No invitation sent or seat reserved.'));status('Waitlist workflow previewed.');},
+    'new-course':()=>simple('New course','Start with a familiar plan.',
+      '<div id="sd-course-form" class="sd-form" role="form" aria-label="Sample course setup"><label class="sd-field">Template<select name="template"><option>After-school · six weeks</option><option>One-day workshop</option><option>School-break camp</option><option>Private art party</option></select></label><label class="sd-field">Course name<input name="courseName" value="After-School Art Studio" required></label><div class="sd-two"><label class="sd-field">First date<input name="firstDate" type="date" value="2026-09-15" required></label><label class="sd-field">Capacity<input name="capacity" type="number" value="16" min="1" max="30" required></label></div><p class="sd-small sd-muted">Dates, room conflicts, instructor and price are reviewed before publishing.</p><button type="button" data-action="course-review" class="sd-btn sd-primary">Review course</button></div>'),
+    course:()=>simple('Course overview','After-School Art Studio.',
+      '<p>Tuesdays · 3:30–4:30 PM · Room 1 · Morgan</p><span class="sd-pill">16 / 16 places filled</span><div class="sd-gap">'+button('Open roster','run',true)+button('Prepare class update','campaign')+'</div><hr class="sd-rule">'+button('Review a cancellation','cancel-class')),
+    makers:()=>simple('Course overview','Little Makers.',
+      '<p>Tuesdays · 4:45–5:30 PM · Room 2 · Riley</p><span class="sd-pill">8 / 10 places filled</span>'+button('Prepare an invitation','invite-family',true)),
+    'copy-week':()=>simple('Copy schedule','Review next week.',
+      '<p>Tuesday, September 15</p><div class="sd-line-item"><span>After-School Art Studio</span><span class="sd-small sd-muted">3:30 PM</span></div><div class="sd-line-item"><span>Little Makers</span><span class="sd-small sd-muted">4:45 PM</span></div>'+note('New dated rosters start with no attendance or manual Paid confirmations. Instructor, room and holiday checks run before saving.')+button('Keep as draft (demo)','draft-week',true)),
+    'draft-week':()=>{show('schedule');status('Next-week draft simulated. The working schedule is unchanged.');},
+    'cancel-class':()=>simple('Schedule change','Review the whole change.',
+      '<p>September 15 · After-School Art Studio</p><p class="sd-muted">16 students affected · planned reminders cancelled · families need a notice · owner reviews credit/refund choices separately.</p><label class="sd-field">Reason<textarea>Fictional weather closure</textarea></label>'+button('Preview family notice','cancel-notice',true)),
+    'cancel-notice':()=>simple('Family notice','Class is cancelled on September 15.',
+      '<p>We are closing the studio for the day. Your remaining class dates are unchanged. We will contact you about a makeup date.</p>'+note('Review actual policy before sending. This concept has not cancelled a class, sent a notice or issued a refund.')),
+    calendar:()=>simple('Calendar options','Take your schedule with you.',
+      '<h3>Start with calendar files</h3><p class="sd-muted">Add class dates to a parent’s or instructor’s calendar. No student roster or safety note is included.</p><h3>Optional Google Calendar connection</h3><p class="sd-muted">Use a dedicated studio calendar. Edit authoritative dates in this app and show the last successful sync.</p>'),
+    invoice:()=>simple('Sample invoice','Thompson family · $180.',
+      '<span class="sd-pill sd-pill-warm">Open invoice · sample only</span><p>After-School Art Studio · six-week course</p><div class="sd-money-row"><span>Total</span><span>$180</span></div><div class="sd-money-row"><span>Verified collected</span><span>$0</span></div>'+note('Square would provide the hosted invoice and its payment status. Staff do not mark a provider invoice settled by editing a checkbox.')+button('Preview payment request','payment-request',true)),
+    'payment-request':()=>simple('Payment request draft','Your art class invoice.',
+      '<p>Hi Alex, here is the secure payment link for Noah’s upcoming course. The total is $180.</p><div class="sd-pill sd-pill-warm">Square link created only after connection</div>'+note('No invoice created and no email sent.')),
+    'match-payment':()=>simple('Payment reconciliation','Match once. Keep the receipt.',
+      '<p>Sample Venmo confirmation · $180</p><label class="sd-field">Allocate to<select id="sd-allocation"><option>Thompson family · Noah · fall course</option><option>Brooks family · Amelia · fall course</option><option>Leave unmatched for review</option></select></label><label class="sd-field">Reference / note<input placeholder="Fictional reference only"></label>'+note('This is a manual confirmation, not a Venmo API connection. Matching never duplicates a payment already recorded.')+button('Preview allocation','allocation',true)),
+    allocation:()=>simple('Allocation preview','One payment, one allocation.',
+      '<p>$180 manual confirmation → '+escape($('#sd-allocation').value)+'.</p><p class="sd-muted">The source, staff identity and allocation history stay visible. Attendance remains independent.</p>'+note('No financial record was written.')),
+    receipt:()=>simple('Expense','Keep the receipt with the purchase.',
+      '<label class="sd-field">Supplier<input value="Fictional Art Supply Shop"></label><div class="sd-two"><label class="sd-field">Amount<input type="number" value="42.50" min="0" step=".01"></label><label class="sd-field">Category<select><option>Class materials</option><option>Studio supplies</option><option>Owner review needed</option></select></label></div><p class="sd-small sd-muted">The implemented app will attach a private receipt photo and let the owner review the category.</p>'+button('Save sample expense','expense-save',true)),
+    'expense-save':()=>{show('money');status('Expense entry simulated. No receipt uploaded or accounting record changed.');},
+    month:()=>simple('Accountant package','Make the month easy to review.',
+      '<div class="sd-line-item"><span>Sales, payments and refunds</span><span class="sd-pill">Separate reports</span></div><div class="sd-line-item"><span>Fees and payout matching</span><span class="sd-pill">Reconciliation</span></div><div class="sd-line-item"><span>Expenses and receipt references</span><span class="sd-pill">Supporting records</span></div><div class="sd-line-item"><span>Credits, deposits and adjustments</span><span class="sd-pill">Preserved</span></div>'+note('The accountant confirms reporting basis, tax treatment and retention. This package is not a tax return or a full database backup.')+button('Preview package manifest','manifest',true)),
+    manifest:()=>simple('Package manifest','September 2026 · example.',
+      '<p>sales.csv<br>payments.csv<br>refunds.csv<br>expenses.csv<br>credits-and-deposits.csv<br>payout-reconciliation.csv<br>receipt-index.csv<br>README with date range and reporting basis</p>'+note('Design preview only. No financial file exported.')),
+    campaign,
+    'review-campaign':()=>{
+      const destinations=all('input[name="destination"]:checked').map((input)=>input.value);
+      if(!destinations.length)return status('Choose at least one destination.');
+      state.campaign=destinations;
+      const story=$('#sd-story').value;
+      simple('Review drafts','Ready for your review.',
+        '<p>'+escape(story)+'</p><hr class="sd-rule"><p>'+destinations.map(escape).join(' · ')+'</p><span class="sd-pill">Sample illustration · no child photo</span>'+note('A real send rechecks subscriptions, media consent and channel access. Each destination has its own result.')+button('Approve drafts (demo)','approve-campaign',true));
+    },
+    'approve-campaign':()=>{simple('Draft approval','Drafts approved in this concept.',
+      '<p>'+state.campaign.map(escape).join(' · ')+'</p>'+note('Nothing was sent, posted or published. Planned integrations are not connected.'));status('Draft approval simulated for '+state.campaign.length+' destinations.');},
+    'invite-family':()=>simple('Invitation','Invite the right families.',
+      '<label class="sd-field">Audience<select><option>Subscribed families interested in ages 6–10</option><option>Families who requested a waitlist offer</option><option>One selected family</option></select></label><label class="sd-field">Invitation<textarea>Fall classes are open! Join us for six weeks of color, collage and creative discoveries. See dates and register in your browser.</textarea></label>'+note('The recipient preview excludes unsubscribed contacts. An invitation does not change pickup, photo or billing permissions.')+button('Preview parent registration','parent',true)),
+    photos:()=>simple('Photo library','Private first. Share with care.',
+      '<div class="sd-two"><div class="sd-stack"><div class="sd-art" role="img" aria-label="Fictional artwork illustration"></div><span class="sd-pill">Illustration · eligible example</span></div><div class="sd-stack"><div class="sd-art sd-art-two" role="img" aria-label="Fictional placeholder for an unreviewed upload"></div><span class="sd-pill sd-pill-warm">Unreviewed · public use blocked</span></div></div><p class="sd-muted">Choose everyone pictured and check permission for private gallery, website and social use separately.</p>'+button('Prepare with eligible illustration','campaign',true)),
+    referrals:()=>simple('Inquiries & referrals','Follow up while interest is fresh.',
+      '<div class="sd-line-item"><div>Reed family<p class="sd-small sd-muted">Friend referral · workshop waitlist</p></div><span class="sd-pill">Follow up</span></div><div class="sd-line-item"><div>Sample neighborhood newsletter<p class="sd-small sd-muted">Invitations link to one course page</p></div><span class="sd-pill">Draft</span></div><p class="sd-muted">Track inquiries, registrations and returning families. Paid ads and rewards need an owner-approved budget.</p>'),
+    reply:()=>simple('Assigned conversation','Reply to Alex Thompson.',
+      '<p class="sd-small sd-muted">About Noah · After-School Art Studio</p><label class="sd-field">Approved class-prep reply<textarea id="sd-reply">Hi Alex! We have aprons and all the materials ready. Clothes that can get a little paint on them are perfect. See you at 3:30!</textarea></label>'+button('Review reply','reply-review',true)),
+    'reply-review':()=>simple('Reply review','Alex Thompson · Email.',
+      '<p>'+escape($('#sd-reply').value)+'</p>'+note('A real reply is logged with the family and its delivery status. This is a local preview.')+button('Simulate sending','reply-send',true)),
+    'reply-send':()=>{show(state.mode==='operator'?'messages':'inbox');status('Reply simulated. No email sent.');},
+    prep:()=>simple('Lesson & materials','Color & collage.',
+      '<p>16 students · 60 minutes · After-School Art Studio</p><div class="sd-timeline"><div><h3>10 min · Look & notice</h3><p class="sd-small sd-muted">Find warm and cool colors around the room.</p></div><div><h3>35 min · Make</h3><p class="sd-small sd-muted">Layer shapes and textures; offer easier cutting choices.</p></div><div><h3>15 min · Share & tidy</h3><p class="sd-small sd-muted">Invite artists to describe one choice they made.</p></div></div><hr class="sd-rule"><p>16 paper bases · 16 glue sticks · 8 shared scissors · 2 trays of paper scraps</p>'+button('Add glue to restock list','restock',true)),
+    restock:()=>status('Restock task simulated: glue sticks. No purchase placed.'),
+    team:()=>simple('Team access','Give each person the right tools.',
+      '<div class="sd-line-item"><div>Morgan Ellis<p class="sd-small sd-muted">Owner · scheduling, approvals and settings</p></div><span class="sd-pill">Owner</span></div><div class="sd-line-item"><div>Riley Park<p class="sd-small sd-muted">Assigned classes, handoffs and approved replies</p></div><span class="sd-pill">Assistant</span></div>'+note('App permissions are separate from Differance Labs administration. Revocation blocks subsequent protected operations.')+button('See assistant training','training',true)),
+    training:()=>simple('First-hour training','Five exercises. One confident shift.',
+      '<div class="sd-timeline"><div><h3>0–10 min · Get ready</h3><p class="sd-small sd-muted">Sign in, find class, print backup.</p></div><div><h3>10–25 min · Arrivals</h3><p class="sd-small sd-muted">Check in fictional students and request a correction.</p></div><div><h3>25–40 min · Pickup</h3><p class="sd-small sd-muted">Verify adults; confirm siblings separately.</p></div><div><h3>40–50 min · Help families</h3><p class="sd-small sd-muted">Reply, upload privately, finish a task.</p></div><div><h3>50–60 min · Handle exceptions</h3><p class="sd-small sd-muted">Paper backup, network uncertainty and owner handoff.</p></div></div>'+button('Try running class','run',true)),
+    records:()=>simple('Records & recovery','Keep the evidence.',
+      '<h3>History stays with each record</h3><p class="sd-muted">Attendance, payments, consent changes and corrections retain the actor, time and reason.</p><h3>Backups include records and photos</h3><p class="sd-muted">The implemented system needs encrypted backups, a retention policy and restore checks. CSVs alone are not a backup.</p>'+note('This concept does not change the existing POC backup or access configuration.')),
+    connections:()=>simple('Integration settings','Connect only what the studio uses.',
+      '<div class="sd-line-item"><span>Square · payments</span><span class="sd-pill sd-pill-warm">Not connected</span></div><div class="sd-line-item"><span>Resend · email</span><span class="sd-pill sd-pill-warm">Not connected</span></div><div class="sd-line-item"><span>Buffer · social</span><span class="sd-pill sd-pill-warm">Not connected</span></div><p class="sd-muted">Owner setup will show account, granted permissions, usage, last sync and failed work. Calendar files and accountant exports work before direct integrations.</p>'+note('No purchase, login, message, DNS change or account connection occurs in this concept.')),
+    print:()=>simple('Paper backup','Print before class.',
+      '<p>Staff use only · September 8 · 3:30–4:30 PM</p><div class="sd-line-item"><span>Attendance sheet</span><span class="sd-small sd-muted">Arrival, departure, adult, initials</span></div><div class="sd-line-item"><span>Separate staff reference</span><span class="sd-small sd-muted">Contacts and approved pickup adults</span></div><p class="sd-muted">The working check-in app already provides a printable PDF. Keep sheets under staff control and reconcile afterward.</p>'+note('This design action previews the workflow; it does not generate a new PDF.')),
+    upload:()=>simple('Private class photos','Add the story of today.',
+      '<p>After-School Art Studio · September 8</p><div class="sd-art" role="img" aria-label="Sample artwork placeholder"></div><span class="sd-pill">Private until reviewed</span><p class="sd-muted">Real uploads will show progress, depicted students and permission for each use. A failed upload never appears saved.</p>'+button('Add sample illustration','upload-sample',true)),
+    'upload-sample':()=>{show('tasks');status('Sample illustration added to this concept. No file uploaded or photo shared.');},
+    paper:()=>simple('Paper reconciliation','Record when it actually happened.',
+      '<div class="sd-two"><label class="sd-field">Actual arrival<input type="time" value="15:32"></label><label class="sd-field">Actual release<input type="time" value="16:31"></label></div><label class="sd-field">Pickup adult<input value="Jordan Brooks"></label><p class="sd-small sd-muted">Source: Paper · entered later by Riley. The actual event time remains distinct from the recorded time.</p>'+note('Compare with existing events before saving. Conflicts need an audited correction; a blank paper Paid box never clears a digital confirmation.')+button('Preview comparison','paper-compare',true)),
+    'paper-compare':()=>simple('Paper comparison','An existing check-in needs review.',
+      '<p>Digital record: 3:30 PM · Paper entry: 3:32 PM</p>'+note('Keep the original event. Ask an authorized administrator to resolve the difference with a reason. No duplicate event is created.')+button('Request owner review (demo)','paper-review',true)),
+    'paper-review':()=>{show('tasks');status('Paper conflict task simulated. No attendance record changed.');},
+    incident:()=>simple('Private incident report','Give the owner what they need.',
+      '<label class="sd-field">What happened?<textarea placeholder="Fictional practice note"></textarea></label><label class="sd-field">Immediate action<input placeholder="For example: contacted the parent on file"></label>'+note('Keep incident details private. Urgent situations require direct action and a call; a saved form is not an emergency response.')+button('Preview owner handoff','incident-save',true)),
+    'incident-save':()=>{show('tasks');status('Incident handoff simulated. No message or report sent.');},
+    finish:()=>{
+      const present=students.filter((s)=>s.status==='Present').length;
+      simple('Finish shift',present?'There are still '+present+' children Present.':'Review your shift.',
+        note(present?'Keep the roster open. Ending a class never releases a child automatically.':'Review paper entries and unresolved tasks before the owner handoff.')+button('Return to roster','run',true));
+    },
+    parent:()=>parent(1),
+    'parent-form':()=>parent(2),
+    'parent-review':()=>{
+      const fields=all('#sd-parent-form input');
+      if(fields.every(input=>input.reportValidity()))parent(3);
+    },
+    'course-review':()=>{
+      const fields=all('#sd-course-form input');
+      if(!fields.every(input=>input.reportValidity()))return;
+      const value=(name)=>escape($('#sd-course-form [name="'+name+'"]').value);
+      simple('Course review',value('courseName'), '<p>'+value('template')+'<br>Starts '+value('firstDate')+' · '+value('capacity')+' places</p>'+note('In the full app, review generated dates, room, instructor, price, policy and conflicts before publication. This form demonstrates the flow only.')+button('See a sample enrollment page','parent',true));
+    },
+    'parent-complete':()=>simple('Parent confirmation · fictional','You have a place at the art table.',
+      '<span class="sd-pill">Simulated enrollment confirmation</span><p>1 student · 6 Tuesdays · sample $180 payment</p><p class="sd-muted">The real flow sends dates, supplies and a calendar file by email. The family never has to download an app.</p>'+note('No payment processed, student enrolled or confirmation email sent.'))
+  };
+  root.addEventListener('click',(event)=>{
+    const control=event.target.closest('button');
+    if(!control||!root.contains(control)||control.disabled)return;
+    if(control.dataset.mode)return mode(control.dataset.mode);
+    if(control.dataset.view)return show(control.dataset.view);
+    if(control.dataset.action&&actions[control.dataset.action])actions[control.dataset.action](control);
+  });
+  root.addEventListener('input',(event)=>{
+    if(event.target.id==='sd-search')roster();
+  });
+  root.addEventListener('change',(event)=>{
+    if(event.target.name==='pickup-adult'||event.target.name==='verification') {
+      const release=$('#sd-release');
+      if(release)release.disabled=!$('input[name="pickup-adult"]:checked')||!$('input[name="verification"]:checked');
+    }
+    if(event.target.dataset.task){
+      state.tasks[event.target.dataset.task]=event.target.checked;
+      status('Practice task '+(event.target.checked?'completed.':'reopened.'));
+    }
+  });
+  roster();
+  const design = { spacing: 'comfortable', accent: 'sage' };
+  function applyDesign(){
+    root.style.setProperty('--sd-pad',design.spacing==='compact'?'16px':'22px');
+    root.style.setProperty('--sd-accent',design.accent==='sage'?'#c9e7ac':'#efd49d');
+  }
+  if(globalThis.Tweak){
+    const tweak = new Tweak({container:root,onChange:applyDesign});
+    tweak.addSelect(design,'spacing',{label:'Spacing',options:['comfortable','compact']});
+    tweak.addSelect(design,'accent',{label:'Accent',options:[{label:'Sage',value:'sage'},{label:'Warm paper',value:'paper'}]});
+  }
+})();
+</script>

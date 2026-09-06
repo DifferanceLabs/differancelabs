@@ -6,6 +6,10 @@ A staff-operated, online-first Home Screen web app for elementary art classes. I
 
 The proposed production address is **https://art-checkin.differancelabs.com**. It has not been configured or deployed. The local address is **http://localhost:5173 on the connected Windows computer**, not your phone.
 
+## Proposed studio workspace
+
+[STUDIO-DESIGN.md](STUDIO-DESIGN.md) describes the requested expansion into Art School Desk: owner and class-operator workspaces, family records, enrollment, payments, email, photos, marketing and accountant preparation. It includes the integration choices, permissions, first-hour training and staged acceptance criteria. The accompanying in-conversation concept is a fictional design simulation; these proposed modules are not connected to live services or part of the deployed check-in workflow.
+
 ## Start locally
 
 The verified Git checkout is `C:\Users\BDM\Documents\GitHub\differancelabs`, on branch `feat/art-class-checkin`. The originally selected `C:\Users\BDM\Documents\DifferanceLabs` was a separate, non-Git copy; it was not edited.
