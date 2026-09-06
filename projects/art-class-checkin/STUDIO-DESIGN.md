@@ -2,9 +2,11 @@
 
 Design date: September 5, 2026 (America/Chicago). Working product name; the business name remains editable.
 
-**Status: proposed expansion, with an interactive fictional concept.** The existing Art Class Check-In proof of concept remains at https://art-class-checkin-poc.vercel.app. This design does not activate registration, payments, email, social publishing, tax filing, or new production storage. The concept's actions run only in memory and reset when reopened. All names, amounts, messages and photos represented in it are fictional.
+**Status (September 6, 2026): the class-day simulation is implemented; broader business integrations remain proposed.** Staff and manager now share a working practice roster, reviews, attendance/payment audit, artwork library, outbox, closing checklist and completed-class summary. See [STUDIO-SIMULATION.md](STUDIO-SIMULATION.md) for an end-to-end walkthrough. All names, amounts, messages and artwork are fictional. The simulation is saved in session storage for this browser tab, survives reload, and can be reset. Other tabs/devices have independent practice; no live or cloud record is written.
 
-Open the design directly in a phone or tablet browser at **https://art-class-checkin-poc.vercel.app/studio-design**. Choose **Manage studio** or **Run class**. The regular page provides the same sample workflows without requiring the conversation's visualization display. It is generated only when building with ART_APP_MODE=demo; live builds omit it. Its script and styles are separate local files so the app's existing Content Security Policy stays intact. Decorative conversation icons and the host's design-tweak controls are omitted on this page.
+Open **https://art-class-checkin-poc.vercel.app/studio-design** in a phone or tablet browser. Choose **Run class** to prepare and operate the class; switch to **Manage studio** to resolve requests and sign off. This page works without the conversation's visualization display. The implemented source is in design/simulation; the original inline fragment is retained as the earlier concept. Only ART_APP_MODE=demo builds include the simulation. External local assets preserve the existing Content Security Policy. The separate cloud-backed check-in POC remains at https://art-class-checkin-poc.vercel.app.
+
+The remaining sections describe the broader proposed product. Registration, real payments, email/social delivery, automated reminders, blog publishing and tax preparation have not been connected or implemented by this simulation.
 
 ## 1. The owner's operating model
 

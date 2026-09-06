@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#14201e" />
+    <title>Art School Desk — class simulation</title>
+  </head>
+  <body>
+    <div id="art-school-desk" aria-label="Art School Desk class simulation">
+      <header class="sd-head">
+        <div class="sd-brand">
+          <span class="sd-mark" aria-hidden="true">a.</span>
+          <div>
+            <div class="sd-brand-name">Art School Desk</div>
+            <div class="sd-small sd-muted">Practice a whole class day.</div>
+          </div>
+        </div>
+        <div class="sd-switch" aria-label="Simulation role">
+          <button type="button" data-role="manager" aria-pressed="true">
+            Manage studio
+          </button>
+          <button type="button" data-role="staff" aria-pressed="false">
+            Run class
+          </button>
+        </div>
+      </header>
+      <div class="sd-concept sd-between">
+        <span
+          >FICTIONAL SIMULATION · No real payments, messages or student
+          records</span
+        ><button type="button" class="sd-btn sd-quiet" data-action="reset">
+          Reset practice
+        </button>
+      </div>
+      <div class="sd-shell">
+        <aside class="sd-sidebar">
+          <nav class="sd-nav" id="sd-manager-nav" aria-label="Manage studio">
+            <button type="button" data-view="today">Today</button
+            ><button type="button" data-view="schedule">Schedule</button
+            ><button type="button" data-view="families">Families</button
+            ><button type="button" data-view="money">Money</button
+            ><button type="button" data-view="growth">Growth</button>
+          </nav>
+          <nav class="sd-nav" id="sd-staff-nav" aria-label="Run class" hidden>
+            <button type="button" data-view="today">Today</button
+            ><button type="button" data-view="roster">Roster</button
+            ><button type="button" data-view="messages">Messages</button
+            ><button type="button" data-view="tasks">Tasks</button>
+          </nav>
+          <nav
+            class="sd-nav sd-nav-extra"
+            id="sd-manager-extra"
+            aria-label="Studio tools"
+          >
+            <button type="button" data-view="reviews">
+              Reviews
+              <span id="sd-review-count" class="sd-pill">0</span></button
+            ><button type="button" data-view="studio">Studio</button>
+          </nav>
+          <div class="sd-user">
+            <div id="sd-actor">Morgan Ellis</div>
+            <div class="sd-small sd-muted" id="sd-role-label">Manager</div>
+          </div>
+        </aside>
+        <main class="sd-main">
+          <div id="sd-clock" class="sd-small sd-muted"></div>
+          <div id="sd-error" role="alert" hidden></div>
+          <div id="sd-content"><p>Loading the fictional class…</p></div>
+          <noscript
+            >Turn on JavaScript to run this fictional simulation.</noscript
+          >
+        </main>
+      </div>
+      <div id="sd-status" class="sd-footer" role="status" aria-live="polite">
+        This practice run is stored only in this browser tab.
+      </div>
+    </div>
+    <script type="module" src="./ui.ts"></script>
+  </body>
+</html>

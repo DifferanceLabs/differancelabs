@@ -2,6 +2,8 @@
 
 Use only the authorized live app for real students. A gold **FICTIONAL DEMO** banner means practice data only.
 
+**Practice the expanded studio:** open **https://art-class-checkin-poc.vercel.app/studio-design**. Tap **Run class**, complete preparation, record arrivals and each pickup, then use **Tasks** to submit the class. Switch to **Manage studio** for pickup/correction reviews and final sign-off. Follow [the complete simulation exercise](STUDIO-SIMULATION.md). Its fictional records stay in this browser tab; external messages and payments are simulated.
+
 **Try the proof of concept:** open **https://art-class-checkin-poc.vercel.app** and choose **Enter demo as staff**. Select **After-School Art Studio** and a dated session, or create a new session. Use **Enter demo as app administrator** when practicing setup and corrections. These demonstration roles need no Google or Vercel login; enter fictional information only. On the installed demo icon, choose a demo role again if its session expires. The live sign-in instructions below apply only after a later live deployment.
 
 1. **Before class:** connect to the internet, open the app, sign in through Differance Labs if asked, and select the correct dated class under **Today**. Tap **Print backup** and print both the attendance roster and the separate staff pickup/contact reference. Keep both under staff control.

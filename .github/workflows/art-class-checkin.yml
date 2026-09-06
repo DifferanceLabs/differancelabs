@@ -47,6 +47,8 @@ jobs:
       - run: npm run test:e2e
         env:
           ART_BROWSER_BUILT: "1"
+      - name: Walk through the fictional studio as staff and manager
+        run: npm run test:simulation:browser
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

@@ -1,0 +1,334 @@
+/* System fonts only; this simulation never contacts a font service. */
+html {
+  background: #14201e;
+  color-scheme: dark;
+}
+body {
+  margin: 0;
+  padding: 12px;
+}
+#art-school-desk {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+#art-school-desk .sd-main {
+  min-width: 0;
+}
+#art-school-desk .sd-page-title {
+  margin: 20px 0;
+  display: grid;
+  gap: 12px;
+}
+#art-school-desk .sd-panel {
+  margin-bottom: 18px;
+}
+#art-school-desk .sd-tools {
+  margin: 16px 0;
+}
+#art-school-desk .sd-form {
+  display: grid;
+  gap: 18px;
+}
+#art-school-desk .sd-field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+#art-school-desk .sd-field input,
+#art-school-desk .sd-field select,
+#art-school-desk .sd-field textarea {
+  color: var(--sd-text);
+  background: var(--sd-bg);
+  border: 1px solid #718279;
+  border-radius: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px;
+  font-size: 16px;
+}
+#art-school-desk .sd-field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+#art-school-desk .sd-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+#art-school-desk .sd-check input {
+  accent-color: #c9e7ac;
+  width: 24px;
+  height: 24px;
+  flex: none;
+}
+#art-school-desk fieldset {
+  border: 1px solid var(--sd-line);
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 0;
+}
+#art-school-desk .sd-filter {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin: 18px 0;
+}
+#art-school-desk .sd-roster {
+  display: grid;
+  gap: 14px;
+}
+#art-school-desk .sd-student {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  border: 1px solid var(--sd-line);
+  background: var(--sd-panel);
+  padding: 18px;
+  border-radius: 12px;
+}
+#art-school-desk .sd-student-name {
+  font-size: 23px;
+  overflow-wrap: anywhere;
+}
+#art-school-desk .sd-attendance {
+  margin-top: 6px;
+  font-weight: 600;
+}
+#art-school-desk .sd-safety {
+  color: var(--sd-gold);
+  margin-top: 8px;
+}
+#art-school-desk .sd-payment-controls {
+  grid-column: 1/-1;
+  border-top: 1px solid var(--sd-line);
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+#art-school-desk .sd-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+#art-school-desk .sd-number {
+  display: block;
+  font-size: 28px;
+  color: var(--sd-text);
+  font-weight: 500;
+}
+#art-school-desk .sd-line-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--sd-line);
+}
+#art-school-desk .sd-line-item > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#art-school-desk .sd-line-item button {
+  flex: none;
+}
+#art-school-desk .sd-notice {
+  border: 1px solid #647c6d;
+  border-radius: 10px;
+  background: #293b30;
+  padding: 14px;
+}
+#art-school-desk .sd-steps {
+  padding-left: 22px;
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+#art-school-desk .sd-message {
+  border-bottom: 1px solid var(--sd-line);
+  padding: 12px 0;
+  display: grid;
+  gap: 10px;
+}
+#art-school-desk .sd-message .sd-between {
+  flex-wrap: wrap;
+}
+#art-school-desk .sd-prewrap {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+#art-school-desk pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 100%;
+  font-size: 12px;
+}
+#art-school-desk summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 10px 0;
+}
+#art-school-desk #sd-error {
+  margin: 16px 0;
+  background: #482d2a;
+  border: 1px solid #dba99f;
+  border-radius: 10px;
+  color: #ffe6dc;
+  padding: 16px;
+}
+#art-school-desk .sd-art {
+  min-height: 140px;
+  border-radius: 10px;
+  background:
+    linear-gradient(26deg, transparent 40%, #c97d55 41% 57%, transparent 58%),
+    linear-gradient(145deg, #c9d6a9 35%, #647e84 36% 66%, #ddbe83 67%);
+}
+#art-school-desk .sd-footer {
+  overflow-wrap: anywhere;
+}
+#art-school-desk .sd-paper {
+  background: white;
+  color: #111;
+  padding: 22px;
+  border-radius: 10px;
+  display: grid;
+  gap: 12px;
+}
+#art-school-desk .sd-paper table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+#art-school-desk .sd-paper th,
+#art-school-desk .sd-paper td {
+  border: 1px solid #555;
+  padding: 8px;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+  color: #111;
+  background: white;
+}
+#art-school-desk .sd-paper td {
+  height: 60px;
+}
+#art-school-desk .sd-paper-reference {
+  margin-top: 32px;
+}
+#art-school-desk .sd-paper-reference h2,
+#art-school-desk .sd-paper-reference p {
+  margin-bottom: 12px;
+}
+@media (max-width: 760px) {
+  #art-school-desk .sd-student {
+    grid-template-columns: 1fr;
+  }
+  #art-school-desk .sd-filter {
+    grid-template-columns: 1fr;
+  }
+  #art-school-desk .sd-line-item {
+    flex-wrap: wrap;
+  }
+  #art-school-desk .sd-kpis {
+    font-size: 12px;
+  }
+  #art-school-desk .sd-concept {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+@media (max-width: 620px) {
+  body {
+    padding: 0;
+  }
+  #art-school-desk {
+    border-radius: 0;
+  }
+  #art-school-desk .sd-paper {
+    padding: 10px;
+  }
+}
+@page {
+  size: letter portrait;
+  margin: 0.45in;
+}
+@media print {
+  #art-school-desk .sd-paper-page {
+    break-after: page;
+  }
+  #art-school-desk .sd-paper .sd-paper-roster td {
+    height: 0.84in;
+  }
+  html,
+  body {
+    background: white !important;
+    color: #111;
+    margin: 0;
+    padding: 0;
+    color-scheme: light;
+  }
+  #art-school-desk {
+    background: white;
+    color: #111;
+    max-width: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+  #art-school-desk .sd-head,
+  #art-school-desk .sd-sidebar,
+  #art-school-desk .sd-concept,
+  #art-school-desk .sd-footer,
+  #art-school-desk #sd-clock,
+  #art-school-desk #sd-error,
+  #art-school-desk .sd-print-controls {
+    display: none !important;
+  }
+  #art-school-desk .sd-shell,
+  #art-school-desk .sd-main {
+    display: block;
+    padding: 0;
+  }
+  #art-school-desk .sd-paper {
+    padding: 0;
+    display: block;
+  }
+  #art-school-desk .sd-paper h1 {
+    font-size: 21px;
+    margin-bottom: 8px;
+  }
+  #art-school-desk .sd-paper h2 {
+    font-size: 16px;
+    margin: 8px 0;
+  }
+  #art-school-desk .sd-paper p {
+    font-size: 11px;
+    margin: 6px 0 12px;
+  }
+  #art-school-desk .sd-paper table {
+    font-size: 10px;
+  }
+  #art-school-desk .sd-paper td {
+    height: 0.54in;
+    padding: 5px;
+  }
+  #art-school-desk .sd-paper thead {
+    display: table-header-group;
+  }
+  #art-school-desk .sd-paper tr {
+    break-inside: avoid;
+  }
+  #art-school-desk .sd-paper-reference {
+    break-before: page;
+    margin-top: 0;
+  }
+  #art-school-desk .sd-paper-reference td {
+    height: 0.45in;
+  }
+}

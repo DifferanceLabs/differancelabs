@@ -6,11 +6,11 @@ A staff-operated, online-first Home Screen web app for elementary art classes. I
 
 The proposed production address is **https://art-checkin.differancelabs.com**. It has not been configured or deployed. The local address is **http://localhost:5173 on the connected Windows computer**, not your phone.
 
-## Proposed studio workspace
+## Studio class-day simulation
 
-[STUDIO-DESIGN.md](STUDIO-DESIGN.md) describes the requested expansion into Art School Desk: owner and class-operator workspaces, family records, enrollment, payments, email, photos, marketing and accountant preparation. It includes the integration choices, permissions, first-hour training and staged acceptance criteria. The accompanying in-conversation concept is a fictional design simulation; these proposed modules are not connected to live services or part of the deployed check-in workflow.
+[STUDIO-SIMULATION.md](STUDIO-SIMULATION.md) walks through the implemented staff/manager simulation: preparation, arrivals, Paid, individual pickup, permission reviews, paper reconciliation, corrections, sample artwork, a simulated outbox, expenses, staff submission, manager sign-off and the next dated session. It uses separate fictional state saved only in the current browser tab; switching roles shares that state and reload preserves it. The role switch is a training control, not live authentication.
 
-The design also opens directly at **https://art-class-checkin-poc.vercel.app/studio-design**, including on phones that do not display the inline visualization. It is a separate, fictional concept page included only in demo builds.
+Open **https://art-class-checkin-poc.vercel.app/studio-design**, including on phones that do not display the inline visualization. The isolated simulation is included only in demo builds and never calls the check-in API. [STUDIO-DESIGN.md](STUDIO-DESIGN.md) retains the broader product proposal; real registration, payment processing, messaging, social/blog publishing and tax preparation remain future work.
 
 ## Start locally
 

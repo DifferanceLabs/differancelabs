@@ -6,6 +6,8 @@ Prepared September 5, 2026 for an owner working remotely from a phone with Codex
 
 The code, account logins, separate cloud database and test migrations are already completed. The Vercel project and its preview variables are configured. The steps below document the setup for reproduction; do not repeat account login, database creation or migrations for this prepared preview.
 
+**Staff/manager studio simulation:** open **https://art-class-checkin-poc.vercel.app/studio-design** and follow [STUDIO-SIMULATION.md](STUDIO-SIMULATION.md). The connected class-day practice is separate from the cloud check-in POC. No sign-in, database setup or integration accounts are needed for the simulation; keep entries fictional. Its role switch shares one tab's state, not records across devices.
+
 ## 1. Select the right project and run setup
 
 **On your phone/iPad, in Codex:** select the existing Differance Labs project. The verified Git checkout is `C:\Users\BDM\Documents\GitHub\differancelabs`. The initially selected `C:\Users\BDM\Documents\DifferanceLabs` was a stale non-Git copy. Open/select the canonical directory on the connected Windows computer; do not initialize another repository. No project-trust error occurred during this run. If a later session shows an untrusted-project error, use Codex's supported Open Folder/trust action for that exact existing directory.

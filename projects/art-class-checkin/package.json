@@ -13,6 +13,7 @@
     "check": "tsc --noEmit && tsc --project tsconfig.server.json --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:simulation:browser": "playwright test --config playwright.simulation.config.ts",
     "verify:preview": "node --import tsx scripts/verify-preview.mjs",
     "demo:setup": "node scripts/local-demo.mjs",
     "demo:reset": "node scripts/local-demo.mjs --reset",

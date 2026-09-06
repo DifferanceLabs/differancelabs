@@ -4,6 +4,21 @@ Checked September 5, 2026 on the connected Windows computer. This is a working f
 
 ## Results
 
+### September 6: connected studio simulation
+
+The hosted design's placeholder class-day responses were replaced with a separate TypeScript simulation at **/studio-design**. Staff and manager share one tab's fictional practice, including real state transitions for preparation, attendance, payment, pickup approvals, paper conflicts, audited corrections, sample artwork, outbox, closing and next-session creation.
+
+- **9 simulation rule tests passed**, including current pickup permission, duplicate/stale releases, manager-only decisions, per-session payments, paper reconciliation, history preservation, message deduplication and Chicago daylight-saving offsets.
+- **9 automated browser scenarios passed** across WebKit phone/tablet portrait and Chromium tablet landscape: 15 individual pickups plus one absence, sibling permission approval, paper correction, staff submission, manager sign-off, reload, fresh next session, optional manager tasks, CSV download, mobile search and independent browser pages.
+- **All 28 app tests passed** against a freshly reset local fictional Supabase fixture (19 existing plus 9 simulation tests). A first run against the reused local fixture hit an existing randomized-session-date collision; resetting that test fixture resolved it without changing production or cloud data.
+- **5 root regression tests passed**; the main site's local Vercel configuration hash remains unchanged.
+- Strict TypeScript and demo/live builds passed. The live build omits the simulation. The simulation uses no API calls or external integrations and passes the existing strict Content Security Policy.
+- Chromium's simulated print output was rendered and visually checked: **3 US Letter pages**, with two balanced handwriting rosters and a separate staff contact reference. Long names fit. Physical Safari/AirPrint devices remain untested.
+
+See [STUDIO-SIMULATION.md](STUDIO-SIMULATION.md) for the exact exercise and test commands. These results describe fictional training behavior; the role switch and per-tab storage are not production authorization or shared cloud records. The original check-in POC and the wider proposed studio integrations remain distinct.
+
+### Original check-in POC verification
+
 | Check | Result / evidence |
 | --- | --- |
 | Correct repository | `C:\Users\BDM\Documents\GitHub\differancelabs`, remote `DifferanceLabs/differancelabs`, feature branch `feat/art-class-checkin`; initial clean main `7cd35ad242f63a04c9bca1dceba6cbf21232bf50` |
