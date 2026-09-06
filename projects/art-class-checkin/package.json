@@ -9,7 +9,7 @@
   "scripts": {
     "dev:netlify": "node scripts/netlify-dev.mjs",
     "dev": "concurrently -k \"node --watch --env-file=.env.local --import tsx server/dev.ts\" \"vite --host 127.0.0.1\"",
-    "build": "npm run check && vite build && node scripts/build-shell.mjs",
+    "build": "npm run check && vite build && node scripts/build-shell.mjs && node scripts/build-studio-design.mjs",
     "check": "tsc --noEmit && tsc --project tsconfig.server.json --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",

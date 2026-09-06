@@ -11,8 +11,10 @@
   },
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/index" },
+    { "source": "/studio-design", "destination": "/studio-design/index.html" },
+    { "source": "/studio-design/", "destination": "/studio-design/index.html" },
     {
-      "source": "/((?!api/|assets/|sw.js|launch.js|fonts.css|manifest.webmanifest|icons/).*)",
+      "source": "/((?!api/|assets/|studio-design/|sw.js|launch.js|fonts.css|manifest.webmanifest|icons/).*)",
       "destination": "/index.html"
     }
   ],

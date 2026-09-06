@@ -4,6 +4,8 @@ Design date: September 5, 2026 (America/Chicago). Working product name; the busi
 
 **Status: proposed expansion, with an interactive fictional concept.** The existing Art Class Check-In proof of concept remains at https://art-class-checkin-poc.vercel.app. This design does not activate registration, payments, email, social publishing, tax filing, or new production storage. The concept's actions run only in memory and reset when reopened. All names, amounts, messages and photos represented in it are fictional.
 
+Open the design directly in a phone or tablet browser at **https://art-class-checkin-poc.vercel.app/studio-design**. Choose **Manage studio** or **Run class**. The regular page provides the same sample workflows without requiring the conversation's visualization display. It is generated only when building with ART_APP_MODE=demo; live builds omit it. Its script and styles are separate local files so the app's existing Content Security Policy stays intact. Decorative conversation icons and the host's design-tweak controls are omitted on this page.
+
 ## 1. The owner's operating model
 
 Open the app and answer three questions: **What happens next? Who needs attention? What needs my decision?** The same records support teaching, customer service, enrollment and bookkeeping. Staff should not copy a roster into a marketing tool, reconcile a sibling by name, or hunt through a personal text thread to determine pickup permission.
@@ -222,6 +224,8 @@ Build and verify each complete workflow before adding the next provider. The exi
 - Interactive in-conversation concept: owner Today, schedule, family profile, money, growth, inbox and Studio; assistant Today, roster, pickup, messages and tasks; browser-only parent enrollment preview.
 - All prototype actions are clearly fictional and local; no credentials, API requests, payments, notifications or database writes.
 - Design exploration includes a compact/comfortable spacing choice and two accent options through the conversation's design controls.
-- The existing deployed app, database and production access rules are unchanged by the concept.
+- Existing check-in workflows, the database and production access rules are unchanged by the concept.
 
 Design verification: exercised owner navigation, operator check-in and guarded release, long student names, the remaining-Present warning, campaign review, parent registration preview and editable course review in Chromium desktop and WebKit phone/tablet emulation. Checked visible buttons at a minimum 44px height and horizontal bounds, including a 320px content width. Inspected desktop, phone and tablet screenshots. No script errors in those checks. Physical-device testing and a first-hour session with a real new assistant remain outstanding; this does not validate any proposed live integration.
+
+The direct browser page was also checked in Chromium desktop and WebKit phone/tablet emulation with the existing strict security headers. Navigation, sample check-in/release and parent registration work without the conversation runtime, API calls or server writes. Both build modes pass TypeScript and Vite checks; live builds omit the design directory.

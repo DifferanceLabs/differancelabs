@@ -10,6 +10,8 @@ The proposed production address is **https://art-checkin.differancelabs.com**. I
 
 [STUDIO-DESIGN.md](STUDIO-DESIGN.md) describes the requested expansion into Art School Desk: owner and class-operator workspaces, family records, enrollment, payments, email, photos, marketing and accountant preparation. It includes the integration choices, permissions, first-hour training and staged acceptance criteria. The accompanying in-conversation concept is a fictional design simulation; these proposed modules are not connected to live services or part of the deployed check-in workflow.
 
+The design also opens directly at **https://art-class-checkin-poc.vercel.app/studio-design**, including on phones that do not display the inline visualization. It is a separate, fictional concept page included only in demo builds.
+
 ## Start locally
 
 The verified Git checkout is `C:\Users\BDM\Documents\GitHub\differancelabs`, on branch `feat/art-class-checkin`. The originally selected `C:\Users\BDM\Documents\DifferanceLabs` was a separate, non-Git copy; it was not edited.
