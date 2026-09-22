@@ -8,6 +8,7 @@ const {
   verifySessionToken,
 } = require("../_auth");
 const { getAppBySlug, getAppTargetUrl, hasAppGrant } = require("../_supabase");
+const { getArtisanHollow, createArtisanLaunchToken } = require("../../lib/artisan-hollow");
 
 function sendPlainText(res, statusCode, body) {
   res.statusCode = statusCode;
@@ -63,8 +64,13 @@ module.exports = async function launchApp(req, res) {
   let userHasGrant = false;
 
   try {
-    app = await getAppBySlug(appSlug);
-    userHasGrant = await hasAppGrant(payload.email, appSlug);
+    if (appSlug === "artisan-hollow") {
+      app = getArtisanHollow();
+      userHasGrant = Boolean(app);
+    } else {
+      app = await getAppBySlug(appSlug);
+      userHasGrant = await hasAppGrant(payload.email, appSlug);
+    }
   } catch (error) {
     console.warn("App launch lookup failed", {
       message: error.message,
@@ -101,8 +107,9 @@ module.exports = async function launchApp(req, res) {
     return;
   }
 
-  if (!process.env.DL_APP_LAUNCH_SECRET) {
-    sendPlainText(res, 500, "DL_APP_LAUNCH_SECRET");
+  const signingKeyName = appSlug === "artisan-hollow" ? "AH_PORTAL_LAUNCH_SECRET" : "DL_APP_LAUNCH_SECRET";
+  if (!process.env[signingKeyName]) {
+    sendPlainText(res, 500, signingKeyName);
     return;
   }
 
@@ -120,7 +127,14 @@ module.exports = async function launchApp(req, res) {
     return;
   }
 
-  destination.searchParams.set("dl_launch_token", createAppLaunchToken(app, payload.email));
+  if (appSlug === "artisan-hollow") {
+    destination.pathname = "/enter";
+    destination.search = "";
+    destination.hash = new URLSearchParams({ dl_launch_token: createArtisanLaunchToken(payload.email) }).toString();
+    res.setHeader("Referrer-Policy", "no-referrer");
+  } else {
+    destination.searchParams.set("dl_launch_token", createAppLaunchToken(app, payload.email));
+  }
   res.setHeader("Cache-Control", "no-store");
   redirect(res, destination.toString());
 };

@@ -303,6 +303,19 @@ If styling is desired, wrap the existing button rather than replacing it.
 
 ## Repository Governance
 
+### Artisan Hollow access
+
+Artisan Hollow is a separate repository and Vercel project. The owner explicitly
+approved access for every signed-in Differance Labs member without a separate
+app grant. `lib/artisan-hollow.js` adds only that app to the authenticated launcher
+when `APP_URL_ARTISAN_HOLLOW` is configured. Its launch route still verifies the
+portal session and sends a signed short-lived token in the URL fragment to
+`/enter`, using its own `AH_PORTAL_LAUNCH_SECRET`. This app-specific handoff adds
+a server-derived `studio_role` claim: the configured portal owner is initially
+the studio owner; ordinary members are families. Existing app token formats and
+keys are unchanged. All other applications keep their existing grant requirements. The
+Artisan Hollow app separately enforces its own owner and customer permissions.
+
 Before making significant changes:
 
 - Read AGENTS.md.

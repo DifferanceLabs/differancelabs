@@ -7,6 +7,7 @@ const {
   verifySessionToken,
 } = require("./_auth");
 const { getAppsForUser } = require("./_supabase");
+const { withArtisanHollow } = require("../lib/artisan-hollow");
 
 function getFallbackAppsForEmail(email) {
   if (!isAdminEmail(email)) {
@@ -56,7 +57,7 @@ module.exports = async function session(req, res) {
   try {
     sendJson(res, 200, {
       user,
-      apps: await getAppsForUser(payload.email),
+      apps: withArtisanHollow(await getAppsForUser(payload.email)),
     });
   } catch (error) {
     console.warn("App grants lookup failed", {
@@ -65,7 +66,7 @@ module.exports = async function session(req, res) {
     });
     sendJson(res, 200, {
       user,
-      apps: getFallbackAppsForEmail(payload.email),
+      apps: withArtisanHollow(getFallbackAppsForEmail(payload.email)),
       degraded: true,
     });
   }
