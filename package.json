@@ -7,9 +7,12 @@
     "test": "node --test"
   },
   "engines": {
-    "node": ">=18"
+    "node": "24.x"
   },
   "devDependencies": {
-    "vercel": "^54.10.2"
+    "vercel": "^65.1.0"
+  },
+  "overrides": {
+    "tar": "^7.5.22"
   }
 }

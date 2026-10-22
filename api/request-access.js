@@ -5,6 +5,7 @@ const {
   verifySessionToken,
 } = require("./_auth");
 const { createOrRefreshAccessRequest } = require("./_supabase");
+const { requireSameOrigin } = require("./_requestSecurity");
 
 module.exports = async function requestAccess(req, res) {
   if (req.method !== "POST") {
@@ -26,6 +27,8 @@ module.exports = async function requestAccess(req, res) {
     sendJson(res, 401, { error: "unauthenticated" });
     return;
   }
+
+  if (!requireSameOrigin(req, res, sendJson)) return;
 
   try {
     await createOrRefreshAccessRequest(payload);

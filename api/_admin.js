@@ -6,6 +6,7 @@ const {
   sendJson,
   verifySessionToken,
 } = require("./_auth");
+const { requireSameOrigin } = require("./_requestSecurity");
 
 function getSession(req) {
   return verifySessionToken(parseCookies(req)[SESSION_COOKIE]);
@@ -21,6 +22,10 @@ function requireAdminApi(req, res) {
 
   if (!isAdminEmail(session.email)) {
     sendJson(res, 403, { error: "Admin access required" });
+    return null;
+  }
+
+  if (!["GET", "HEAD", "OPTIONS"].includes(req.method) && !requireSameOrigin(req, res, sendJson)) {
     return null;
   }
 
