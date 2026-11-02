@@ -17,9 +17,21 @@ async function login(page: Page, role = "staff") {
 }
 async function newRoster(page: Page) {
   await page.getByRole("button", { name: "New session", exact: true }).click();
-  const date = new Date(Date.now() + Math.random() * 300000000000)
-    .toISOString()
-    .slice(0, 10);
+  // Browser projects share one demo database. Avoid random-date collisions
+  // with earlier tests; duplicate-session rejection is valid app behavior.
+  const usedDates = new Set(
+    (
+      await page
+        .getByLabel("Dated class session", { exact: true })
+        .locator("option")
+        .allTextContents()
+    ).map((label) => label.trim().slice(0, 10)),
+  );
+  let day = 1;
+  let date: string;
+  do {
+    date = new Date(Date.UTC(2100, 0, day++)).toISOString().slice(0, 10);
+  } while (usedDates.has(date));
   await page.getByLabel("Session date", { exact: true }).fill(date);
   await page
     .getByRole("button", { name: "Create session", exact: true })
