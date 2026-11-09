@@ -1,0 +1,7 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Exact English prose in the check-in requirements; not a credential"
+regexTarget = "secret"
+regexes = ['''^missing/revoked$''']
